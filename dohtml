@@ -6,6 +6,7 @@ realmakepage() {
 	local	filter="$1"	# Distributions to list
 	local	title="$2"	# Title of page
 	local	date="$3"	# Date
+	local	worry="$4"	# Worry about testing only?
 	local	descr		# Description of filter
 
 	if [ -z "$filter" ]; then
@@ -14,6 +15,8 @@ realmakepage() {
 		descr="$filter"
 		filter="-d $filter"
 	fi
+
+	filter="$filter $worry"
 
 	cat <<EOF
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -127,6 +130,8 @@ EOF
 <ul>
   <li> <a href="debian/all.html">All</a>
     <br>
+     + <a href="debian/testing.html">Only bugs relevant to testing</a>
+    <br>
      + <a href="debian-non-US/all.html">All non-US</a>
   <li> <a href="debian/main.html">main</a>
     <br>
@@ -158,20 +163,21 @@ EOF
 
 makepage() {
 	if [ ! -d "`dirname $3`" ]; then mkdir -p "`dirname $3`"; fi
-	realmakepage "$1" "$2" "$4" > $3.new
+	realmakepage "$1" "$2" "$4" "$5" > $3.new
 	mv -f $3.new $3
 }
 
-time=$(date -u --date="1970-1-1 00:00:00 UTC + $(stat -c %Y status) secs")
-oldtime=$(date -u --date="1970-1-1 00:00:00 UTC + $(stat -c %Y status-old) secs")
+time=$(date -u --date="$(ls -Ll status | awk '{print $6, $7}'):00 $(date +%z)")
+oldtime=$(date -u --date="$(ls -Ll status-old | awk '{print $6, $7}'):00 $(date +%z)")
 title="Release-critical bugs status"
-
 
 makepage "debian" "$title" "$htmldir/debian/all.html" "$time"
 makepage "debian/main" "$title" $htmldir/debian/main.html "$time"
 makepage "debian/contrib" "$title" $htmldir/debian/contrib.html "$time"
 makepage "debian/non-free" "$title" $htmldir/debian/non-free.html "$time"
 makepage "debian/source" "$title" $htmldir/debian/source.html "$time"
+
+makepage "debian" "$title" "$htmldir/debian/testing.html" "$time" "-t"
 
 makepage "non-US" "$title" "$htmldir/debian-non-US/all.html" "$time"
 makepage "non-US/main" "$title" $htmldir/debian-non-US/main.html "$time"
