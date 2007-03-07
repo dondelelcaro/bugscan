@@ -1,6 +1,6 @@
 #! /bin/sh
 
-htmldir=/org/bugs.debian.org/www/bugscan
+htmldir=/home/sesse/bugscan
 
 realmakepage() {
 	local	filter="$1"	# Distributions to list

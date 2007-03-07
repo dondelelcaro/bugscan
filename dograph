@@ -2,7 +2,7 @@
 
 set -e
 
-cd /org/bugs.debian.org/bugscan
+cd /home/sesse/bugscan
 
 tmp=`tempfile`
 tmp2=`tempfile`
@@ -11,7 +11,6 @@ find counts -type f | sort | xargs grep '^' /dev/null |
     sed 's/^.*count-//;s/ .*$//;s/:/ /' >"$tmp"
 find counts -type f | sort | xargs egrep '^(.* ){6}' /dev/null |
     sed 's/^.*count-//;s/:.* / /;' >"$tmp2"
-    
 
 #for i in counts/count-[0-9]* ; do
 #	date=`echo $i | sed -e s/.*count-//`
@@ -29,7 +28,7 @@ set terminal png
 set yrange [0:]
 #set xtics 2678400
 #set nomxtics
-set output "/org/bugs.debian.org/www/bugscan/graph.png"
+set output "/home/sesse/bugscan/www/graph.png"
 plot "$tmp" using 1:2 with lines, "$tmp2" using 1:2 with lines
 quit
 EOF
