@@ -153,7 +153,7 @@ sub MakeStatistics() {
 		my $count = 0;		# Number of bugs for this package
 
 		next if (defined $scanlib::exclude{$p});
-		for my $nr (split(/ /, $scanlib::packagelist{$p})) {
+		for my $nr (@{$scanlib::packagelist{$p}}) {
 			$pendingtotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*P/);
 			$patchtotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*\+/);
 			$ignoretotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*I/);
