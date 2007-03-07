@@ -201,8 +201,8 @@ sub FilterPackages($) {
 
 sub FilterBugs() {
 	for my $p (sort keys %scanlib::packagelist) {
-		$scanlib::packagelist{$p} = join(' ', grep { scanlib::check_worry($scanlib::bugs{$_}) } split / /, $scanlib::packagelist{$p});
-		delete $scanlib::packagelist{$p} if ($scanlib::packagelist{$p} eq '');
+		$scanlib::packagelist{$p} = [ grep { scanlib::check_worry($scanlib::bugs{$_}) } @{$scanlib::packagelist{$p}} ];
+		delete $scanlib::packagelist{$p} if (scalar @{$scanlib::packagelist{$p}} == 0);
 	}
 }
 
