@@ -21,7 +21,12 @@ use Debbugs::Packages;
 use Debbugs::Versions;
 use Debbugs::Status;
 use Fcntl qw(O_RDONLY);
+use strict;
+use warnings;
 require bugcfg;
+package scanlib;
+
+our (%comments,%premature,%exclude,%maintainer,%section,%packagelist,%NMU,%debbugssection,%bugs);
 
 sub readcomments() {
 # Read bug commentary 
@@ -30,8 +35,8 @@ sub readcomments() {
 # Prefix a bug number with a * to force it to be listed even if it's closed.
 # (This deals with prematurely closed bugs)
 
-	local($index);					# Bug-number for current comment
-	local($file);					# Name of comments-file
+	my $index;					# Bug-number for current comment
+	my $file;					# Name of comments-file
 
 	%comments = ();					# Initialize our data
 	%premature = ();
@@ -62,10 +67,10 @@ sub readcomments() {
 
 # Read the list of maintainer 
 sub readmaintainers() {
-	local ($pkg);					# Name of package
-	local ($mnt);					# Maintainer name & email
+	my $pkg;					# Name of package
+	my $mnt;					# Maintainer name & email
 
-	open(M, $maintainerlist) or die "open $maintainerlist: $!\n";
+	open(M, $bugcfg::maintainerlist) or die "open $bugcfg::maintainerlist: $!\n";
 	while (<M>) {
 		chomp;
 		m/^(\S+)\s+(\S.*\S)\s*$/ or die "Maintainers: $_ ?";
@@ -82,15 +87,15 @@ sub readmaintainers() {
 
 
 sub readsources() {
-	local($root);					# Root of archive we are scanning
-	local($archive);				# Name of archive we are scanning
-	local($sect);					# Name of current section
+	my $root;					# Root of archive we are scanning
+	my $archive;				# Name of archive we are scanning
+	my $sect;					# Name of current section
 
 	$root=shift;
 	$archive=shift;
-	for $sect ( @sections) {
+	for $sect (@bugcfg::sections) {
 		open(P, "zcat $root/$sect/source/Sources.gz|")
-			or die open "open: $sect / $arch sourcelist: $!\n";
+			or die open "open: $sect sourcelist: $!\n";
 		while (<P>) {
 			chomp;
 			next unless m/^Package:\s/;
@@ -102,15 +107,15 @@ sub readsources() {
 }
 
 sub readpackages() {
-	local($root);					# Root of archive we are scanning
-	local($archive);				# Name of archive we are scanning
-	local($sect);					# Name of current section
-	local($arch);					# Name of current architecture
+	my $root;					# Root of archive we are scanning
+	my $archive;				# Name of archive we are scanning
+	my $sect;					# Name of current section
+	my $arch;					# Name of current architecture
 
 	$root=shift;
 	$archive=shift;
-	for $arch ( @architectures ) {
-		for $sect ( @sections) {
+	for $arch ( @bugcfg::architectures ) {
+		for $sect ( @bugcfg::sections) {
 			open(P, "zcat $root/$sect/binary-$arch/Packages.gz|")
 				or die "open: $root/$sect/binary-$arch/Packages.gz: $!\n";
 			while (<P>) {
@@ -125,8 +130,8 @@ sub readpackages() {
 }
 
 sub readdebbugssources() {
-	local($file);
-	local($archive);
+	my $file;
+	my $archive;
 
 	$file=shift;
 	$archive=shift;
@@ -143,7 +148,7 @@ sub readdebbugssources() {
 }
 
 sub readpseudopackages() {
-	open(P, $pseudolist) or die("open $pseudolist: $!\n");
+	open(P, $bugcfg::pseudolist) or die("open $bugcfg::pseudolist: $!\n");
 	while (<P>) {
 		chomp;
 		s/\s.*//;
@@ -154,28 +159,28 @@ sub readpseudopackages() {
 
 
 sub scanspool() {
-	local(@dirs);
-	local($dir);
+	my @dirs;
+	my $dir;
 
-	chdir($spooldir) or die "chdir $spooldir: $!\n";
+	chdir($bugcfg::spooldir) or die "chdir $bugcfg::spooldir: $!\n";
 
-	opendir(DIR, $spooldir) or die "opendir $spooldir: $!\n";
+	opendir(DIR, $bugcfg::spooldir) or die "opendir $bugcfg::spooldir: $!\n";
 	@dirs=grep(m/^\d+$/,readdir(DIR));
 	closedir(DIR);
 
 	for $dir (@dirs) {
-		scanspooldir("$spooldir/$dir");
+		scanspooldir("$bugcfg::spooldir/$dir");
 	}
 
 }
 
 sub scanspooldir() {
-	local($dir)		= @_;
-	local($f);			# While we're currently processing
-	local(@list);		# List of files to process
-	local($skip);		# Flow control
-	local($walk);		# index variable
-	local($taginfo);	# Tag info
+	my ($dir)		= @_;
+	my $f;			# While we're currently processing
+	my @list;		# List of files to process
+	my $skip;		# Flow control
+	my $walk;		# index variable
+	my $taginfo;	# Tag info
 
 	chdir($dir) or die "chdir $dir: $!\n";
 
@@ -192,13 +197,13 @@ sub scanspooldir() {
 		next if (!defined($bug));
 		
 		$skip=1;
-		for $walk (@priorities) {
+		for $walk (@bugcfg::priorities) {
 			$skip=0 if $walk eq $bug->{'severity'};
 		}
 
 		my @tags = split(' ', $bug->{'keywords'});
-		for $tag (@tags) {
-			for $s (@skiptags) {
+		for my $tag (@tags) {
+			for my $s (@bugcfg::skiptags) {
 				$skip=1 if $tag eq $s;
 			}
 		}
@@ -218,13 +223,13 @@ sub scanspooldir() {
 		}
 
 		# only bother to check the versioning status for the distributions indicated by the tags 
-		$status_oldstable    = get_status($f, $bug, 'oldstable')    if ($oldstable_tag);
-		$status_stable       = get_status($f, $bug, 'stable')       if ($stable_tag);
-		$status_testing      = get_status($f, $bug, 'testing')      if ($testing_tag);
-		$status_unstable     = get_status($f, $bug, 'unstable')     if ($unstable_tag);
-		$status_experimental = get_status($f, $bug, 'experimental') if ($experimental_tag);
+		my $status_oldstable    = get_status($f, $bug, 'oldstable')    if ($oldstable_tag);
+		my $status_stable       = get_status($f, $bug, 'stable')       if ($stable_tag);
+		my $status_testing      = get_status($f, $bug, 'testing')      if ($testing_tag);
+		my $status_unstable     = get_status($f, $bug, 'unstable')     if ($unstable_tag);
+		my $status_experimental = get_status($f, $bug, 'experimental') if ($experimental_tag);
 
-		$relinfo = "";
+		my $relinfo = "";
 		$relinfo .= (($oldstable_tag    && $status_oldstable    eq 'pending') ? "O" : "");
 		$relinfo .= (($stable_tag       && $status_stable       eq 'pending') ? "S" : "");
 		$relinfo .= (($testing_tag      && $status_testing      eq 'pending') ? "T" : "");
@@ -250,7 +255,7 @@ sub scanspooldir() {
 			next if ($merged[0] < $f);
 		}
 
-		for $package (split /[,\s]+/, $bug->{'package'}) {
+		for my $package (split /[,\s]+/, $bug->{'package'}) {
 			$_= $package; y/A-Z/a-z/; $_= $` if m/[^-+._a-z0-9]/;
 			if (not defined $section{$_}) {
 				if (defined $debbugssection{$_}) {
@@ -275,12 +280,12 @@ sub scanspooldir() {
 
 
 sub readstatus() {
-	local ($bug);		# Number of current bug
-	local ($subject);	# Subject for current bug
-	local ($pkg);		# Name of current package
-	local ($file);		# Name of statusfile
-	local ($sect);		# Section of current package
-	local ($mnt);		# Maintainer of current package
+	my $bug;		# Number of current bug
+	my $subject;	# Subject for current bug
+	my $pkg;		# Name of current package
+	my $file;		# Name of statusfile
+	my $sect;		# Section of current package
+	my $mnt;		# Maintainer of current package
 
 	$file=shift;
 	open(P, $file) or die "open $file: $!";
@@ -301,11 +306,11 @@ sub readstatus() {
 
 
 sub readNMUstatus() {
-	local ($bug);       # Number of current bug
-	local ($source);    # Source upload which closes this bug.
-	local ($version);   # Version where this bug was closed.
-	local ($flag);      # Whether this paragraph has been processed.
-	local ($field, $value);
+	my $bug;       # Number of current bug
+	my $source;    # Source upload which closes this bug.
+	my $version;   # Version where this bug was closed.
+	my $flag;      # Whether this paragraph has been processed.
+	my ($field, $value);
 
 	for (split /\n/, LWP::UserAgent->new->request(HTTP::Request->new(GET => shift))->content) {
 		chomp;
@@ -350,8 +355,8 @@ sub htmlsanit {
 }
 
 sub wwwnumber() {
-	local ($number) = shift;		# Number of bug to html-ize
-#	local ($section);				# Section for the bug
+	my $number = shift;		# Number of bug to html-ize
+#	my $section);				# Section for the bug
 
 	"<A HREF=\"http://bugs.debian.org/cgi-bin/bugreport.cgi?archive=no&amp;bug=" .
 		urlsanit($number) . '">' . htmlsanit($number) . '</A>';
@@ -360,7 +365,7 @@ sub wwwnumber() {
 }
 
 sub wwwname() {
-	local ($name) = shift;			# Name of package
+	my $name = shift;			# Name of package
 
 	"<A HREF=\"http://bugs.debian.org/cgi-bin/pkgreport.cgi?archive=no&amp;pkg=" .
 		urlsanit($name) . '">' . htmlsanit($name) . '</A>';

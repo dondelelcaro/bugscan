@@ -2,32 +2,34 @@
 
 require bugcfg;
 require scanlib;
+use strict;
+use warnings;
 
 # Main part
 
-&readpackages($debian_ftproot, "debian") if defined $debian_ftproot;
-&readpackages($nonUS_ftproot, "non-US")  if defined $nonUS_ftproot;
-&readsources($debian_ftproot, "debian")  if defined $debian_ftproot;
-&readsources($nonUS_ftproot, "non-US")   if defined $nonUS_ftproot;
+scanlib::readpackages($bugcfg::debian_ftproot, "debian") if defined $bugcfg::debian_ftproot;
+scanlib::readpackages($bugcfg::nonUS_ftproot, "non-US")  if defined $bugcfg::nonUS_ftproot;
+scanlib::readsources($bugcfg::debian_ftproot, "debian")  if defined $bugcfg::debian_ftproot;
+scanlib::readsources($bugcfg::nonUS_ftproot, "non-US")   if defined $bugcfg::nonUS_ftproot;
 
-&readdebbugssources($debian_sources, "debian") if defined $debian_sources;
-&readdebbugssources($nonUS_sources, "non-US") if defined $nonUS_sources;
+scanlib::readdebbugssources($bugcfg::debian_sources, "debian") if defined $bugcfg::debian_sources;
+scanlib::readdebbugssources($bugcfg::nonUS_sources, "non-US") if defined $bugcfg::nonUS_sources;
 
 
-&readpseudopackages;
-&readmaintainers;
-&scanspool;
+scanlib::readpseudopackages();
+scanlib::readmaintainers();
+scanlib::scanspool();
 
-for $p (keys %packagelist) {
+for my $p (keys %scanlib::packagelist) {
 	my $section;
-	if (exists $section{$p}) {
-	    $section = $section{$p};
+	if (exists $scanlib::section{$p}) {
+	    $section = $scanlib::section{$p};
 	} else {
-	    $section = $debbugssection{$p};
+	    $section = $scanlib::debbugssection{$p};
 	}
-	print "$p $section $maintainer{$p}";
-	for $b (split(/ /, $packagelist{$p})) {
-		print "$bugs{$b}\n";
+	print "$p $section $scanlib::maintainer{$p}";
+	for my $b (split(/ /, $scanlib::packagelist{$p})) {
+		print "$scanlib::bugs{$b}\n";
 	}
 }
 
