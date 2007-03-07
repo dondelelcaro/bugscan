@@ -19,6 +19,7 @@ use LWP::UserAgent;
 use Debbugs::MIME qw(decode_rfc1522 encode_rfc1522);
 use Debbugs::Packages;
 use Debbugs::Versions;
+use Debbugs::Status;
 use Fcntl qw(O_RDONLY);
 require bugcfg;
 
@@ -187,7 +188,7 @@ sub scanspooldir() {
 	for $f (@list) {
 		next if $exclude{$f};			# Check the list of bugs to skip
 	
-		my $bug = readbug("$f.summary");
+		my $bug = Debbugs::Status::read_bug(summary => "$f.summary");
 		next if (!defined($bug));
 		
 		$skip=1;
@@ -217,11 +218,11 @@ sub scanspooldir() {
 		}
 
 		# only bother to check the versioning status for the distributions indicated by the tags 
-		$status_oldstable    = getbugstatus($bug, undef, 'oldstable')    if ($oldstable_tag);
-		$status_stable       = getbugstatus($bug, undef, 'stable')       if ($stable_tag);
-		$status_testing      = getbugstatus($bug, undef, 'testing')      if ($testing_tag);
-		$status_unstable     = getbugstatus($bug, undef, 'unstable')     if ($unstable_tag);
-		$status_experimental = getbugstatus($bug, undef, 'experimental') if ($experimental_tag);
+		$status_oldstable    = get_status($f, $bug, 'oldstable')    if ($oldstable_tag);
+		$status_stable       = get_status($f, $bug, 'stable')       if ($stable_tag);
+		$status_testing      = get_status($f, $bug, 'testing')      if ($testing_tag);
+		$status_unstable     = get_status($f, $bug, 'unstable')     if ($unstable_tag);
+		$status_experimental = get_status($f, $bug, 'experimental') if ($experimental_tag);
 
 		$relinfo = "";
 		$relinfo .= (($oldstable_tag    && $status_oldstable->{'pending'}    eq 'pending') ? "O" : "");
@@ -366,297 +367,28 @@ sub wwwname() {
 #	"<A HREF=\"${btsURL}/db/pa/l$name.html\">$name</A>";
 }
 
-# === everything from here is adapted from debbugs, and should probably be merged
-# === back at some point
+my $_version_cache = {};
+sub get_status() {
+	my ($bugnr, $bug, $dist) = @_;
 
-my %_binarytosource;
-my %_binarytosourcecache = ();
-sub binarytosource {
-    my ($binname, $binver, $binarch) = @_;
+	my @versions = Debbugs::Status::getversions($bug->{'package'}, $dist, undef);
+	my @sourceversions = Debbugs::Status::makesourceversions($bug->{'package'}, $dist, @versions);
 
-    # TODO: This gets hit a lot, especially from buggyversion() - probably
-    # need an extra cache for speed here.
-
-    if (tied %_binarytosource or
-	    tie %_binarytosource, 'MLDBM',
-		$Debbugs::Packages::gBinarySourceMap, O_RDONLY) {
-		if (!exists($_binarytosourcecache{$binname})) {
-			$_binarytosourcecache{$binname} = \%{ $_binarytosource{$binname} };
-		}
-		
-		if (defined $_binarytosourcecache{$binname} and
-			exists $_binarytosourcecache{$binname}{$binver}) {
-			if (defined $binarch) {
-				my $src = $_binarytosourcecache{$binname}{$binver}{$binarch};
-				return () unless defined $src; # not on this arch
-				# Copy the data to avoid tiedness problems.
-				return [@$src];
-			} else {
-				# Get (srcname, srcver) pairs for all architectures and
-				# remove any duplicates. This involves some slightly tricky
-				# multidimensional hashing; sorry. Fortunately there'll
-				# usually only be one pair returned.
-				my %uniq;
-				for my $ar (keys %{$_binarytosourcecache{$binname}{$binver}}) {
-					my $src = $_binarytosourcecache{$binname}{$binver}{$ar};
-					next unless defined $src;
-					$uniq{$src->[0]}{$src->[1]} = 1;
-				}
-				my @uniq;
-				for my $sn (sort keys %uniq) {
-					push @uniq, [$sn, $_] for sort keys %{$uniq{$sn}};
-				}
-				return @uniq;
-			}
-		}
-    }
-
-    # No $gBinarySourceMap, or it didn't have an entry for this name and
-    # version.
-    return ();
-}
-
-my %_versionobj;
-sub buggyversion {
-    my ($bug, $ver, $status) = @_;
-    return '' unless defined $versionpkgdir;
-    my $src = getpkgsrc()->{$status->{package}};
-    $src = $status->{package} unless defined $src;
-
-    my $tree;
-    if (exists $_versionobj{$src}) {
-        $tree = $_versionobj{$src};
-    } else {
-        $tree = Debbugs::Versions->new(\&DpkgVer::vercmp);
-        my $srchash = substr $src, 0, 1;
-        if (open VERFILE, "< $versionpkgdir/$srchash/$src") {
-            $tree->load(\*VERFILE);
-            close VERFILE;
-        }
-        $_versionobj{$src} = $tree;
-    }
-
-    my @found = makesourceversions($status->{package}, undef,
-                                   @{$status->{found_versions}});
-    my @fixed = makesourceversions($status->{package}, undef,
-                                   @{$status->{fixed_versions}});
-
-    return $tree->buggy($ver, \@found, \@fixed);
-}
-
-sub getbugstatus {
-    my ($bug,$common_version,$common_dist) = @_;
-	my %status = %$bug;
-
-    my @versions;
-    if (defined $common_version) {
-        @versions = ($common_version);
-    } elsif (defined $common_dist) {
-        @versions = getversions($status{package}, $common_dist, $common_arch);
-    }
-    
-	if (not @versions) {
-		$status{"pending"} = 'absent';
-		return \%status;
-	}
-
-    # TODO: This should probably be handled further out for efficiency and
-    # for more ease of distinguishing between pkg= and src= queries.
-    my @sourceversions = makesourceversions($status{package}, $common_arch,
-                                            @versions);
-
-	$status{"pending"} = 'pending';
-
-    if (@sourceversions) {
-        # Resolve bugginess states (we might be looking at multiple
-        # architectures, say). Found wins, then fixed, then absent.
-        my $maxbuggy = 'absent';
-        for my $version (@sourceversions) {
-            my $buggy = buggyversion($bugnum, $version, \%status);
-            if ($buggy eq 'found') {
-                $maxbuggy = 'found';
-                last;
-            } elsif ($buggy eq 'fixed' and $maxbuggy ne 'found') {
-                $maxbuggy = 'fixed';
-            }
-        }
-        if ($maxbuggy eq 'absent') {
-            $status{"pending"} = 'absent';
-        } elsif ($maxbuggy eq 'fixed') {
-            $status{"pending"} = 'done';
-        }
-    }
-    
-    if (length($status{done}) and
-            (not @sourceversions or not @{$status{fixed_versions}})) {
-        $status{"pending"} = 'done';
-    }
-    
-    return \%status;
-}
-
-my %_versions;
-my %_binversioncache = ();
-sub getversions {
-    my ($pkg, $dist, $arch) = @_;
-    return () unless defined $versionindex;
-    $dist = 'unstable' unless defined $dist;
-
-    unless (tied %_versions) {
-        tie %_versions, 'MLDBM', $versionindex, O_RDONLY
-            or die "can't open versions index: $!";
-    }
-
-	if (!exists($_binversioncache{$pkg})) {
-		$_binversioncache{$pkg} = \%{ $_versions{$pkg} };
-	}
-	#if ($pkg eq 'atlas3-base') {
-	#	require Data::Dumper;
-	#	print STDERR Data::Dumper::Dumper($_versions{$pkg});
-	#}
-
-	if (defined $arch and exists $_binversioncache{$pkg}{$dist}{$arch}) {
-		my $ver = $_binversioncache{$pkg}{$dist}{$arch};
-		if (defined($ver)) {
-			return $ver;
-		} else {
-			return ();
-		}
-	} else {
-		my %uniq;
-		for my $ar (keys %{$_binversioncache{$pkg}{$dist}}) {
-			$uniq{$_binversioncache{$pkg}{$dist}{$ar}} = 1 unless ($ar eq 'source' or $ar eq 'm68k' or $ar eq 'hurd-i386');
-		}
-		if (%uniq) {
-			return keys %uniq;
-		} elsif (exists $_binversioncache{$pkg}{$dist}{source}) {
-			# Maybe this is actually a source package with no corresponding
-			# binaries?
-			return $_binversioncache{$pkg}{$dist}{source};
-		} else {
-			return ();
-		}
-	}
-}
-
-my %_sourceversioncache = ();
-sub makesourceversions {
-    my $pkg = shift;
-    my $arch = shift;
-    my %sourceversions;
-
-    for my $version (@_) {
-        if ($version =~ m[/]) {
-            # Already a source version.
-            $sourceversions{$version} = 1;
-        } else {
-            my $cachearch = (defined $arch) ? $arch : '';
-            my $cachekey = "$pkg/$cachearch/$version";
-            if (exists($_sourceversioncache{$cachekey})) {
-                for my $v (@{$_sourceversioncache{$cachekey}}) {
-					$sourceversions{$v} = 1;
-				}
-				next;
-			}
-
-			my @srcinfo = binarytosource($pkg, $version, $arch);
-			unless (@srcinfo) {
-				# We don't have explicit information about the
-				# binary-to-source mapping for this version (yet). Since
-				# this is a CGI script and our output is transient, we can
-				# get away with just looking in the unversioned map; if it's
-				# wrong (as it will be when binary and source package
-				# versions differ), too bad.
-				my $pkgsrc = getpkgsrc();
-				if (exists $pkgsrc->{$pkg}) {
-					@srcinfo = ([$pkgsrc->{$pkg}, $version]);
-				} elsif (getsrcpkgs($pkg)) {
-					# If we're looking at a source package that doesn't have
-					# a binary of the same name, just try the same version.
-					@srcinfo = ([$pkg, $version]);
-				} else {
-					next;
-				}
-			}
-			$sourceversions{"$_->[0]/$_->[1]"} = 1 foreach @srcinfo;
-			$_sourceversioncache{$cachekey} = [ map { "$_->[0]/$_->[1]" } @srcinfo ];
-		}
-	}
-
-    return sort keys %sourceversions;
-}
-
-my %fields = (originator => 'submitter',
-              date => 'date',
-              subject => 'subject',
-              msgid => 'message-id',
-              'package' => 'package',
-              keywords => 'tags',
-              done => 'done',
-              forwarded => 'forwarded-to',
-              mergedwith => 'merged-with',
-              severity => 'severity',
-              owner => 'owner',
-              found_versions => 'found-in',
-              fixed_versions => 'fixed-in',
-              blocks => 'blocks',
-              blockedby => 'blocked-by',
-             );
-
-# Fields which need to be RFC1522-decoded in format versions earlier than 3.
-my @rfc1522_fields = qw(originator subject done forwarded owner);
-
-sub readbug {
-    my ($location) = @_;
-    if (!open(S,$location)) { return undef; }
-
-    my %data;
-    my @lines;
-    my $version = 2;
-    local $_;
-
-    while (<S>) {
-        chomp;
-        push @lines, $_;
-        $version = $1 if /^Format-Version: ([0-9]+)/i;
-    }
-
-    # Version 3 is the latest format version currently supported.
-    return undef if $version > 3;
-
-    my %namemap = reverse %fields;
-    for my $line (@lines) {
-        if ($line =~ /(\S+?): (.*)/) {
-            my ($name, $value) = (lc $1, $2);
-            $data{$namemap{$name}} = $value if exists $namemap{$name};
-        }
-    }
-    for my $field (keys %fields) {
-        $data{$field} = '' unless exists $data{$field};
-    }
-
-    close(S);
-
-    $data{severity} = $gDefaultSeverity if $data{severity} eq '';
-    $data{found_versions} = [split ' ', $data{found_versions}];
-    $data{fixed_versions} = [split ' ', $data{fixed_versions}];
-
-    if ($version < 3) {
-		for my $field (@rfc1522_fields) {
-			$data{$field} = decode_rfc1522($data{$field});
-		}
-    }
-
-    return \%data;
+	return Debbugs::Status::max_buggy(bug => $bugnr,
+			 sourceversions => \@sourceversions,
+		 	 found => $bug->{'found_versions'},
+		 	 fixed => $bug->{'fixed_versions'},
+			 version_cache => $_version_cache,
+			 package => $bug->{'package'});
 }
 
 sub check_worry {
-    my ($status) = @_;
+	my ($status) = @_;
 
-    if ($status =~ m/^\[[^]]*I/ or
-        $status =~ m/ \[[^]]*X/ or
-        ($status =~ m/ \[[^]]*[OSUE]/ and $status !~ m/ \[[^]]*T/)) {
-	return 0;
-    }
-    return 1;
+	if ($status =~ m/^\[[^]]*I/ or
+	    $status =~ m/ \[[^]]*X/ or
+            ($status =~ m/ \[[^]]*[OSUE]/ and $status !~ m/ \[[^]]*T/)) {
+		return 0;
+	}
+	return 1;
 }
