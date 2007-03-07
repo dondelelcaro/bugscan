@@ -103,8 +103,8 @@ scanlib::readstatus($ARGV[1]);
 
 $closed=0;
 for $p (keys %oldbugs) {
-	for $b (split(/ /, $oldbugs{$p})) {
-		if (not ($packagelist{$p} =~ m/\b$b\b/)) {
+	for $b (@{$oldbugs{$p}}) {
+		if (scalar grep { $_ == $b } @{$packagelist{$p}} == 0) { 
 			$removed{$p} .= "$b ";
 			$closed++;
 		}
@@ -113,7 +113,7 @@ for $p (keys %oldbugs) {
 
 $opened=0;
 for $p (keys %packagelist) {
-	for $b (split(/ /, $packagelist{$p})) {
+	for $b (@{$packagelist{$p}}) {
 		if (not ($oldbugs{$p} =~ m/\b$b\b/)) {
 			$new{$p} .= "$b ";
 			$opened++;

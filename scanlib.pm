@@ -265,7 +265,7 @@ sub scanspooldir() {
 				}
 			}
 
-			$packagelist{$_} .= " $f";
+			push @{$packagelist{$_}}, $f;
 		}
 
 		if ($relinfo eq "") { # or $relinfo eq "U" # confuses e.g. #210306
@@ -294,7 +294,7 @@ sub readstatus() {
 		if (m/^[0-9]+ \[/) {
 			($bug,$subject)=split(/ /, $_, 2);
 			$bugs{$bug}=$subject;
-			$packagelist{$pkg} .= "$bug ";
+			push @{$packagelist{$pkg}}, $bug;
 		} else {
 			($pkg,$sect, $mnt)=split(/ /, $_, 3);
 			$section{$pkg}=$sect;

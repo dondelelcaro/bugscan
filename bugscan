@@ -27,10 +27,11 @@ for my $p (keys %scanlib::packagelist) {
 	} else {
 	    $section = $scanlib::debbugssection{$p};
 	}
-	print "$p $section $scanlib::maintainer{$p}";
-	for my $b (split(/ /, $scanlib::packagelist{$p})) {
+	print "$p $section $scanlib::maintainer{$p}\n";
+	for my $b (@{$scanlib::packagelist{$p}}) {
 		print "$scanlib::bugs{$b}\n";
 	}
+	print "\n";
 }
 
 exit 0;

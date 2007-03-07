@@ -53,7 +53,7 @@ my %sectcount=();	# Bugs per type
 
 for my $p (keys %scanlib::packagelist) {
 	next if (defined $bugcfg::exclude{$p});
-	for my $nr (sort split(/ /, $scanlib::packagelist{$p})) {
+	for my $nr (sort @{$scanlib::packagelist{$p}}) {
 		next if (defined $bugcfg::exclude{$nr});
 		$total++;
 		$pendingcount++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*P/);
@@ -73,8 +73,7 @@ for my $p (keys %scanlib::packagelist) {
 	}
 
 	if (defined($scanlib::comments{$p}) && $scanlib::comments{$p} =~ m/^\[REMOVE\]/) {
-		my @a = split(/ /,$scanlib::packagelist{$p});
-		$removecount += scalar(@a);
+		$removecount += scalar @{$scanlib::packagelist{$p});
 	}
 }
 

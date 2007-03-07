@@ -41,7 +41,7 @@ $commentfile=$opt_C if ($opt_C);
 &readcomments($commentfile);
 
 for $p (keys %packagelist) {
-	for $nr (split(/ /, $packagelist{$p})) {
+	for my $nr (@{$packagelist{$p}}) {
 		$found{$nr}=1;
 	}
 }
