@@ -1,6 +1,6 @@
 #! /bin/sh
 
-htmldir=/home/sesse/bugscan
+htmldir=/home/sesse/bugscan/www
 
 realmakepage() {
 	local	filter="$1"	# Distributions to list
