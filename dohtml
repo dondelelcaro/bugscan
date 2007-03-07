@@ -34,10 +34,6 @@ realmakepage() {
 
 <hr>
 
-<p>Check out Steinar H. Gunderson's beta <a href="http://people.debian.org/~sesse/bugscan/">version-tracking aware release critical bug page</a>.
-
-<hr>
-
 <p>
 EOF
 	./bugreport -H -s $filter
