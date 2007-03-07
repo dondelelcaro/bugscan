@@ -188,7 +188,7 @@ sub MakeStatistics() {
 }
 
 
-sub FilterPackages() {
+sub FilterPackages($) {
 	my $filter = shift;		# Distribution we want to keep
 
 	for my $p (sort keys %scanlib::packagelist) {
@@ -203,7 +203,7 @@ sub FilterBugs() {
 	}
 }
 
-my ($opt_h,$opt_V,$opt_S,$opt_C,$opt_H,$opt_d,$opt_t,$opt_s,$opt_l);
+our ($opt_h,$opt_V,$opt_S,$opt_C,$opt_H,$opt_d,$opt_t,$opt_s,$opt_l);
 
 getopts('VhHlstd:S:C:');
 ShowUsage if ($opt_h);
@@ -216,12 +216,12 @@ scanlib::readstatus($statusfile);
 scanlib::readcomments($commentsfile);
 # scanlib::readNMUstatus($NMUfile);
 
-&FilterPackages($opt_d) if ($opt_d);
-&FilterBugs() if ($opt_t);
+FilterPackages($opt_d) if ($opt_d);
+FilterBugs() if ($opt_t);
 
 MakeStatistics if ($opt_s);
 if ($opt_l) {
-	MakeBuglist 
+	MakeBuglist();
 }
 
 exit 0;

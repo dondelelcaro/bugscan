@@ -31,7 +31,7 @@ EOF
 	exit 0;
 }
 
-my ($opt_h,$opt_V,$opt_S,$opt_C);
+our ($opt_h,$opt_V,$opt_S,$opt_C);
 
 getopts('VhS:C:');
 ShowUsage if ($opt_h);
