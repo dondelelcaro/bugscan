@@ -45,13 +45,18 @@ sub PrintPackageHeader() {
 	my ($name, $email);	# Name & email of maintainer
 
 	if ($html) {
-	    print "<div class=\"package\"><pre>";
-		print "<a name=\"$p\"><strong>Package:</strong></a> " . &wwwname($p);
+		print "<div class=\"package\"><pre>";
+		print "<a name=\"$p\"><strong>Package:</strong></a> " . scanlib::wwwname($p);
 		print " ($scanlib::section{$p}).\n";
 		print "<strong>Maintainer:</strong> ";
 		if (defined($scanlib::maintainer{$p})) {
-			$_ = $scanlib::maintainer{$p};
-			($name,$email) = m/(.*) <([^>]*)>/;
+			if ($scanlib::maintainer{$p} =~ /(.*) <([^>]*)>/) {
+				($name,$email) = ($1,$2);
+			} elsif ($scanlib::maintainer{$p} =~ /<(.*) \((.*)\)>/) {
+				($name,$email) = ($1,$2);
+			} elsif ($scanlib::maintainer{$p} =~ /<(.*)>/) {
+				$name = $email = $1;
+			}
 			print "$name &lt;<a href=\"http://bugs.debian.org/$email\">$email</A>&gt;\n";
 		} else {
 			print "unknown\n";
@@ -114,8 +119,8 @@ sub MakeBuglist() {
 				print "<strike>" if ($scanlib::bugs{$nr} =~ m/^\[.......I\]/);
 				print "<em class=\"worry\">" if $worry;
 				($sect=$nr) =~ s/([0-9]{2}).*/$1/;
-				print "<A NAME=\"$nr\"></A>  " . &wwwnumber($nr) . ' ' .
-					  htmlsanit($scanlib::bugs{$nr}) . "\n";
+				print "<A NAME=\"$nr\"></A>  " . scanlib::wwwnumber($nr) . ' ' .
+					  scanlib::htmlsanit($scanlib::bugs{$nr}) . "\n";
 				print "</em>" if $worry;
 				print "</strike>" if ($scanlib::bugs{$nr} =~ m/^\[.......I\]/);
 			} else {
@@ -135,21 +140,19 @@ sub MakeBuglist() {
 
 
 sub MakeStatistics() {
-	my $bugcount;		# Total number of bugs so far
-	my $count;		# Number of bugs for this package
-	my $remtotal;		# Total number of bugs for packages marked REMOVE
-	my $patchtotal;		# Total number of bugs marked patch
-	my $pendingtotal;	# Total number of bugs marked pending
-	my $ignoretotal;	# Total number of bugs marked ignore
-	my $nottestingtotal;	# Total number of bugs on packages not in testing
-	my $worrytotal;		# Total number of bugs we're actually worried about
-	my $p;			# Index variable
+	my $bugcount=0;		# Total number of bugs so far
+	my $remtotal=0;		# Total number of bugs for packages marked REMOVE
+	my $patchtotal=0;	# Total number of bugs marked patch
+	my $pendingtotal=0;	# Total number of bugs marked pending
+	my $ignoretotal=0;	# Total number of bugs marked ignore
+	my $nottestingtotal=0;	# Total number of bugs on packages not in testing
+	my $worrytotal=0;	# Total number of bugs we're actually worried about
 	my %list;		# List of bugnumber associated with package
 
-	$bugcount=0;
 	for my $p (sort keys %scanlib::packagelist) {
+		my $count = 0;		# Number of bugs for this package
+
 		next if (defined $scanlib::exclude{$p});
-		$count=0;
 		for my $nr (split(/ /, $scanlib::packagelist{$p})) {
 			$pendingtotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*P/);
 			$patchtotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*\+/);
@@ -198,7 +201,7 @@ sub FilterPackages($) {
 
 sub FilterBugs() {
 	for my $p (sort keys %scanlib::packagelist) {
-		$scanlib::packagelist{$p} = join(' ', grep { check_worry($scanlib::bugs{$_}) } split / /, $scanlib::packagelist{$p});
+		$scanlib::packagelist{$p} = join(' ', grep { scanlib::check_worry($scanlib::bugs{$_}) } split / /, $scanlib::packagelist{$p});
 		delete $scanlib::packagelist{$p} if ($scanlib::packagelist{$p} eq '');
 	}
 }

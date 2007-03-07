@@ -95,11 +95,11 @@ ShowUsage if ($opt_h or ($#ARGV != 1));
 ShowVersion if ($opt_V);
 $html=1 if ($opt_H);
 
-&readstatus($ARGV[0]);
+scanlib::readstatus($ARGV[0]);
 %oldbugs=%packagelist;
 %packagelist=();
 
-&readstatus($ARGV[1]);
+scanlib::readstatus($ARGV[1]);
 
 $closed=0;
 for $p (keys %oldbugs) {
