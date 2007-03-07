@@ -389,8 +389,8 @@ sub get_status() {
 			$status = 'done';
 		}
 	}
-	if (length($bug{'done'}) and
-	    (not @sourceversions or not @{$status{'fixed_versions'}})) {
+	if (length($bug->{'done'}) and
+	    (not @sourceversions or not @{$bug->{'fixed_versions'}})) {
 		$status = 'done';
 	}
 
