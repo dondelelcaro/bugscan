@@ -97,3 +97,135 @@ sub MakeBuglist() {
 			&PrintPackageHeader($p);
 			print $scanlib::comments{$p};
 		}
+		for $nr (sort @{$scanlib::packagelist{$p}}) {
+			next if (defined $bugcfg::exclude{$nr});
+			if (! $header) {
+				$header = 1;
+				&PrintPackageHeader($p);
+			}
+
+			if ($html) {
+				my $worry = scanlib::check_worry($scanlib::bugs{$nr});
+			
+				if ($scanlib::bugs{$nr} =~ m/ \[[^]]*X/) {
+					print '<span style="color: #808080">';
+				} elsif ($scanlib::bugs{$nr} =~ m/^\[[^]]*P/) {
+					print '<span style="color: #f040d0">';
+				} elsif ($scanlib::bugs{$nr} =~ m/^\[[^]]*\+/) {
+					print '<span style="color: #00aa00">';
+				} elsif ($scanlib::bugs{$nr} =~ m/^\[[^]]*H/) {
+					print '<span style="color: #ffaa30">';
+				}
+				print "<strike>" if ($scanlib::bugs{$nr} =~ m/^\[.......I\]/);
+				print "<em class=\"worry\">" if $worry;
+				($sect=$nr) =~ s/([0-9]{2}).*/$1/;
+				print "<A NAME=\"$nr\"></A>  " . scanlib::wwwnumber($nr) . ' ' .
+					  scanlib::htmlsanit($scanlib::bugs{$nr}) . "\n";
+				print "</em>" if $worry;
+				print "</strike>" if ($scanlib::bugs{$nr} =~ m/^\[.......I\]/);
+			} else {
+				printf("  %-6d %s\n", $nr, $scanlib::bugs{$nr});
+			}
+			print $scanlib::comments{$nr} if (defined($scanlib::comments{$nr}));
+			print "[FIX] Fixed by package " . $scanlib::NMU{$nr, "source"} . ", version " . $scanlib::NMU{$nr, "version"} . " in Incoming\n" if (defined $scanlib::NMU{$nr});
+			print "</span>" if ($html && ($scanlib::bugs{$nr} =~ m/^\[[^]]*[H+P]/ ||
+			                              $scanlib::bugs{$nr} =~ m/ \[[^]]*X/));
+		}
+		print "</span>" if ($fontset);
+		if ($header) {
+			&PrintPackageFooter($p);
+		}
+	}
+}
+
+
+sub MakeStatistics() {
+	my $bugcount=0;		# Total number of bugs so far
+	my $remtotal=0;		# Total number of bugs for packages marked REMOVE
+	my $patchtotal=0;	# Total number of bugs marked patch
+	my $pendingtotal=0;	# Total number of bugs marked pending
+	my $ignoretotal=0;	# Total number of bugs marked ignore
+	my $nottestingtotal=0;	# Total number of bugs on packages not in testing
+	my $worrytotal=0;	# Total number of bugs we're actually worried about
+	my %list;		# List of bugnumber associated with package
+
+	for my $p (sort keys %scanlib::packagelist) {
+		my $count = 0;		# Number of bugs for this package
+
+		next if (defined $scanlib::exclude{$p});
+		for my $nr (split(/ /, $scanlib::packagelist{$p})) {
+			$pendingtotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*P/);
+			$patchtotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*\+/);
+			$ignoretotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*I/);
+			$nottestingtotal++ if ($scanlib::bugs{$nr} =~ m/ \[[^]]*X/);
+			$worrytotal++ unless (
+				$scanlib::bugs{$nr} =~ m/^\[[^]]*I/ or
+				$scanlib::bugs{$nr} =~ m/ \[[^]]*X/ or
+				($scanlib::bugs{$nr} =~ m/ \[[^]]*[OSUE]/ and $scanlib::bugs{$nr} !~ m/ \[[^]]*T/));
+
+			if (not defined($scanlib::exclude{$nr})) {
+				$bugcount++;
+				$count++;
+			} 
+		}
+		$remtotal+=$count if (defined($scanlib::comments{$p}) && $scanlib::comments{$p} =~ m/^\[REMOVE\]/);
+	}
+
+	if ($html) {
+		print "<strong>Total number of release-critical bugs:</strong> $bugcount<BR>\n";
+		printf("<strong>Number that will disappear after removing packages marked [REMOVE]:</strong> %d<BR>\n", $remtotal);
+		printf("<strong>Number that have a patch:</strong> %d<BR>\n", $patchtotal);
+		printf("<strong>Number that have a fix prepared and waiting to upload:</strong> %d<BR>\n", $pendingtotal);
+		printf("<strong>Number that are being ignored:</strong> %d<BR>\n", $ignoretotal);
+		printf("<strong>Number on packages not in testing:</strong> %d<BR>\n", $nottestingtotal);
+		printf("<strong>Number concerning the next release (excluding ignored and not-in-testing):</strong> %d<P>\n", $worrytotal);
+	} else {
+		print "Total number of release-critical bugs: $bugcount\n";
+		printf("Number that will disappear after removing packages marked [REMOVE]: %d\n", $remtotal);
+		printf("Number that have a patch: %d\n", $patchtotal);
+		printf("Number that have a fix prepared and waiting to upload: %d\n", $pendingtotal);
+		printf("Number that are being ignored: %d\n", $ignoretotal);
+		printf("Number on packages not in testing: %d\n", $nottestingtotal);
+		printf("Number concerning the next release (excluding ignored and not-in-testing): %d\n", $worrytotal);
+	}
+}
+
+
+sub FilterPackages($) {
+	my $filter = shift;		# Distribution we want to keep
+
+	for my $p (sort keys %scanlib::packagelist) {
+		delete $scanlib::packagelist{$p} unless ($scanlib::section{$p} =~ m/^$filter/);
+	}
+}
+
+sub FilterBugs() {
+	for my $p (sort keys %scanlib::packagelist) {
+		$scanlib::packagelist{$p} = join(' ', grep { scanlib::check_worry($scanlib::bugs{$_}) } split / /, $scanlib::packagelist{$p});
+		delete $scanlib::packagelist{$p} if ($scanlib::packagelist{$p} eq '');
+	}
+}
+
+our ($opt_h,$opt_V,$opt_S,$opt_C,$opt_H,$opt_d,$opt_t,$opt_s,$opt_l);
+
+getopts('VhHlstd:S:C:');
+ShowUsage if ($opt_h);
+ShowVersion if ($opt_V);
+$statusfile=$opt_S if ($opt_S);
+$commentsfile=$opt_C if ($opt_C);
+$html=1 if ($opt_H);
+
+scanlib::readstatus($statusfile);
+scanlib::readcomments($commentsfile);
+# scanlib::readNMUstatus($NMUfile);
+
+FilterPackages($opt_d) if ($opt_d);
+FilterBugs() if ($opt_t);
+
+MakeStatistics if ($opt_s);
+if ($opt_l) {
+	MakeBuglist();
+}
+
+exit 0;
+
