@@ -23,13 +23,14 @@ sub ShowVersion() {
 sub ShowUsage() {
 	print <<EOF;
 Usage:
-  $0 [-V] [-h] [-H] [-l] -[s] [-d distrib] [-S file] [-C file]
+  $0 [-V] [-h] [-H] [-l] [-s] [-d distrib] [-S file] [-C file]
 Options:
   -V    show version
   -h    show some (hopefully) helpful information
   -H    produce HTML output
   -l    list all release-critical bugs
   -s    list bug statistics
+  -t    show bugs relevant for testing only
   -d    only list these distributions (comma-separated)
   -S    use different statusfile
   -C    use different commentsfile
@@ -198,7 +199,14 @@ sub FilterPackages() {
 	}
 }
 
-getopts('VhHlsd:S:C:');
+sub FilterBugs() {
+	for $p (sort keys %packagelist) {
+		$packagelist{$p} = join(' ', grep { check_worry($bugs{$_}) } split / /, $packagelist{$p});
+		delete $packagelist{$p} if ($packagelist{$p} eq '');
+	}
+}
+
+getopts('VhHlstd:S:C:');
 ShowUsage if ($opt_h);
 ShowVersion if ($opt_V);
 $statusfile=$opt_S if ($opt_S);
@@ -210,6 +218,7 @@ $html=1 if ($opt_H);
 &readNMUstatus($NMUfile);
 
 &FilterPackages($opt_d) if ($opt_d);
+&FilterBugs() if ($opt_t);
 
 MakeStatistics if ($opt_s);
 if ($opt_l) {
