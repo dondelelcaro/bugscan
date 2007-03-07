@@ -41,7 +41,7 @@ $btsURL			= "http://www.debian.org/Bugs/";
 @architectures		= ( "i386", "m68k", "alpha", "sparc", "powerpc", "arm", "hppa", "ia64", "mips", "mipsel", "s390" );
 @sections		= ( "main", "contrib", "non-free" );
 @priorities		= ( "serious", "grave", "critical" );
-@skiptags		= ( "wontfix", "fixed" );
+@skiptags		= ( );
 
 1;
 

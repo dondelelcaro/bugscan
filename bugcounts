@@ -60,10 +60,12 @@ for $p (keys %packagelist) {
 			($sect) = ($comments{$nr} =~ m/\[([^]]*)\]/);
 			$sectcount{$sect}++;
 		}
-		$worrycount++ unless (
-			$bugs{$nr} =~ m/^\[[^]]*I/ or
+		unless ($bugs{$nr} =~ m/^\[[^]]*I/ or
 			$bugs{$nr} =~ m/ \[[^]]*X/ or
-			($bugs{$nr} =~ m/ \[[^]]*[OSUE]/ and $bugs{$nr} !~ m/ \[[^]]*T/));
+			($bugs{$nr} =~ m/ \[[^]]*[OSUE]/ and $bugs{$nr} !~ m/ \[[^]]*T/)) {
+			$worrycount++;
+			# print STDERR "$nr $bugs{$nr}\n";
+		}	
 	}
 
 	if (defined($comments{$p}) && $comments{$p} =~ m/^\[REMOVE\]/) {
