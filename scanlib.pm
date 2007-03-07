@@ -14,7 +14,8 @@
 #   %packagelist    - map from packagename to bugreports
 #   %NMU            - map with NMU information
 
-use lib qw(/org/bugs.debian.org/perl/);
+#use lib qw(/org/bugs.debian.org/perl/);
+use lib qw(/home/sesse/debbugs);
 use LWP::UserAgent;
 use Debbugs::MIME qw(decode_rfc1522 encode_rfc1522);
 use Debbugs::Packages;
@@ -223,11 +224,11 @@ sub scanspooldir() {
 		}
 
 		# only bother to check the versioning status for the distributions indicated by the tags 
-		my $status_oldstable    = get_status($f, $bug, 'oldstable')    if ($oldstable_tag);
-		my $status_stable       = get_status($f, $bug, 'stable')       if ($stable_tag);
-		my $status_testing      = get_status($f, $bug, 'testing')      if ($testing_tag);
-		my $status_unstable     = get_status($f, $bug, 'unstable')     if ($unstable_tag);
-		my $status_experimental = get_status($f, $bug, 'experimental') if ($experimental_tag);
+		my $status_oldstable    = Debbugs::Status::check_bug_presence(bug => $f, status => $bug, dist => 'oldstable')    if ($oldstable_tag);
+		my $status_stable       = Debbugs::Status::check_bug_presence(bug => $f, status => $bug, dist => 'stable')       if ($stable_tag);
+		my $status_testing      = Debbugs::Status::check_bug_presence(bug => $f, status => $bug, dist => 'testing')      if ($testing_tag);
+		my $status_unstable     = Debbugs::Status::check_bug_presence(bug => $f, status => $bug, dist => 'unstable')     if ($unstable_tag);
+		my $status_experimental = Debbugs::Status::check_bug_presence(bug => $f, status => $bug, dist => 'experimental') if ($experimental_tag);
 
 		my $relinfo = "";
 		$relinfo .= (($oldstable_tag    && $status_oldstable    eq 'pending') ? "O" : "");
@@ -373,32 +374,6 @@ sub wwwname() {
 #	"<A HREF=\"${btsURL}/db/pa/l$name.html\">$name</A>";
 }
 
-my $_version_cache = {};
-sub get_status() {
-	my ($bugnr, $bug, $dist) = @_;
-
-	my @versions = Debbugs::Status::getversions($bug->{'package'}, $dist, undef);
-	my @sourceversions = Debbugs::Status::makesourceversions($bug->{'package'}, undef, @versions);
-
-	if (length($bug->{'done'}) and
-	    (not @sourceversions or not @{$bug->{'fixed_versions'}})) {
-		return 'done';
-	}
-	if (@sourceversions) {
-		my $max_buggy = Debbugs::Status::max_buggy(bug => $bugnr,
-			 sourceversions => \@sourceversions,
-		 	 found => $bug->{'found_versions'},
-		 	 fixed => $bug->{'fixed_versions'},
-			 version_cache => $_version_cache,
-			 package => $bug->{'package'});
-		if ($max_buggy eq 'absent' || $max_buggy eq 'fixed') {
-			return $max_buggy;
-		}
-	}
-
-	return 'pending';
-}
-
 sub check_worry {
 	my ($status) = @_;
 
@@ -409,3 +384,5 @@ sub check_worry {
 	}
 	return 1;
 }
+
+1;
