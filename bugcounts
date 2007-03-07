@@ -6,10 +6,12 @@
 use Getopt::Std;
 require scanlib;
 require bugcfg;
+use strict;
+use warnings;
 
-$Version		= "BugCount 1.1\nCopyright (C) Wichert Akkerman <wakkerma\@debian.org>\n";
-$statusfile		= "status";
-$commentsfile	= "comments";
+my $Version		= "BugCount 1.1\nCopyright (C) Wichert Akkerman <wakkerma\@debian.org>\n";
+my $statusfile		= "status";
+my $commentsfile	= "comments";
 
 sub ShowVersion() {
 	print "$Version\n";
@@ -29,47 +31,50 @@ EOF
 	exit 0;
 }
 
+my ($opt_h,$opt_V,$opt_S,$opt_C);
+
 getopts('VhS:C:');
 ShowUsage if ($opt_h);
 ShowVersion if ($opt_V);
 $statusfile=$opt_S if ($opt_S);
 $commentsfile=$opt_C if ($opt_C);
 
-&readstatus($statusfile);
-&readcomments($commentsfile);
+scanlib::readstatus($statusfile);
+scanlib::readcomments($commentsfile);
 
-$total=0;			# total number of bugs
-$removecount=0;		# Number of bugs that will disappear if packages are removed
-$patchcount=0;		# Number of bugs that have a fix proposed
-$pendingcount=0;	# Number of bugs that will have a fix uploaded RSN
-$ignorecount=0;         # Number of bugs being ignored
-$nottestingcount=0;	# Number of bugs on packages not in testing
-$worrycount=0;		# Number of bugs we're actually worried about
-%sectcount=();		# Bugs per type
+my $total=0;		# total number of bugs
+my $removecount=0;	# Number of bugs that will disappear if packages are removed
+my $patchcount=0;	# Number of bugs that have a fix proposed
+my $pendingcount=0;	# Number of bugs that will have a fix uploaded RSN
+my $ignorecount=0;      # Number of bugs being ignored
+my $nottestingcount=0;	# Number of bugs on packages not in testing
+my $worrycount=0;	# Number of bugs we're actually worried about
+my %sectcount=();	# Bugs per type
 
-for $p (keys %packagelist) {
-	next if (defined $exclude{$p});
-	for $nr (sort split(/ /, $packagelist{$p})) {
-		next if (defined $exclude{$nr});
+for my $p (keys %scanlib::packagelist) {
+	next if (defined $bugcfg::exclude{$p});
+	for my $nr (sort split(/ /, $scanlib::packagelist{$p})) {
+		next if (defined $bugcfg::exclude{$nr});
 		$total++;
-		$pendingcount++ if ($bugs{$nr} =~ m/^\[[^]]*P/);
-		$patchcount++ if ($bugs{$nr} =~ m/^\[[^]]*\+/);
-		$ignorecount++ if ($bugs{$nr} =~ m/^\[[^]]*I/);
-		$nottestingcount++ if ($bugs{$nr} =~ m/ \[[^]]*X/);
-		if (defined $comments{$nr}) {
-			($sect) = ($comments{$nr} =~ m/\[([^]]*)\]/);
+		$pendingcount++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*P/);
+		$patchcount++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*\+/);
+		$ignorecount++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*I/);
+		$nottestingcount++ if ($scanlib::bugs{$nr} =~ m/ \[[^]]*X/);
+		if (defined $scanlib::comments{$nr}) {
+			my $sect = ($scanlib::comments{$nr} =~ m/\[([^]]*)\]/);
 			$sectcount{$sect}++;
 		}
-		unless ($bugs{$nr} =~ m/^\[[^]]*I/ or
-			$bugs{$nr} =~ m/ \[[^]]*X/ or
-			($bugs{$nr} =~ m/ \[[^]]*[OSUE]/ and $bugs{$nr} !~ m/ \[[^]]*T/)) {
+		unless ($scanlib::bugs{$nr} =~ m/^\[[^]]*I/ or
+			$scanlib::bugs{$nr} =~ m/ \[[^]]*X/ or
+			($scanlib::bugs{$nr} =~ m/ \[[^]]*[OSUE]/ and $scanlib::bugs{$nr} !~ m/ \[[^]]*T/)) {
 			$worrycount++;
 			# print STDERR "$nr $bugs{$nr}\n";
 		}	
 	}
 
-	if (defined($comments{$p}) && $comments{$p} =~ m/^\[REMOVE\]/) {
-		$removecount+=scalar(split(/ /,$packagelist{$p}));
+	if (defined($scanlib::comments{$p}) && $scanlib::comments{$p} =~ m/^\[REMOVE\]/) {
+		my @a = split(/ /,$scanlib::packagelist{$p});
+		$removecount += scalar(@a);
 	}
 }
 
