@@ -371,15 +371,30 @@ my $_version_cache = {};
 sub get_status() {
 	my ($bugnr, $bug, $dist) = @_;
 
+	my $status = 'pending';
+
 	my @versions = Debbugs::Status::getversions($bug->{'package'}, $dist, undef);
 	my @sourceversions = Debbugs::Status::makesourceversions($bug->{'package'}, undef, @versions);
 
-	return Debbugs::Status::max_buggy(bug => $bugnr,
+	if (@sourceversions) {
+		my $max_buggy = Debbugs::Status::max_buggy(bug => $bugnr,
 			 sourceversions => \@sourceversions,
 		 	 found => $bug->{'found_versions'},
 		 	 fixed => $bug->{'fixed_versions'},
 			 version_cache => $_version_cache,
 			 package => $bug->{'package'});
+		if ($max_buggy eq 'absent') {
+			$status = 'absent';
+		} elsif ($max_buggy eq 'fixed') {
+			$status = 'done';
+		}
+	}
+	if (length($bug{'done'}) and
+	    (not @sourceversions or not @{$status{'fixed_versions'}})) {
+		$status = 'done';
+	}
+
+	return $status;
 }
 
 sub check_worry {
