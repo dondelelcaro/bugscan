@@ -82,7 +82,7 @@ sub MakeBuglist() {
 	my $header;		# Flag if packagename has already been printed
 	my $fontset;		# Did we change the font?
 
-	for my $p (sort {$a->[0] <=> $b->[0]} keys %scanlib::packagelist) {
+	for my $p (sort {$a cmp $b} keys %scanlib::packagelist) {
 		next if (defined $bugcfg::exclude{$p});
 		$header = 0;
 		$fontset = 0;
