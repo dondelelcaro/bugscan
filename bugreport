@@ -214,7 +214,7 @@ $html=1 if ($opt_H);
 
 scanlib::readstatus($statusfile);
 scanlib::readcomments($commentsfile);
-scanlib::readNMUstatus($NMUfile);
+# scanlib::readNMUstatus($NMUfile);
 
 &FilterPackages($opt_d) if ($opt_d);
 &FilterBugs() if ($opt_t);
