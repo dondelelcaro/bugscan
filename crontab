@@ -1,0 +1,32 @@
+#! /bin/sh
+
+set -e
+
+cd /org/bugs.debian.org/bugscan
+
+# Run script from doogie to check packages in Incoming
+# ../../doogie/chgscan/update -o quiet=yes
+
+time=`date +"%Y%m%d%H%M"`
+statusfile="stati/status-$time"
+countfile="counts/count-$time"
+
+if [ -f $statusfile ]; then
+	echo "Error: $statusfile already exists"
+	exit 1
+fi
+
+./bugscan > $statusfile
+
+rm -f status-old
+if [ -f status ]; then
+	mv -f status status-old
+fi
+
+ln -sf $statusfile status
+./bugcounts > $countfile
+ln -sf $countfile count
+
+./dohtml
+./dostatus
+./dograph

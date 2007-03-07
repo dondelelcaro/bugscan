@@ -1,0 +1,188 @@
+#! /bin/sh
+
+htmldir=/org/bugs.debian.org/www/bugscan
+
+realmakepage() {
+	local	filter="$1"	# Distributions to list
+	local	title="$2"	# Title of page
+	local	date="$3"	# Date
+	local	descr		# Description of filter
+
+	if [ -z "$filter" ]; then
+		descr="all"
+	else
+		descr="$filter"
+		filter="-d $filter"
+	fi
+
+	cat <<EOF
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>$title, $date</title>
+  </head>
+<body bgcolor="white">
+<h1 align="center">$title</h1>
+
+<h2 align="center">$date</h2>
+
+<p align="center">for distribution(s): $descr</p>
+
+<hr>
+
+<p>Check out Steinar H. Gunderson's beta <a href="http://people.debian.org/~sesse/bugscan/">version-tracking aware release critical bug page</a>.
+
+<hr>
+
+<p>
+EOF
+	./bugreport -H -s $filter
+	
+	cat <<EOF
+<p>
+Explanation for comment tags:
+<ul>
+   <li><strong>[FIX]</strong>: describes a simple method to deal with
+       the bug.
+   <li><strong>[STRATEGY]</strong>: describes a possible approach for
+       fixing the bug.
+   <li><strong>[HELP]</strong>: help is needed to fix this bug.
+   <li><strong>[REMOVE]</strong>: package will be removed if bug is not fixed
+</ul>
+
+<p>
+Explanation for <a href="http://www.debian.org/Bugs/Developer#tags">bug
+tags</a>:
+
+<ul>
+   <li><strong>P</strong>: pending</li>
+   <li><strong>+</strong>: patch</li>
+   <li><strong>H</strong>: help</li>
+   <li><strong>M</strong>: moreinfo</li>
+   <li><strong>R</strong>: unreproducible</li>
+   <li><strong>S</strong>: security</li>
+   <li><strong>U</strong>: upstream</li>
+   <li><strong>I</strong>: etch-ignore</li>
+</ul>
+
+<p>
+Some bugs have an additional set of tags indicating they only apply
+to a particular release: O for oldstable (woody), S for stable (sarge),
+T for testing (etch), U for unstable (sid) or E for experimental. X
+indicates that the package is not in testing.
+
+<p>
+
+EOF
+	./bugreport -H -l $filter
+
+	cat <<EOF
+<hr>
+This page is automatically generated.<br>
+Please contact
+<a href="mailto:owner@bugs.debian.org">owner@bugs.debian.org</a> for comments.
+</body>
+</html>
+EOF
+}
+
+makemainpage() {
+	cat <<EOF
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>$title, $time</title>
+  </head>
+<body bgcolor="white">
+<h1 align="center">$title</h1>
+
+<h2 align="center">$time</h2>
+
+<p align="center">
+EOF
+
+	./bugreport -Hs
+
+	cat <<EOF
+</p>
+
+<div align="center"><img src="graph.png" alt="Graph of RC bugs"></div>
+
+<p>The red line graphs all bugs with release-critical severities; the green
+line graphs the number of bugs that are actually a concern for the next
+release (excluding ignored bugs, bugs on packages not in testing, and bugs
+whose tags indicate that they don't apply to testing).</p>
+
+<h2>Recent changes</h2>
+EOF
+
+	./bugdiff -Hncs status-old status
+
+	cat <<EOF
+
+<h2>Detailed lists of RC bug reports:</h2>
+
+<ul>
+  <li> <a href="debian/all.html">All</a>
+    <br>
+     + <a href="debian-non-US/all.html">All non-US</a>
+  <li> <a href="debian/main.html">main</a>
+    <br>
+     + <a href="debian-non-US/main.html">main non-US</a>
+  <li> <a href="debian/source.html">source</a> 
+    <br>
+     + <a href="debian-non-US/source.html">source non-US</a> 
+  <li> <a href="debian/contrib.html">contrib</a>
+    <br>
+     + <a href="debian-non-US/contrib.html">contrib non-US</a>
+  <li> <a href="debian/non-free.html">non-free</a>
+    <br>
+     + <a href="debian-non-US/non-free.html">non-free non-US</a>
+  <li><a href="other/pseudo.html">pseudo-packages</a>
+       <a href="http://www.debian.org/Bugs/pseudo-packages">(?)</a>
+  <li><a href="other/all.html">Everything in one page</a>
+</ul>
+<p clear=both>
+<hr>
+This page is automatically generated.<br>
+Please contact
+<a href="mailto:owner@bugs.debian.org">owner@bugs.debian.org</a> for comments.
+To receive all mails sent to release-critical bugs, subscribe to the
+<a href="http://lists.debian.org/debian-bugs-rc/">debian-bugs-rc</a>
+mailing list.
+
+EOF
+}
+
+makepage() {
+	if [ ! -d "`dirname $3`" ]; then mkdir -p "`dirname $3`"; fi
+	realmakepage "$1" "$2" "$4" > $3.new
+	mv -f $3.new $3
+}
+
+time=$(date -u --date="1970-1-1 00:00:00 UTC + $(stat -c %Y status) secs")
+oldtime=$(date -u --date="1970-1-1 00:00:00 UTC + $(stat -c %Y status-old) secs")
+title="Release-critical bugs status"
+
+
+makepage "debian" "$title" "$htmldir/debian/all.html" "$time"
+makepage "debian/main" "$title" $htmldir/debian/main.html "$time"
+makepage "debian/contrib" "$title" $htmldir/debian/contrib.html "$time"
+makepage "debian/non-free" "$title" $htmldir/debian/non-free.html "$time"
+makepage "debian/source" "$title" $htmldir/debian/source.html "$time"
+
+makepage "non-US" "$title" "$htmldir/debian-non-US/all.html" "$time"
+makepage "non-US/main" "$title" $htmldir/debian-non-US/main.html "$time"
+makepage "non-US/contrib" "$title" $htmldir/debian-non-US/contrib.html "$time"
+makepage "non-US/non-free" "$title" $htmldir/debian-non-US/non-free.html "$time"
+makepage "non-US/source" "$title" $htmldir/debian-non-US/source.html "$time"
+
+makepage "other/pseudo" "$title" $htmldir/other/pseudo.html "$time"
+
+makepage "" "$title" $htmldir/other/all.html "$time"
+
+makemainpage > $htmldir/index.html.new
+mv -f $htmldir/index.html.new $htmldir/index.html
+

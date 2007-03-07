@@ -1,0 +1,35 @@
+#! /bin/sh
+
+newtime=`ls -alL pstatus | cut -c 44-55`
+oldtime=`ls -alL pstatus-old | cut -c 44-55`
+title="Bug stamp-out list for $newtime (CST)"
+cat <<EOF
+$title
+
+EOF
+./bugreport -s 
+
+cat <<EOF
+
+Explanation for bug tags:
+
+   P  pending
+   +  patch
+   H  help
+   M  moreinfo
+   R  unreproducible
+   S  security
+   U  upstream
+   I  etch-ignore
+
+Some bugs have an additional set of tags indicating they only apply
+to a particular release: O for oldstable (woody), S for stable (sarge),
+T for testing (etch), U for unstable (sid) or E for experimental. X
+indicates that the package is not in testing.
+
+------------------------------------------------------------------------------
+EOF
+
+./bugreport -l -S pstatus
+
+

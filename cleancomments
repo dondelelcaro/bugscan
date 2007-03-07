@@ -1,0 +1,60 @@
+#!/usr/bin/perl
+# vim: ts=4 sw=4 nowrap
+
+# Read a comments-file and output only the comments that are still relevant
+
+use Getopt::Std;
+require scanlib;
+require bugcfg;
+
+$Version		= "CommentClean 1.0\nCopyright (C) Wichert Akkerman <wakkerma\@debian.org>\n";
+$html			= 0;
+$statusfile		= "status";
+$commentfile	= "comments";
+
+sub ShowVersion() {
+	print "$Version\n";
+	exit 0;
+}
+
+sub ShowUsage() {
+	print <<EOF;
+Usage:
+  $0 [-V] [-h] [-S file] [-C file]
+Options:
+  -V    show version
+  -h    show some (hopefully) helpfull information
+  -S    use different statusfile
+  -C    use different commentfile
+EOF
+	exit 0;
+}
+
+
+getopts('VhS:C:');
+ShowUsage if ($opt_h);
+ShowVersion if ($opt_V);
+$statusfile=$opt_S if ($opt_S);
+$commentfile=$opt_C if ($opt_C);
+
+&readstatus($statusfile);
+&readcomments($commentfile);
+
+for $p (keys %packagelist) {
+	for $nr (split(/ /, $packagelist{$p})) {
+		$found{$nr}=1;
+	}
+}
+
+for $n (sort keys %exclude) {
+	print "$n EXCLUDE\n\n"
+		if (defined($found{$n}) or defined ($packagelist{$n}));
+}
+
+for $n (sort keys %comments) {
+	print "$n\n$comments{$n}\n"
+		if (defined($found{$n}) or defined ($packagelist{$n}));
+}
+
+exit 0;
+

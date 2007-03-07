@@ -1,0 +1,74 @@
+#! /usr/bin/perl
+# vim: ts=4 sw=4 nowrap
+
+# Generate some counts for the bugreports
+
+use Getopt::Std;
+require scanlib;
+require bugcfg;
+
+$Version		= "BugCount 1.1\nCopyright (C) Wichert Akkerman <wakkerma\@debian.org>\n";
+$statusfile		= "status";
+$commentsfile	= "comments";
+
+sub ShowVersion() {
+	print "$Version\n";
+	exit 0;
+}
+
+sub ShowUsage() {
+	print <<EOF;
+Usage:
+  $0 [-V] [-h] [-S file] [-C file]
+Options:
+  -V    show version
+  -h    show some (hopefully) helpfull information
+  -S    use different statusfile
+  -C    use different commentsfile
+EOF
+	exit 0;
+}
+
+getopts('VhS:C:');
+ShowUsage if ($opt_h);
+ShowVersion if ($opt_V);
+$statusfile=$opt_S if ($opt_S);
+$commentsfile=$opt_C if ($opt_C);
+
+&readstatus($statusfile);
+&readcomments($commentsfile);
+
+$total=0;			# total number of bugs
+$removecount=0;		# Number of bugs that will disappear if packages are removed
+$patchcount=0;		# Number of bugs that have a fix proposed
+$pendingcount=0;	# Number of bugs that will have a fix uploaded RSN
+$ignorecount=0;         # Number of bugs being ignored
+$nottestingcount=0;	# Number of bugs on packages not in testing
+$worrycount=0;		# Number of bugs we're actually worried about
+%sectcount=();		# Bugs per type
+
+for $p (keys %packagelist) {
+	next if (defined $exclude{$p});
+	for $nr (sort split(/ /, $packagelist{$p})) {
+		next if (defined $exclude{$nr});
+		$total++;
+		$pendingcount++ if ($bugs{$nr} =~ m/^\[[^]]*P/);
+		$patchcount++ if ($bugs{$nr} =~ m/^\[[^]]*\+/);
+		$ignorecount++ if ($bugs{$nr} =~ m/^\[[^]]*I/);
+		$nottestingcount++ if ($bugs{$nr} =~ m/ \[[^]]*X/);
+		if (defined $comments{$nr}) {
+			($sect) = ($comments{$nr} =~ m/\[([^]]*)\]/);
+			$sectcount{$sect}++;
+		}
+		$worrycount++ unless (
+			$bugs{$nr} =~ m/^\[[^]]*I/ or
+			$bugs{$nr} =~ m/ \[[^]]*X/ or
+			($bugs{$nr} =~ m/ \[[^]]*[OSUE]/ and $bugs{$nr} !~ m/ \[[^]]*T/));
+	}
+
+	if (defined($comments{$p}) && $comments{$p} =~ m/^\[REMOVE\]/) {
+		$removecount+=scalar(split(/ /,$packagelist{$p}));
+	}
+}
+
+printf("%d %d %d %d %d %d %d\n", $total, $pendingcount, $patchcount, $removecount, $ignorecount, $nottestingcount, $worrycount);

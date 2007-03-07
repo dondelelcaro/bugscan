@@ -1,0 +1,24 @@
+#! /bin/sh
+
+cd /org/bugs.debian.org/bugscan
+
+rm pstatus-old
+mv pstatus pstatus-old
+now=`ls -al status | sed -e 's/.*-\([0-9]*\)/\1/'`
+ln -s stati/status-$now pstatus
+
+./makepost > posts/post-$now
+
+cat <<EOF >> posts/post-$now
+
+This post is automatically generated. Please send comments to
+bugscan@debian.org .
+EOF
+
+cat posts/post-$now | \
+	mutt \
+		-e "my_hdr Reply-To: debian-devel@lists.debian.org,bugscan\@debian.org" \
+		-e "my_hdr From: BugScan reporter <bugscan\@debian.org>" \
+		-s "Release-critical Bugreport for `date +'%B %e, %Y'`" \
+		debian-devel-announce@lists.debian.org
+

@@ -1,0 +1,35 @@
+#! /usr/bin/perl
+
+require bugcfg;
+require scanlib;
+
+# Main part
+
+&readpackages($debian_ftproot, "debian") if defined $debian_ftproot;
+&readpackages($nonUS_ftproot, "non-US")  if defined $nonUS_ftproot;
+&readsources($debian_ftproot, "debian")  if defined $debian_ftproot;
+&readsources($nonUS_ftproot, "non-US")   if defined $nonUS_ftproot;
+
+&readdebbugssources($debian_sources, "debian") if defined $debian_sources;
+&readdebbugssources($nonUS_sources, "non-US") if defined $nonUS_sources;
+
+
+&readpseudopackages;
+&readmaintainers;
+&scanspool;
+
+for $p (keys %packagelist) {
+	my $section;
+	if (exists $section{$p}) {
+	    $section = $section{$p};
+	} else {
+	    $section = $debbugssection{$p};
+	}
+	print "$p $section $maintainer{$p}";
+	for $b (split(/ /, $packagelist{$p})) {
+		print "$bugs{$b}\n";
+	}
+}
+
+exit 0;
+

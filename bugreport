@@ -1,0 +1,202 @@
+#!/usr/bin/perl
+# vim: ts=4 sw=4 nowrap
+
+# Generate a report of the release-critical bugs for packages
+
+use Getopt::Std;
+require scanlib;
+require bugcfg;
+
+$Version		= "BugReport 1.4\nCopyright (C) 1998-2002 Wichert Akkerman <wakkerma\@debian.org>\n";
+$html			= 0;
+$statusfile		= "status";
+$commentsfile	= "comments";
+$NMUfile		= "/debian/home/doogie/public_html/incoming/bugs_closed";
+$NMUfile		= "/debian/home/doogie/chgscan/db/bugs_closed"; # Changed as of request by dark  -Joey, 99/11/22
+$NMUfile		= "http://auric.debian.org/~doogie/incoming/bugs_closed"; # Changed as of request by dark  -Joey, 99/11/22
+
+sub ShowVersion() {
+	print "$Version\n";
+	exit 0;
+}
+
+sub ShowUsage() {
+	print <<EOF;
+Usage:
+  $0 [-V] [-h] [-H] [-l] -[s] [-d distrib] [-S file] [-C file]
+Options:
+  -V    show version
+  -h    show some (hopefully) helpful information
+  -H    produce HTML output
+  -l    list all release-critical bugs
+  -s    list bug statistics
+  -d    only list these distributions (comma-separated)
+  -S    use different statusfile
+  -C    use different commentsfile
+EOF
+	exit 0;
+}
+
+sub PrintPackageHeader() {
+	local($p)	= shift;	# Package to print
+	local ($name, $email);	# Name & email of maintainer
+
+	if ($html) {
+		print "\n<a name=\"$p\"><strong>Package:</strong> " . &wwwname($p);
+		print " ($section{$p}).\n";
+		print "<strong>Maintainer:</strong> ";
+		if (defined($maintainer{$p})) {
+			$_ = $maintainer{$p};
+			($name,$email) = m/(.*) <([^>]*)>/;
+			print "$name &lt;<a href=\"http://bugs.debian.org/$email\">$email</A>&gt;\n";
+		} else {
+			print "unknown\n";
+		}
+	} else {
+		print "\nPackage: $p ($section{$p})\n";
+		print "Maintainer: " . (defined($maintainer{$p}) ? $maintainer{$p} : "unknown") . "\n";
+	}
+}
+
+
+sub MakeBuglist() {
+	local ($p);				# Index variable
+	local ($nr);			# Current bugnumber
+	local ($sect);			# BTS-subsection for bugnumber
+	local ($header);		# Flag if packagename has already been printed
+	local ($fontset);		# Did we change the font?
+
+	print "<pre>\n" if ($html);
+	for $p (sort {$a cmp $b} keys %packagelist) {
+		next if (defined $exclude{$p});
+		$header = 0;
+		$fontset = 0;
+		if (defined $comments{$p}) {
+			if ($html && defined($comments{$p})) {
+				if ($comments{$p} =~ m/^\[REMOVE\]/) {
+					$fontset=1;
+					print "<font color=red>";
+				}
+			}
+			$header=1;
+			&PrintPackageHeader($p);
+			print $comments{$p};
+		}
+		for $nr (sort split(/ /, $packagelist{$p})) {
+			next if (defined $exclude{$nr});
+			if (! $header) {
+				$header = 1;
+				&PrintPackageHeader($p);
+			}
+
+			if ($html) {
+				if ($bugs{$nr} =~ m/ \[[^]]*X/) {
+					print '<font color="#808080">';
+				} elsif ($bugs{$nr} =~ m/^\[[^]]*P/) {
+					print '<font color="#f040d0">';
+				} elsif ($bugs{$nr} =~ m/^\[[^]]*\+/) {
+					print '<font color="#00aa00">';
+				} elsif ($bugs{$nr} =~ m/^\[[^]]*H/) {
+					print '<font color="#ffaa30">';
+				}
+				print "<strike>" if ($bugs{$nr} =~ m/^\[.......I\]/);
+				($sect=$nr) =~ s/([0-9]{2}).*/$1/;
+				print "<A NAME=\"$nr\">  " . &wwwnumber($nr) . ' ' .
+					  htmlsanit($bugs{$nr}) . "\n";
+				print "</strike>" if ($bugs{$nr} =~ m/^\[.......I\]/);
+			} else {
+				printf("  %-6d %s\n", $nr, $bugs{$nr});
+			}
+			print $comments{$nr} if (defined($comments{$nr}));
+			print "[FIX] Fixed by package " . $NMU{$nr, "source"} . ", version " . $NMU{$nr, "version"} . " in Incoming\n" if (defined $NMU{$nr});
+			print "</font>" if ($html && ($bugs{$nr} =~ m/^\[[^]]*[H+P]/ ||
+			                              $bugs{$nr} =~ m/ \[[^]]*X/));
+		}
+		print "</font>" if ($fontset);
+	}
+	print "</pre>\n" if ($html);
+}
+
+
+sub MakeStatistics() {
+	local($bugcount);		# Total number of bugs so far
+	local($count);			# Number of bugs for this package
+	local($remtotal);		# Total number of bugs for packages marked REMOVE
+	local($patchtotal);		# Total number of bugs marked patch
+	local($pendingtotal);		# Total number of bugs marked pending
+	local($ignoretotal);		# Total number of bugs marked ignore
+	local($nottestingtotal);	# Total number of bugs on packages not in testing
+	local($worrytotal);		# Total number of bugs we're actually worried about
+	local($p);				# Index variable
+	local(%list);			# List of bugnumber associated with package
+
+	$bugcount=0;
+	for $p (sort keys %packagelist) {
+		next if (defined $exclude{$p});
+		$count=0;
+		for $nr (split(/ /, $packagelist{$p})) {
+			$pendingtotal++ if ($bugs{$nr} =~ m/^\[[^]]*P/);
+			$patchtotal++ if ($bugs{$nr} =~ m/^\[[^]]*\+/);
+			$ignoretotal++ if ($bugs{$nr} =~ m/^\[[^]]*I/);
+			$nottestingtotal++ if ($bugs{$nr} =~ m/ \[[^]]*X/);
+			$worrytotal++ unless (
+				$bugs{$nr} =~ m/^\[[^]]*I/ or
+				$bugs{$nr} =~ m/ \[[^]]*X/ or
+				($bugs{$nr} =~ m/ \[[^]]*[OSUE]/ and $bugs{$nr} !~ m/ \[[^]]*T/));
+
+			if (not defined($exclude{$nr})) {
+				$bugcount++;
+				$count++;
+			} 
+		}
+		$remtotal+=$count if (defined($comments{$p}) && $comments{$p} =~ m/^\[REMOVE\]/);
+	}
+
+	if ($html) {
+		print "<strong>Total number of release-critical bugs:</strong> $bugcount<BR>\n";
+		printf("<strong>Number that will disappear after removing packages marked [REMOVE]:</strong> %d<BR>\n", $remtotal);
+		printf("<strong>Number that have a patch:</strong> %d<BR>\n", $patchtotal);
+		printf("<strong>Number that have a fix prepared and waiting to upload:</strong> %d<BR>\n", $pendingtotal);
+		printf("<strong>Number that are being ignored:</strong> %d<BR>\n", $ignoretotal);
+		printf("<strong>Number on packages not in testing:</strong> %d<BR>\n", $nottestingtotal);
+		printf("<strong>Number concerning the next release (excluding ignored and not-in-testing):</strong> %d<P>\n", $worrytotal);
+	} else {
+		print "Total number of release-critical bugs: $bugcount\n";
+		printf("Number that will disappear after removing packages marked [REMOVE]: %d\n", $remtotal);
+		printf("Number that have a patch: %d\n", $patchtotal);
+		printf("Number that have a fix prepared and waiting to upload: %d\n", $pendingtotal);
+		printf("Number that are being ignored: %d\n", $ignoretotal);
+		printf("Number on packages not in testing: %d\n", $nottestingtotal);
+		printf("Number concerning the next release (excluding ignored and not-in-testing): %d\n", $worrytotal);
+	}
+}
+
+
+sub FilterPackages() {
+	local($filter) = shift;		# Distribution we want to keep
+
+	for $p (sort keys %packagelist) {
+		delete $packagelist{$p} unless ($section{$p} =~ m/^$filter/);
+	}
+}
+
+getopts('VhHlsd:S:C:');
+ShowUsage if ($opt_h);
+ShowVersion if ($opt_V);
+$statusfile=$opt_S if ($opt_S);
+$commentsfile=$opt_C if ($opt_C);
+$html=1 if ($opt_H);
+
+&readstatus($statusfile);
+&readcomments($commentsfile);
+&readNMUstatus($NMUfile);
+
+&FilterPackages($opt_d) if ($opt_d);
+
+MakeStatistics if ($opt_s);
+if ($opt_l) {
+	MakeBuglist 
+}
+
+exit 0;
+

@@ -1,0 +1,128 @@
+#!/usr/bin/perl
+# vim: ts=4 sw=4 nowrap
+
+# Compare two buglist status-files
+
+use Getopt::Std;
+require scanlib;
+require bugcfg;
+
+$Version		= "BugDiff 1.0\nCopyright (C) Wichert Akkerman <wakkerma\@debian.org>\n";
+$html			= 0;
+
+
+sub ShowVersion() {
+	print "$Version\n";
+	exit 0;
+}
+
+sub ShowUsage() {
+	print <<EOF;
+Usage:
+  $0 [-V] [-h] [-H] <status1> <status2>
+Options:
+  -V    show version
+  -h    show some (hopefully) helpfull information
+  -H    produce HTML output
+  -n    list newly opened bugs
+  -c    list closed bugs
+  -s    show statistics
+EOF
+	exit 0;
+}
+
+sub closedbugs() {
+	if ($html) {
+		if (%removed) {
+			print "<h2>Closed/downgraded release-critical bugs</h2>\n";
+			print "<ul>\n";
+			for $p (sort keys %removed) {
+				print "  <li><em>" . &wwwname($p) . ":</em>\n";
+				for $b (sort split(/ /, $removed{$p})) {
+					print &wwwnumber($b) . " ";
+				}
+				print "\n";
+			}
+			print "</ul>\n";
+		}
+	} else {
+		print "Closed/downgraded release-critical bugs:\n" if (%removed>0);
+		for $p (sort keys %removed) {
+			print "   $p: ";
+			print join(", ", sort split(/ /, $removed{$p}));
+			print "\n";
+		}
+	}
+}
+
+
+sub openedbugs() {
+	if ($html) {
+		if (%new) {
+			print "<h2>Opened/upgraded release-critical bugs</h2>\n";
+			print "<ul>\n";
+			for $p (sort keys %new) {
+				print "  <li><em>" . &wwwname($p) . ":</em>\n";
+				for $b (sort split(/ /, $new{$p})) {
+					print &wwwnumber($b) . " ";
+				}
+				print "\n";
+			}
+			print "</ul>\n";
+		}
+	} else {
+		print "Opened/upgraded release-critical bugs:\n" if (%new);
+		for $p (sort keys %new) {
+			print "   $p: ";
+			print join(", ", sort split(/ /, $new{$p}));
+			print "\n";
+		}
+	}
+}
+
+sub statistics() {
+	if ($html) {
+		print "<STRONG>" . ($closed ? $closed : "NO") . "</STRONG> release-critical bugs were closed and ";
+		print "<STRONG>" . ($opened ? $opened : "NONE") . "</STRONG> were opened.<P>\n";
+	} else {
+		print "" . ($closed ? $closed : "NO") . " release-critical bugs were closed ";
+		print "and " . ($opened ? $opened : "NONE") . " were opened.\n\n";
+	}
+}
+
+getopts('VhHncs');
+ShowUsage if ($opt_h or ($#ARGV != 1));
+ShowVersion if ($opt_V);
+$html=1 if ($opt_H);
+
+&readstatus($ARGV[0]);
+%oldbugs=%packagelist;
+%packagelist=();
+
+&readstatus($ARGV[1]);
+
+$closed=0;
+for $p (keys %oldbugs) {
+	for $b (split(/ /, $oldbugs{$p})) {
+		if (not ($packagelist{$p} =~ m/\b$b\b/)) {
+			$removed{$p} .= "$b ";
+			$closed++;
+		}
+	}
+}
+
+$opened=0;
+for $p (keys %packagelist) {
+	for $b (split(/ /, $packagelist{$p})) {
+		if (not ($oldbugs{$p} =~ m/\b$b\b/)) {
+			$new{$p} .= "$b ";
+			$opened++;
+		}
+	}
+}
+
+statistics if ($opt_s);
+closedbugs if ($opt_c);
+openedbugs if ($opt_n);
+
+exit 0;

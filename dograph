@@ -1,0 +1,37 @@
+#! /bin/sh
+
+set -e
+
+cd /org/bugs.debian.org/bugscan
+
+tmp=`tempfile`
+tmp2=`tempfile`
+
+find counts -type f | sort | xargs grep '^' /dev/null |
+    sed 's/^.*count-//;s/ .*$//;s/:/ /' >"$tmp"
+find counts -type f | sort | xargs egrep '^(.* ){6}' /dev/null |
+    sed 's/^.*count-//;s/:.* / /;' >"$tmp2"
+    
+
+#for i in counts/count-[0-9]* ; do
+#	date=`echo $i | sed -e s/.*count-//`
+#	count=`sed -e 's/ .*//' $i`
+#	echo $date $count >> ${tmp}2
+#done
+
+cat <<EOF | gnuplot
+set xdata time
+set timefmt "%Y%m%d%H%M"
+set format x "%m\n%Y"
+set title "Number of release-critical bugs"
+set nokey
+set terminal png
+set yrange [0:]
+#set xtics 2678400
+#set nomxtics
+set output "/org/bugs.debian.org/www/bugscan/graph.png"
+plot "$tmp" using 1:2 with lines, "$tmp2" using 1:2 with lines
+quit
+EOF
+
+rm "$tmp" "$tmp2"
