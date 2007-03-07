@@ -73,7 +73,7 @@ for my $p (keys %scanlib::packagelist) {
 	}
 
 	if (defined($scanlib::comments{$p}) && $scanlib::comments{$p} =~ m/^\[REMOVE\]/) {
-		$removecount += scalar @{$scanlib::packagelist{$p});
+		$removecount += scalar @{$scanlib::packagelist{$p}};
 	}
 }
 
