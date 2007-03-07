@@ -209,33 +209,29 @@ sub scanspooldir() {
 			}
 		}
 		next if $skip==1;
-		
-		my $oldstable_tag    = grep(/^woody$/, @tags);
-		my $stable_tag       = grep(/^sarge$/, @tags);
-		my $testing_tag      = grep(/^etch$/, @tags);
-		my $unstable_tag     = grep(/^sid$/, @tags);
-		my $experimental_tag = grep(/^experimental$/, @tags);
+	
+		my %disttags = ();	
+		$disttags{'oldstable'}    = grep(/^woody$/, @tags);
+		$disttags{'stable'}       = grep(/^sarge$/, @tags);
+		$disttags{'testing'}      = grep(/^etch$/, @tags);
+		$disttags{'unstable'}     = grep(/^sid$/, @tags);
+		$disttags{'experimental'} = grep(/^experimental$/, @tags);
 
 		# default according to dondelelcaro 2006-11-11
-		if (!$oldstable_tag && !$stable_tag && !$testing_tag && !$unstable_tag && !$experimental_tag) {
-			$testing_tag = 1;
-			$unstable_tag = 1;
-			$experimental_tag = 1;
+		if (!$disttags{'oldstable'} && !$disttags{'stable'} && !$disttags{'testing'} && !$disttags{'unstable'} && !$disttags{'experimental'}) {
+			$disttags{'testing'} = 1;
+			$disttags{'unstable'} = 1;
+			$disttags{'experimental'} = 1;
 		}
 
 		# only bother to check the versioning status for the distributions indicated by the tags 
-		my $status_oldstable    = Debbugs::Status::check_bug_presence(bug => $f, status => $bug, dist => 'oldstable')    if ($oldstable_tag);
-		my $status_stable       = Debbugs::Status::check_bug_presence(bug => $f, status => $bug, dist => 'stable')       if ($stable_tag);
-		my $status_testing      = Debbugs::Status::check_bug_presence(bug => $f, status => $bug, dist => 'testing')      if ($testing_tag);
-		my $status_unstable     = Debbugs::Status::check_bug_presence(bug => $f, status => $bug, dist => 'unstable')     if ($unstable_tag);
-		my $status_experimental = Debbugs::Status::check_bug_presence(bug => $f, status => $bug, dist => 'experimental') if ($experimental_tag);
-
 		my $relinfo = "";
-		$relinfo .= (($oldstable_tag    && $status_oldstable    eq 'pending') ? "O" : "");
-		$relinfo .= (($stable_tag       && $status_stable       eq 'pending') ? "S" : "");
-		$relinfo .= (($testing_tag      && $status_testing      eq 'pending') ? "T" : "");
-		$relinfo .= (($unstable_tag     && $status_unstable     eq 'pending') ? "U" : "");
-		$relinfo .= (($experimental_tag && $status_experimental eq 'pending') ? "E" : "");
+		for my $dist qw(oldstable stable testing unstable experimental) {
+			next if (!$disttags{$dist});
+			if (Debbugs::Status::check_bug_presence(bug => $f, status => $bug, dist => $dist) eq 'pending') {
+				$relinfo .= uc(substr($dist, 0, 1));
+			}
+		}
 		
 		next if $relinfo eq '' and not $premature{$f};
 		$premature{$f}++ if $relinfo eq '';
