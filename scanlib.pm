@@ -227,6 +227,8 @@ sub scanspooldir() {
 		# only bother to check the versioning status for the distributions indicated by the tags 
 		my $relinfo = "";
 		for my $dist qw(oldstable stable testing unstable experimental) {
+			local $SIG{__WARN__} = sub {};
+
 			next if (!$disttags{$dist});
 			if (Debbugs::Status::check_bug_presence(bug => $f, status => $bug, dist => $dist) eq 'pending') {
 				$relinfo .= uc(substr($dist, 0, 1));
