@@ -42,7 +42,8 @@ sub PrintPackageHeader() {
 	local ($name, $email);	# Name & email of maintainer
 
 	if ($html) {
-		print "\n<a name=\"$p\"><strong>Package:</strong> " . &wwwname($p);
+	    print "<div class=\"package\"><pre>";
+		print "<a name=\"$p\"><strong>Package:</strong></a> " . &wwwname($p);
 		print " ($section{$p}).\n";
 		print "<strong>Maintainer:</strong> ";
 		if (defined($maintainer{$p})) {
@@ -58,6 +59,13 @@ sub PrintPackageHeader() {
 	}
 }
 
+sub PrintPackageFooter() {
+	local($p)	= shift;	# Package to print
+
+	if ($html) {
+		print "</pre></div>\n";
+	}
+}
 
 sub MakeBuglist() {
 	local ($p);				# Index variable
@@ -66,7 +74,6 @@ sub MakeBuglist() {
 	local ($header);		# Flag if packagename has already been printed
 	local ($fontset);		# Did we change the font?
 
-	print "<pre>\n" if ($html);
 	for $p (sort {$a cmp $b} keys %packagelist) {
 		next if (defined $exclude{$p});
 		$header = 0;
@@ -75,7 +82,7 @@ sub MakeBuglist() {
 			if ($html && defined($comments{$p})) {
 				if ($comments{$p} =~ m/^\[REMOVE\]/) {
 					$fontset=1;
-					print "<font color=red>";
+					print "<span style=\"color: red\">";
 				}
 			}
 			$header=1;
@@ -90,31 +97,42 @@ sub MakeBuglist() {
 			}
 
 			if ($html) {
+			    $worry = 1;
+				if ($bugs{$nr} =~ m/^\[[^]]*I/ or
+					$bugs{$nr} =~ m/ \[[^]]*X/ or
+					($bugs{$nr} =~ m/ \[[^]]*[OSUE]/ and $bugs{$nr} !~ m/ \[[^]]*T/)) {
+					$worry = 0;
+				}
+			
 				if ($bugs{$nr} =~ m/ \[[^]]*X/) {
-					print '<font color="#808080">';
+					print '<span style="color: #808080">';
 				} elsif ($bugs{$nr} =~ m/^\[[^]]*P/) {
-					print '<font color="#f040d0">';
+					print '<span style="color: #f040d0">';
 				} elsif ($bugs{$nr} =~ m/^\[[^]]*\+/) {
-					print '<font color="#00aa00">';
+					print '<span style="color: #00aa00">';
 				} elsif ($bugs{$nr} =~ m/^\[[^]]*H/) {
-					print '<font color="#ffaa30">';
+					print '<span style="color: #ffaa30">';
 				}
 				print "<strike>" if ($bugs{$nr} =~ m/^\[.......I\]/);
+				print "<em class=\"worry\">" if $worry;
 				($sect=$nr) =~ s/([0-9]{2}).*/$1/;
-				print "<A NAME=\"$nr\">  " . &wwwnumber($nr) . ' ' .
+				print "<A NAME=\"$nr\"></A>  " . &wwwnumber($nr) . ' ' .
 					  htmlsanit($bugs{$nr}) . "\n";
+				print "</em>" if $worry;
 				print "</strike>" if ($bugs{$nr} =~ m/^\[.......I\]/);
 			} else {
 				printf("  %-6d %s\n", $nr, $bugs{$nr});
 			}
 			print $comments{$nr} if (defined($comments{$nr}));
 			print "[FIX] Fixed by package " . $NMU{$nr, "source"} . ", version " . $NMU{$nr, "version"} . " in Incoming\n" if (defined $NMU{$nr});
-			print "</font>" if ($html && ($bugs{$nr} =~ m/^\[[^]]*[H+P]/ ||
+			print "</span>" if ($html && ($bugs{$nr} =~ m/^\[[^]]*[H+P]/ ||
 			                              $bugs{$nr} =~ m/ \[[^]]*X/));
 		}
-		print "</font>" if ($fontset);
+		print "</span>" if ($fontset);
+		if ($header) {
+			&PrintPackageFooter($p);
+		}
 	}
-	print "</pre>\n" if ($html);
 }
 
 
