@@ -167,8 +167,6 @@ sub scanspooldir() {
 	local($dir)		= @_;
 	local($f);			# While we're currently processing
 	local(@list);		# List of files to process
-	local($s_originator, $s_date, $s_subject, $s_msgid, $s_package, $s_keywords);
-	local($s_done, $s_forwarded, $s_mergedwith, $s_severity);
 	local($skip);		# Flow control
 	local($walk);		# index variable
 	local($taginfo);	# Tag info
@@ -176,70 +174,77 @@ sub scanspooldir() {
 	chdir($dir) or die "chdir $dir: $!\n";
 
 	opendir(DIR, $dir) or die "opendir $dir: $!\n";
-	@list = grep { s/\.status$// }
-			grep { m/^\d+\.status$/ } 
+	@list = grep { s/\.summary$// }
+			grep { m/^\d+\.summary$/ } 
 			readdir(DIR);
 	closedir(DIR);
 
 	for $f (@list) {
 		next if $exclude{$f};			# Check the list of bugs to skip
-		next if (!open(S,"$f.status"));	# Check bugs without a status (?)
-
-		chomp($s_originator = <S>);
-		chomp($s_date = <S>);
-		chomp($s_subject = <S>);
-		chomp($s_msgid = <S>);
-		chomp($s_package = <S>);
-		chomp($s_tags = <S>);
-		chomp($s_done = <S>);
-		chomp($s_forwarded = <S>);
-		chomp($s_mergedwith = <S>);
-		chomp($s_severity = <S>);
-		close(S);
-
-		next if length($s_done) and not $premature{$f};
-		$premature{$f}++ if length($s_done);
-
-		$s_severity =~ y/A-Z/a-z/;
-		$s_tags =~ y/A-Z/a-z/;
-
+	
+		my $bug = readbug("$f.summary");
+		next if (!defined($bug));
+		
 		$skip=1;
 		for $walk (@priorities) {
-			$skip=0 if $walk eq $s_severity;
+			$skip=0 if $walk eq $bug->{'severity'};
 		}
 
-		for $tag (split(' ', $s_tags)) {
+		my @tags = split(' ', $bug->{'keywords'});
+		for $tag (@tags) {
 			for $s (@skiptags) {
 				$skip=1 if $tag eq $s;
 			}
 		}
 		next if $skip==1;
+		
+		my $oldstable_tag    = grep(/^woody$/, @tags);
+		my $stable_tag       = grep(/^sarge$/, @tags);
+		my $testing_tag      = grep(/^etch$/, @tags);
+		my $unstable_tag     = grep(/^sid$/, @tags);
+		my $experimental_tag = grep(/^experimental$/, @tags);
+
+		# default according to dondelelcaro 2006-11-11
+		if (!$oldstable_tag && !$stable_tag && !$testing_tag && !$unstable_tag && !$experimental_tag) {
+			$testing_tag = 1;
+			$unstable_tag = 1;
+			$experimental_tag = 1;
+		}
+
+		# only bother to check the versioning status for the distributions indicated by the tags 
+		$status_oldstable    = getbugstatus($bug, undef, 'oldstable')    if ($oldstable_tag);
+		$status_stable       = getbugstatus($bug, undef, 'stable')       if ($stable_tag);
+		$status_testing      = getbugstatus($bug, undef, 'testing')      if ($testing_tag);
+		$status_unstable     = getbugstatus($bug, undef, 'unstable')     if ($unstable_tag);
+		$status_experimental = getbugstatus($bug, undef, 'experimental') if ($experimental_tag);
 
 		$relinfo = "";
-		$relinfo .= ($s_tags =~ /\bwoody\b/         ? "O" : "");
-		$relinfo .= ($s_tags =~ /\bsarge(|\s.*)%/   ? "S" : "");
-		$relinfo .= ($s_tags =~ /\betch(|\s.*)$/    ? "T" : "");
-			# etch-ignore matches \betch\b :(
-		$relinfo .= ($s_tags =~ /\bsid\b/           ? "U" : "");
-		$relinfo .= ($s_tags =~ /\bexperimental\b/  ? "E" : "");
+		$relinfo .= (($oldstable_tag    && $status_oldstable->{'pending'}    eq 'pending') ? "O" : "");
+		$relinfo .= (($stable_tag       && $status_stable->{'pending'}       eq 'pending') ? "S" : "");
+		$relinfo .= (($testing_tag      && $status_testing->{'pending'}      eq 'pending') ? "T" : "");
+		$relinfo .= (($unstable_tag     && $status_unstable->{'pending'}     eq 'pending') ? "U" : "");
+		$relinfo .= (($experimental_tag && $status_experimental->{'pending'} eq 'pending') ? "E" : "");
+		
+		next if $relinfo eq '' and not $premature{$f};
+		$premature{$f}++ if $relinfo eq '';
 
 		$taginfo = "[";
-		$taginfo .= ($s_tags =~ /\bpending\b/        ? "P" : " ");
-		$taginfo .= ($s_tags =~ /\bpatch\b/          ? "+" : " ");
-		$taginfo .= ($s_tags =~ /\bhelp\b/           ? "H" : " ");
-		$taginfo .= ($s_tags =~ /\bmoreinfo\b/       ? "M" : " ");
-		$taginfo .= ($s_tags =~ /\bunreproducible\b/ ? "R" : " ");
-		$taginfo .= ($s_tags =~ /\bsecurity\b/       ? "S" : " ");
-		$taginfo .= ($s_tags =~ /\bupstream\b/       ? "U" : " ");
-		$taginfo .= ($s_tags =~ /\betch-ignore\b/    ? "I" : " ");
+		$taginfo .= ($bug->{'keywords'} =~ /\bpending\b/        ? "P" : " ");
+		$taginfo .= ($bug->{'keywords'} =~ /\bpatch\b/          ? "+" : " ");
+		$taginfo .= ($bug->{'keywords'} =~ /\bhelp\b/           ? "H" : " ");
+		$taginfo .= ($bug->{'keywords'} =~ /\bmoreinfo\b/       ? "M" : " ");
+		$taginfo .= ($bug->{'keywords'} =~ /\bunreproducible\b/ ? "R" : " ");
+		$taginfo .= ($bug->{'keywords'} =~ /\bsecurity\b/       ? "S" : " ");
+		$taginfo .= ($bug->{'keywords'} =~ /\bupstream\b/       ? "U" : " ");
+		$taginfo .= ($bug->{'keywords'} =~ /\betch-ignore\b/    ? "I" : " ");
 		$taginfo .= "]";
 
-		if ($s_mergedwith) {			# Only show the first package if things are merged
-			my @merged = split(' ', $s_mergedwith);
+		if (length($bug->{'mergedwith'})) {
+			my @merged = split(' ', $bug->{'mergedwith'});
 			next if ($merged[0] < $f);
 		}
 
-		for $package (split /[,\s]+/, $s_package) {
+		for $package (split /[,\s]+/, $bug->{'package'}) {
 			$_= $package; y/A-Z/a-z/; $_= $` if m/[^-+._a-z0-9]/;
 			if (not defined $section{$_}) {
 				if (defined $debbugssection{$_}) {
@@ -258,7 +263,7 @@ sub scanspooldir() {
 			$relinfo = " [$relinfo]";
 		}
 
-		$bugs{$f} = "$f $taginfo$relinfo $s_subject";
+		$bugs{$f} = "$f $taginfo$relinfo " . $bug->{'subject'};
 	}
 }
 
