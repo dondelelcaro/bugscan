@@ -225,11 +225,11 @@ sub scanspooldir() {
 		$status_experimental = get_status($f, $bug, 'experimental') if ($experimental_tag);
 
 		$relinfo = "";
-		$relinfo .= (($oldstable_tag    && $status_oldstable->{'pending'}    eq 'pending') ? "O" : "");
-		$relinfo .= (($stable_tag       && $status_stable->{'pending'}       eq 'pending') ? "S" : "");
-		$relinfo .= (($testing_tag      && $status_testing->{'pending'}      eq 'pending') ? "T" : "");
-		$relinfo .= (($unstable_tag     && $status_unstable->{'pending'}     eq 'pending') ? "U" : "");
-		$relinfo .= (($experimental_tag && $status_experimental->{'pending'} eq 'pending') ? "E" : "");
+		$relinfo .= (($oldstable_tag    && $status_oldstable    eq 'pending') ? "O" : "");
+		$relinfo .= (($stable_tag       && $status_stable       eq 'pending') ? "S" : "");
+		$relinfo .= (($testing_tag      && $status_testing      eq 'pending') ? "T" : "");
+		$relinfo .= (($unstable_tag     && $status_unstable     eq 'pending') ? "U" : "");
+		$relinfo .= (($experimental_tag && $status_experimental eq 'pending') ? "E" : "");
 		
 		next if $relinfo eq '' and not $premature{$f};
 		$premature{$f}++ if $relinfo eq '';
