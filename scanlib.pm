@@ -297,6 +297,7 @@ sub readstatus() {
 			push @{$packagelist{$pkg}}, $bug;
 		} else {
 			($pkg,$sect, $mnt)=split(/ /, $_, 3);
+			next if (!defined($pkg));
 			$section{$pkg}=$sect;
 			$maintainer{$pkg}=$mnt;
 		}
