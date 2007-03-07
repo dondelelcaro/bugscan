@@ -3,7 +3,7 @@
 require bugcfg;
 require scanlib;
 use strict;
-use warnings;
+# use warnings;
 
 # Main part
 
