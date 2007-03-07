@@ -372,7 +372,7 @@ sub get_status() {
 	my ($bugnr, $bug, $dist) = @_;
 
 	my @versions = Debbugs::Status::getversions($bug->{'package'}, $dist, undef);
-	my @sourceversions = Debbugs::Status::makesourceversions($bug->{'package'}, $dist, @versions);
+	my @sourceversions = Debbugs::Status::makesourceversions($bug->{'package'}, undef, @versions);
 
 	return Debbugs::Status::max_buggy(bug => $bugnr,
 			 sourceversions => \@sourceversions,
