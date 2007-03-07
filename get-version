@@ -1,0 +1,7 @@
+use Data::Dumper;
+use MLDBM qw(DB_File Storable);
+my %v;
+tie %v, "MLDBM", "/org/bugs.debian.org/versions/indices/versions.idx", 0;
+my $z = $v{$ARGV[0]};
+print Data::Dumper::Dumper($z);
+
