@@ -112,7 +112,8 @@ EOF
 <p>The red line graphs all bugs with release-critical severities; the green
 line graphs the number of bugs that are actually a concern for the next
 release (excluding ignored bugs, bugs on packages not in testing, and bugs
-whose tags indicate that they don't apply to testing).</p>
+whose tags and/or verisoning information indicate that they don't apply to
+testing).</p>
 
 <h2>Recent changes</h2>
 EOF
