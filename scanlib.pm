@@ -14,8 +14,7 @@
 #   %packagelist    - map from packagename to bugreports
 #   %NMU            - map with NMU information
 
-#use lib qw(/org/bugs.debian.org/perl/);
-use lib qw(/home/sesse/debbugs);
+use lib qw(/org/bugs.debian.org/perl);
 use LWP::UserAgent;
 use Debbugs::MIME qw(decode_rfc1522 encode_rfc1522);
 use Debbugs::Packages;
@@ -230,7 +229,13 @@ sub scanspooldir() {
 			local $SIG{__WARN__} = sub {};
 
 			next if (!$disttags{$dist});
-			if (Debbugs::Status::check_bug_presence(bug => $f, status => $bug, dist => $dist) eq 'pending') {
+			my $presence = Debbugs::Status::bug_presence(bug => $f, status => $bug, dist => $dist);
+
+			# ignore bugs that are absent/fixed in this distribution, include everything
+			# else (that is, "found" which says that the bug is present, and undef, which
+			# indicates that no versioning information is present and it's not closed
+			# unversioned)
+			if (!defined($presence) || ($presence ne 'absent' && $presence ne 'fixed')) {
 				$relinfo .= uc(substr($dist, 0, 1));
 			}
 		}
