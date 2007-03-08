@@ -158,10 +158,7 @@ sub MakeStatistics() {
 			$patchtotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*\+/);
 			$ignoretotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*I/);
 			$nottestingtotal++ if ($scanlib::bugs{$nr} =~ m/ \[[^]]*X/);
-			$worrytotal++ unless (
-				$scanlib::bugs{$nr} =~ m/^\[[^]]*I/ or
-				$scanlib::bugs{$nr} =~ m/ \[[^]]*X/ or
-				($scanlib::bugs{$nr} =~ m/ \[[^]]*[OSUE]/ and $scanlib::bugs{$nr} !~ m/ \[[^]]*T/));
+			$worrytotal++ if (scanlib::check_worry($scanlib::bugs{$nr}));
 
 			if (not defined($scanlib::exclude{$nr})) {
 				$bugcount++;
