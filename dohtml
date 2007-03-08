@@ -174,7 +174,7 @@ makepage "debian/contrib" "$title" $htmldir/debian/contrib.html "$time"
 makepage "debian/non-free" "$title" $htmldir/debian/non-free.html "$time"
 makepage "debian/source" "$title" $htmldir/debian/source.html "$time"
 
-makepage "debian" "$title" "$htmldir/debian/testing.html" "$time" "-t"
+makepage "" "$title" "$htmldir/debian/testing.html" "$time" "-t"
 
 makepage "non-US" "$title" "$htmldir/debian-non-US/all.html" "$time"
 makepage "non-US/main" "$title" $htmldir/debian-non-US/main.html "$time"
