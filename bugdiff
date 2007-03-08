@@ -6,10 +6,13 @@
 use Getopt::Std;
 require scanlib;
 require bugcfg;
+use strict;
+use warnings;
 
-$Version		= "BugDiff 1.0\nCopyright (C) Wichert Akkerman <wakkerma\@debian.org>\n";
-$html			= 0;
+my $Version		= "BugDiff 1.0\nCopyright (C) Wichert Akkerman <wakkerma\@debian.org>\n";
+my $html			= 0;
 
+my (%removed, %new);
 
 sub ShowVersion() {
 	print "$Version\n";
@@ -36,10 +39,10 @@ sub closedbugs() {
 		if (%removed) {
 			print "<h2>Closed/downgraded release-critical bugs</h2>\n";
 			print "<ul>\n";
-			for $p (sort keys %removed) {
-				print "  <li><em>" . &wwwname($p) . ":</em>\n";
+			for my $p (sort keys %removed) {
+				print "  <li><em>" . &scanlib::wwwname($p) . ":</em>\n";
 				for $b (sort split(/ /, $removed{$p})) {
-					print &wwwnumber($b) . " ";
+					print &scanlib::wwwnumber($b) . " ";
 				}
 				print "\n";
 			}
@@ -47,7 +50,7 @@ sub closedbugs() {
 		}
 	} else {
 		print "Closed/downgraded release-critical bugs:\n" if (%removed>0);
-		for $p (sort keys %removed) {
+		for my $p (sort keys %removed) {
 			print "   $p: ";
 			print join(", ", sort split(/ /, $removed{$p}));
 			print "\n";
@@ -61,10 +64,10 @@ sub openedbugs() {
 		if (%new) {
 			print "<h2>Opened/upgraded release-critical bugs</h2>\n";
 			print "<ul>\n";
-			for $p (sort keys %new) {
-				print "  <li><em>" . &wwwname($p) . ":</em>\n";
+			for my $p (sort keys %new) {
+				print "  <li><em>" . &scanlib::wwwname($p) . ":</em>\n";
 				for $b (sort split(/ /, $new{$p})) {
-					print &wwwnumber($b) . " ";
+					print &scanlib::wwwnumber($b) . " ";
 				}
 				print "\n";
 			}
@@ -72,7 +75,7 @@ sub openedbugs() {
 		}
 	} else {
 		print "Opened/upgraded release-critical bugs:\n" if (%new);
-		for $p (sort keys %new) {
+		for my $p (sort keys %new) {
 			print "   $p: ";
 			print join(", ", sort split(/ /, $new{$p}));
 			print "\n";
@@ -80,7 +83,9 @@ sub openedbugs() {
 	}
 }
 
-sub statistics() {
+sub statistics($$) {
+	my ($opened, $closed) = @_;
+
 	if ($html) {
 		print "<STRONG>" . ($closed ? $closed : "NO") . "</STRONG> release-critical bugs were closed and ";
 		print "<STRONG>" . ($opened ? $opened : "NONE") . "</STRONG> were opened.<P>\n";
@@ -90,30 +95,31 @@ sub statistics() {
 	}
 }
 
+our ($opt_V, $opt_h, $opt_H, $opt_n, $opt_c, $opt_s);
 getopts('VhHncs');
 ShowUsage if ($opt_h or ($#ARGV != 1));
 ShowVersion if ($opt_V);
 $html=1 if ($opt_H);
 
 scanlib::readstatus($ARGV[0]);
-%oldbugs=%packagelist;
-%packagelist=();
+my %oldbugs=%scanlib::packagelist;
+%scanlib::packagelist=();
 
 scanlib::readstatus($ARGV[1]);
 
-$closed=0;
-for $p (keys %oldbugs) {
+my $closed=0;
+for my $p (keys %oldbugs) {
 	for $b (@{$oldbugs{$p}}) {
-		if (scalar grep { $_ == $b } @{$packagelist{$p}} == 0) { 
+		if (!defined($scanlib::packagelist{$p}) || scalar grep { $_ == $b } @{$scanlib::packagelist{$p}} == 0) { 
 			$removed{$p} .= "$b ";
 			$closed++;
 		}
 	}
 }
 
-$opened=0;
-for $p (keys %packagelist) {
-	for $b (@{$packagelist{$p}}) {
+my $opened=0;
+for my $p (keys %scanlib::packagelist) {
+	for $b (@{$scanlib::packagelist{$p}}) {
 		if (not ($oldbugs{$p} =~ m/\b$b\b/)) {
 			$new{$p} .= "$b ";
 			$opened++;
@@ -121,8 +127,9 @@ for $p (keys %packagelist) {
 	}
 }
 
-statistics if ($opt_s);
+statistics($opened, $closed) if ($opt_s);
 closedbugs if ($opt_c);
 openedbugs if ($opt_n);
 
 exit 0;
+
