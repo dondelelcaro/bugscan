@@ -41,7 +41,7 @@ sub closedbugs() {
 			print "<ul>\n";
 			for my $p (sort keys %removed) {
 				print "  <li><em>" . &scanlib::wwwname($p) . ":</em>\n";
-				for $b (sort split(/ /, $removed{$p})) {
+				for $b (sort @{$removed{$p}}) {
 					print &scanlib::wwwnumber($b) . " ";
 				}
 				print "\n";
@@ -49,10 +49,10 @@ sub closedbugs() {
 			print "</ul>\n";
 		}
 	} else {
-		print "Closed/downgraded release-critical bugs:\n" if (%removed>0);
+		print "Closed/downgraded release-critical bugs:\n" if (scalar keys %removed>0);
 		for my $p (sort keys %removed) {
 			print "   $p: ";
-			print join(", ", sort split(/ /, $removed{$p}));
+			print join(", ", sort @{$removed{$p}});
 			print "\n";
 		}
 	}
@@ -66,7 +66,7 @@ sub openedbugs() {
 			print "<ul>\n";
 			for my $p (sort keys %new) {
 				print "  <li><em>" . &scanlib::wwwname($p) . ":</em>\n";
-				for $b (sort split(/ /, $new{$p})) {
+				for $b (sort @{$new{$p}}) {
 					print &scanlib::wwwnumber($b) . " ";
 				}
 				print "\n";
@@ -77,7 +77,7 @@ sub openedbugs() {
 		print "Opened/upgraded release-critical bugs:\n" if (%new);
 		for my $p (sort keys %new) {
 			print "   $p: ";
-			print join(", ", sort split(/ /, $new{$p}));
+			print join(", ", sort @{$new{$p}});
 			print "\n";
 		}
 	}
@@ -111,7 +111,7 @@ my $closed=0;
 for my $p (keys %oldbugs) {
 	for $b (@{$oldbugs{$p}}) {
 		if (!defined($scanlib::packagelist{$p}) || scalar grep { $_ == $b } @{$scanlib::packagelist{$p}} == 0) { 
-			$removed{$p} .= "$b ";
+			push @{$removed{$p}}, $b;
 			$closed++;
 		}
 	}
@@ -120,8 +120,8 @@ for my $p (keys %oldbugs) {
 my $opened=0;
 for my $p (keys %scanlib::packagelist) {
 	for $b (@{$scanlib::packagelist{$p}}) {
-		if (not ($oldbugs{$p} =~ m/\b$b\b/)) {
-			$new{$p} .= "$b ";
+		if (!defined($oldbugs{$p}) || scalar grep { $_ == $b } @{$oldbugs{$p}} == 0) { 
+			push @{$new{$p}}, $b;
 			$opened++;
 		}
 	}
