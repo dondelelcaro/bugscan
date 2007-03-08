@@ -64,12 +64,7 @@ for my $p (keys %scanlib::packagelist) {
 			my $sect = ($scanlib::comments{$nr} =~ m/\[([^]]*)\]/);
 			$sectcount{$sect}++;
 		}
-		unless ($scanlib::bugs{$nr} =~ m/^\[[^]]*I/ or
-			$scanlib::bugs{$nr} =~ m/ \[[^]]*X/ or
-			($scanlib::bugs{$nr} =~ m/ \[[^]]*[OSUE]/ and $scanlib::bugs{$nr} !~ m/ \[[^]]*T/)) {
-			$worrycount++;
-			# print STDERR "$nr $bugs{$nr}\n";
-		}	
+		$worrycount++ if (scanlib::check_worry($scanlib::bugs{$nr}));
 	}
 
 	if (defined($scanlib::comments{$p}) && $scanlib::comments{$p} =~ m/^\[REMOVE\]/) {
