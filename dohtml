@@ -144,7 +144,7 @@ EOF
        <a href="http://www.debian.org/Bugs/pseudo-packages">(?)</a>
   <li><a href="other/all.html">Everything in one page</a>
     <br>
-     + <a href="debian/testing.html">Only bugs relevant to testing</a>
+     + <a href="other/testing.html">Only bugs relevant to testing</a>
 </ul>
 <p clear=both>
 <hr>
@@ -174,8 +174,6 @@ makepage "debian/contrib" "$title" $htmldir/debian/contrib.html "$time"
 makepage "debian/non-free" "$title" $htmldir/debian/non-free.html "$time"
 makepage "debian/source" "$title" $htmldir/debian/source.html "$time"
 
-makepage "" "$title" "$htmldir/debian/testing.html" "$time" "-t"
-
 makepage "non-US" "$title" "$htmldir/debian-non-US/all.html" "$time"
 makepage "non-US/main" "$title" $htmldir/debian-non-US/main.html "$time"
 makepage "non-US/contrib" "$title" $htmldir/debian-non-US/contrib.html "$time"
@@ -185,6 +183,7 @@ makepage "non-US/source" "$title" $htmldir/debian-non-US/source.html "$time"
 makepage "pseudo" "$title" $htmldir/other/pseudo.html "$time"
 
 makepage "" "$title" $htmldir/other/all.html "$time"
+makepage "" "$title" "$htmldir/other/testing.html" "$time" "-t"
 
 makemainpage > $htmldir/index.html.new
 mv -f $htmldir/index.html.new $htmldir/index.html
