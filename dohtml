@@ -56,9 +56,9 @@ tags</a>:
 
 <p>
 The second set of tags indicate what releases a bug applies to:
-O for oldstable (woody), S for stable (sarge),
-T for testing (etch), U for unstable (sid) or E for experimental. X
-indicates that the package is not in testing.
+O for oldstable (woody), S for stable (sarge), T for testing (etch),
+U for unstable (sid) or E for experimental. X indicates that the
+package is not in testing.
 
 <p>
 
