@@ -127,8 +127,6 @@ EOF
 <ul>
   <li> <a href="debian/all.html">All</a>
     <br>
-     + <a href="debian/testing.html">Only bugs relevant to testing</a>
-    <br>
      + <a href="debian-non-US/all.html">All non-US</a>
   <li> <a href="debian/main.html">main</a>
     <br>
@@ -145,6 +143,8 @@ EOF
   <li><a href="other/pseudo.html">pseudo-packages</a>
        <a href="http://www.debian.org/Bugs/pseudo-packages">(?)</a>
   <li><a href="other/all.html">Everything in one page</a>
+    <br>
+     + <a href="debian/testing.html">Only bugs relevant to testing</a>
 </ul>
 <p clear=both>
 <hr>
