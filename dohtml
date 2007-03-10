@@ -126,20 +126,10 @@ EOF
 
 <ul>
   <li> <a href="debian/all.html">All</a>
-    <br>
-     + <a href="debian-non-US/all.html">All non-US</a>
   <li> <a href="debian/main.html">main</a>
-    <br>
-     + <a href="debian-non-US/main.html">main non-US</a>
   <li> <a href="debian/source.html">source</a> 
-    <br>
-     + <a href="debian-non-US/source.html">source non-US</a> 
   <li> <a href="debian/contrib.html">contrib</a>
-    <br>
-     + <a href="debian-non-US/contrib.html">contrib non-US</a>
   <li> <a href="debian/non-free.html">non-free</a>
-    <br>
-     + <a href="debian-non-US/non-free.html">non-free non-US</a>
   <li><a href="other/pseudo.html">pseudo-packages</a>
        <a href="http://www.debian.org/Bugs/pseudo-packages">(?)</a>
   <li><a href="other/all.html">Everything in one page</a>
@@ -173,14 +163,6 @@ makepage "debian/main" "$title" $htmldir/debian/main.html "$time"
 makepage "debian/contrib" "$title" $htmldir/debian/contrib.html "$time"
 makepage "debian/non-free" "$title" $htmldir/debian/non-free.html "$time"
 makepage "debian/source" "$title" $htmldir/debian/source.html "$time"
-
-makepage "non-US" "$title" "$htmldir/debian-non-US/all.html" "$time"
-makepage "non-US/main" "$title" $htmldir/debian-non-US/main.html "$time"
-makepage "non-US/contrib" "$title" $htmldir/debian-non-US/contrib.html "$time"
-makepage "non-US/non-free" "$title" $htmldir/debian-non-US/non-free.html "$time"
-makepage "non-US/source" "$title" $htmldir/debian-non-US/source.html "$time"
-
-makepage "pseudo" "$title" $htmldir/other/pseudo.html "$time"
 
 makepage "" "$title" $htmldir/other/all.html "$time"
 makepage "" "$title" "$htmldir/other/testing.html" "$time" "-t"
