@@ -337,12 +337,9 @@ sub htmlsanit {
 
 sub wwwnumber() {
 	my $number = shift;		# Number of bug to html-ize
-#	my $section);				# Section for the bug
 
 	"<A HREF=\"http://bugs.debian.org/cgi-bin/bugreport.cgi?archive=no&amp;bug=" .
 		urlsanit($number) . '">' . htmlsanit($number) . '</A>';
-#	($section=$number) =~ s/([0-9]{2}).*/$1/;
-#	"<A HREF=\"${btsURL}/db/$section/$number.html\">$number</A>";
 }
 
 sub wwwname() {
@@ -350,7 +347,6 @@ sub wwwname() {
 
 	"<A HREF=\"http://bugs.debian.org/cgi-bin/pkgreport.cgi?archive=no&amp;pkg=" .
 		urlsanit($name) . '">' . htmlsanit($name) . '</A>';
-#	"<A HREF=\"${btsURL}/db/pa/l$name.html\">$name</A>";
 }
 
 sub check_worry {

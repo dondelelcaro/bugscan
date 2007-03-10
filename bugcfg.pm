@@ -26,7 +26,6 @@ if ($host eq "master" or $host eq "spohr" or $host eq "rietz") {
 	die "Unknown machine, please configure paths in bugcfg.pm\n";
 }
 
-our $btsURL			= "http://www.debian.org/Bugs/";
 our @architectures		= ( "i386", "amd64", "alpha", "sparc", "powerpc", "arm", "hppa", "ia64", "mips", "mipsel", "s390" );
 our @sections		= ( "main", "contrib", "non-free" );
 our @priorities		= ( "serious", "grave", "critical" );
