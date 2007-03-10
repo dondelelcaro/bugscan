@@ -215,39 +215,48 @@ sub scanspooldir() {
 		$disttags{'testing'}      = grep(/^etch$/, @tags);
 		$disttags{'unstable'}     = grep(/^sid$/, @tags);
 		$disttags{'experimental'} = grep(/^experimental$/, @tags);
-
-		# default according to dondelelcaro 2006-11-11
-		if (!$disttags{'oldstable'} && !$disttags{'stable'} && !$disttags{'testing'} && !$disttags{'unstable'} && !$disttags{'experimental'}) {
-			$disttags{'testing'} = 1;
-			$disttags{'unstable'} = 1;
-			$disttags{'experimental'} = 1;
-		}
-
-		# only bother to check the versioning status for the distributions indicated by the tags 
-		my $relinfo = "";
-		for my $dist qw(oldstable stable testing unstable experimental) {
-			local $SIG{__WARN__} = sub {};
-
-			next if (!$disttags{$dist});
-
-			my $presence = Debbugs::Status::bug_presence(
-				bug => $f, 
-				status => $bug, 
-				dist => $dist, 
-				arch => [ qw(alpha amd64 arm hppa i386 ia64 mips mipsel powerpc s390 sparc) ]
-			);
-
-			# ignore bugs that are absent/fixed in this distribution, include everything
-			# else (that is, "found" which says that the bug is present, and undef, which
-			# indicates that no versioning information is present and it's not closed
-			# unversioned)
-			if (!defined($presence) || ($presence ne 'absent' && $presence ne 'fixed')) {
-				$relinfo .= uc(substr($dist, 0, 1));
-			}
-		}
 		
-		next if $relinfo eq '' and not $premature{$f};
-		$premature{$f}++ if $relinfo eq '';
+		my $relinfo = "";
+		warn $section{$bug->{'package'}};
+		if ($section{$bug->{'package'}} eq 'pseudo') {
+			# versioning information makes no sense for pseudo packages,
+			# just use the tags
+			for my $dist qw(oldstable stable testing unstable experimental) {
+				$relinfo .= uc(substr($dist, 0, 1)) if $disttags{$dist};
+			}
+		} else {
+			# default according to dondelelcaro 2006-11-11
+			if (!$disttags{'oldstable'} && !$disttags{'stable'} && !$disttags{'testing'} && !$disttags{'unstable'} && !$disttags{'experimental'}) {
+				$disttags{'testing'} = 1;
+				$disttags{'unstable'} = 1;
+				$disttags{'experimental'} = 1;
+			}
+
+			# only bother to check the versioning status for the distributions indicated by the tags 
+			for my $dist qw(oldstable stable testing unstable experimental) {
+				local $SIG{__WARN__} = sub {};
+
+				next if (!$disttags{$dist});
+
+				my $presence = Debbugs::Status::bug_presence(
+					bug => $f, 
+					status => $bug, 
+					dist => $dist, 
+					arch => [ qw(alpha amd64 arm hppa i386 ia64 mips mipsel powerpc s390 sparc) ]
+				);
+
+				# ignore bugs that are absent/fixed in this distribution, include everything
+				# else (that is, "found" which says that the bug is present, and undef, which
+				# indicates that no versioning information is present and it's not closed
+				# unversioned)
+				if (!defined($presence) || ($presence ne 'absent' && $presence ne 'fixed')) {
+					$relinfo .= uc(substr($dist, 0, 1));
+				}
+			}
+			
+			next if $relinfo eq '' and not $premature{$f};
+			$premature{$f}++ if $relinfo eq '';
+		}
 
 		$taginfo = "[";
 		$taginfo .= ($bug->{'keywords'} =~ /\bpending\b/        ? "P" : " ");
