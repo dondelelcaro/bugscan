@@ -11,7 +11,6 @@
 #   %maintainer     - map from packagename to maintainer
 #   %section        - map from packagename to section in the FTP-site
 #   %packagelist    - map from packagename to bugreports
-#   %NMU            - map with NMU information
 
 use lib qw(/org/bugs.debian.org/perl);
 use LWP::UserAgent;
@@ -25,7 +24,7 @@ use warnings;
 require bugcfg;
 package scanlib;
 
-our (%premature,%exclude,%maintainer,%section,%packagelist,%NMU,%debbugssection,%bugs);
+our (%premature,%exclude,%maintainer,%section,%packagelist,%debbugssection,%bugs);
 
 
 # Read the list of maintainer 
@@ -283,37 +282,6 @@ sub readstatus() {
 			$section{$pkg}=$sect;
 			$maintainer{$pkg}=$mnt;
 		}
-	}
-	close P;
-}
-
-
-sub readNMUstatus() {
-	my $bug;       # Number of current bug
-	my $source;    # Source upload which closes this bug.
-	my $version;   # Version where this bug was closed.
-	my $flag;      # Whether this paragraph has been processed.
-	my ($field, $value);
-
-	for (split /\n/, LWP::UserAgent->new->request(HTTP::Request->new(GET => shift))->content) {
-		chomp;
-		if (m/^$/) {
-			$NMU{$bug} = 1;
-			$NMU{$bug, "source"} = $source;
-			$NMU{$bug, "version"} = $version;
-			$flag = 0;
-		} else {
-			($field, $value) = split(/: /, $_, 2);
-			$bug = $value if($field =~ /bug/i);
-			$source = $value if($field =~ /source/i);
-			$version = $value if($field =~ /version/i);
-			$flag = 1;
-		}
-	}
-	if ($flag) {
-		$NMU{$bug} = 1;
-		$NMU{$bug, "source"} = $source;
-		$NMU{$bug, "version"} = $version;
 	}
 	close P;
 }

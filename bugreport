@@ -12,9 +12,6 @@ use warnings;
 my $Version		= "BugReport 1.4\nCopyright (C) 1998-2002 Wichert Akkerman <wakkerma\@debian.org>\n";
 my $html		= 0;
 my $statusfile		= "status";
-my $NMUfile		= "/debian/home/doogie/public_html/incoming/bugs_closed";
-$NMUfile		= "/debian/home/doogie/chgscan/db/bugs_closed"; # Changed as of request by dark  -Joey, 99/11/22
-$NMUfile		= "http://auric.debian.org/~doogie/incoming/bugs_closed"; # Changed as of request by dark  -Joey, 99/11/22
 
 sub ShowVersion() {
 	print "$Version\n";
@@ -111,7 +108,6 @@ sub MakeBuglist() {
 			} else {
 				printf("  %-6d %s\n", $nr, $scanlib::bugs{$nr});
 			}
-			print "[FIX] Fixed by package " . $scanlib::NMU{$nr, "source"} . ", version " . $scanlib::NMU{$nr, "version"} . " in Incoming\n" if (defined $scanlib::NMU{$nr});
 			print "</span>" if ($html && ($scanlib::bugs{$nr} =~ m/^\[[^]]*[H+P]/ ||
 			                              $scanlib::bugs{$nr} =~ m/ \[[^]]*X/));
 		}
@@ -191,7 +187,6 @@ $statusfile=$opt_S if ($opt_S);
 $html=1 if ($opt_H);
 
 scanlib::readstatus($statusfile);
-# scanlib::readNMUstatus($NMUfile);
 
 FilterPackages($opt_d) if ($opt_d);
 FilterBugs() if ($opt_t);
