@@ -5,7 +5,6 @@ use strict;
 use warnings;
 package bugcfg;
 our ($spooldir,$maintainerlist,$debian_ftproot,$debian_sources,$pseudolist);
-our ($versionindex,$versionpkgdir);
 
 # General configuration stuff
 
@@ -17,16 +16,12 @@ if ($host eq "master" or $host eq "spohr" or $host eq "rietz") {
 	$debian_ftproot	= "/org/bugs.debian.org/etc/indices/ftp/testing";
 	$debian_sources	= "/etc/debbugs/indices/ftp.sources";
 	$pseudolist	= "/org/bugs.debian.org/etc/pseudo-packages.description";
-	$versionindex   = "/org/bugs.debian.org/versions/indices/versions.idx";
-	$versionpkgdir  = "/org/bugs.debian.org/versions/pkg";
 } elsif ($host eq "merkel") {
 	$spooldir	= "/org/bugs.debian.org/spool/db-h";
 	$maintainerlist	= "/etc/debbugs/Maintainers";
 	$debian_ftproot	= "/org/bugs.debian.org/etc/indices/ftp/testing";
 	$debian_sources	= "/etc/debbugs/indices/ftp.sources";
 	$pseudolist	= "/org/bugs.debian.org/etc/pseudo-packages.description";
-	$versionindex = "/org/bugs.debian.org/versions/indices/versions.idx";
-	$versionpkgdir = "/org/bugs.debian.org/versions/pkg";
 } else {
 	die "Unknown machine, please configure paths in bugcfg.pm\n";
 }
