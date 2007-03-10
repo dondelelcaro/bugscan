@@ -8,12 +8,9 @@ use strict;
 # Main part
 
 scanlib::readpackages($bugcfg::debian_ftproot, "debian") if defined $bugcfg::debian_ftproot;
-scanlib::readpackages($bugcfg::nonUS_ftproot, "non-US")  if defined $bugcfg::nonUS_ftproot;
 scanlib::readsources($bugcfg::debian_ftproot, "debian")  if defined $bugcfg::debian_ftproot;
-scanlib::readsources($bugcfg::nonUS_ftproot, "non-US")   if defined $bugcfg::nonUS_ftproot;
 
 scanlib::readdebbugssources($bugcfg::debian_sources, "debian") if defined $bugcfg::debian_sources;
-scanlib::readdebbugssources($bugcfg::nonUS_sources, "non-US") if defined $bugcfg::nonUS_sources;
 
 
 scanlib::readpseudopackages();
