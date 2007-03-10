@@ -205,7 +205,7 @@ sub scanspooldir() {
 					bug => $f, 
 					status => $bug, 
 					dist => $dist, 
-					arch => [ qw(alpha amd64 arm hppa i386 ia64 mips mipsel powerpc s390 sparc) ]
+					arch => \@bugcfg::architectures
 				);
 
 				# ignore bugs that are absent/fixed in this distribution, include everything

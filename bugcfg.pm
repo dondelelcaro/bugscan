@@ -27,7 +27,7 @@ if ($host eq "master" or $host eq "spohr" or $host eq "rietz") {
 }
 
 our $btsURL			= "http://www.debian.org/Bugs/";
-our @architectures		= ( "i386", "m68k", "alpha", "sparc", "powerpc", "arm", "hppa", "ia64", "mips", "mipsel", "s390" );
+our @architectures		= ( "i386", "amd64", "alpha", "sparc", "powerpc", "arm", "hppa", "ia64", "mips", "mipsel", "s390" );
 our @sections		= ( "main", "contrib", "non-free" );
 our @priorities		= ( "serious", "grave", "critical" );
 our @skiptags		= ( );
