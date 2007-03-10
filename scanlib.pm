@@ -217,8 +217,7 @@ sub scanspooldir() {
 		$disttags{'experimental'} = grep(/^experimental$/, @tags);
 		
 		my $relinfo = "";
-		warn $section{$bug->{'package'}};
-		if ($section{$bug->{'package'}} eq 'pseudo') {
+		if (defined($section{$bug->{'package'}}) && $section{$bug->{'package'}} eq 'pseudo') {
 			# versioning information makes no sense for pseudo packages,
 			# just use the tags
 			for my $dist qw(oldstable stable testing unstable experimental) {
@@ -397,7 +396,7 @@ sub check_worry {
 
 	if ($status =~ m/^\[[^]]*I/ or
 	    $status =~ m/ \[[^]]*X/ or
-            ($status =~ m/ \[[^]]*[OSUE]/ and $status !~ m/ \[[^]]*T/)) {
+            $status !~ m/ \[[^]]*T/) {
 		return 0;
 	}
 	return 1;
