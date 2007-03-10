@@ -182,7 +182,7 @@ makepage "non-US/contrib" "$title" $htmldir/debian-non-US/contrib.html "$time"
 makepage "non-US/non-free" "$title" $htmldir/debian-non-US/non-free.html "$time"
 makepage "non-US/source" "$title" $htmldir/debian-non-US/source.html "$time"
 
-makepage "other/pseudo" "$title" $htmldir/other/pseudo.html "$time"
+makepage "pseudo" "$title" $htmldir/other/pseudo.html "$time"
 
 makepage "" "$title" $htmldir/other/all.html "$time"
 
