@@ -223,6 +223,7 @@ sub scanspooldir() {
 			for my $dist qw(oldstable stable testing unstable experimental) {
 				$relinfo .= uc(substr($dist, 0, 1)) if $disttags{$dist};
 			}
+			next if (length($bug->{'done'}));
 		} else {
 			# default according to dondelelcaro 2006-11-11
 			if (!$disttags{'oldstable'} && !$disttags{'stable'} && !$disttags{'testing'} && !$disttags{'unstable'} && !$disttags{'experimental'}) {
