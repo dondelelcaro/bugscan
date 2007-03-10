@@ -215,6 +215,13 @@ sub scanspooldir() {
 		$disttags{'testing'}      = grep(/^etch$/, @tags);
 		$disttags{'unstable'}     = grep(/^sid$/, @tags);
 		$disttags{'experimental'} = grep(/^experimental$/, @tags);
+			
+		# default according to dondelelcaro 2006-11-11
+		if (!$disttags{'oldstable'} && !$disttags{'stable'} && !$disttags{'testing'} && !$disttags{'unstable'} && !$disttags{'experimental'}) {
+			$disttags{'testing'} = 1;
+			$disttags{'unstable'} = 1;
+			$disttags{'experimental'} = 1;
+		}
 		
 		my $relinfo = "";
 		if (defined($section{$bug->{'package'}}) && $section{$bug->{'package'}} eq 'pseudo') {
@@ -225,13 +232,6 @@ sub scanspooldir() {
 			}
 			next if (length($bug->{'done'}));
 		} else {
-			# default according to dondelelcaro 2006-11-11
-			if (!$disttags{'oldstable'} && !$disttags{'stable'} && !$disttags{'testing'} && !$disttags{'unstable'} && !$disttags{'experimental'}) {
-				$disttags{'testing'} = 1;
-				$disttags{'unstable'} = 1;
-				$disttags{'experimental'} = 1;
-			}
-
 			# only bother to check the versioning status for the distributions indicated by the tags 
 			for my $dist qw(oldstable stable testing unstable experimental) {
 				local $SIG{__WARN__} = sub {};
