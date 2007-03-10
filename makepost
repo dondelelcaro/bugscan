@@ -1,7 +1,7 @@
 #! /bin/sh
 
-newtime=`ls -alL pstatus | cut -c 44-55`
-oldtime=`ls -alL pstatus-old | cut -c 44-55`
+newtime=`stat --format %y pstatus | cut -d: -f-2`
+oldtime=`stat --format %y pstatus-old | cut -d: -f-2`
 title="Bug stamp-out list for $newtime (CST)"
 cat <<EOF
 $title

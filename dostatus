@@ -1,6 +1,6 @@
 #!/bin/sh
 
-newtime=`ls -al status | cut -c 43-54`
+newtime=`stat --format %y status | cut -d: -f-2`
 echo -n "$newtime (CST): " > /home/sesse/bugscan/www/status
 ./bugreport -s >> /home/sesse/bugscan/www/status
 
