@@ -6,7 +6,6 @@
 # which was based on an unknown other script.
 #
 # Global variables:
-#   %comments       - map from bugnumber to bug description
 #   %premature      - list of prematurely closed bugreports
 #   %exclude        - list of bugreports to exclude from the report
 #   %maintainer     - map from packagename to maintainer
@@ -26,43 +25,7 @@ use warnings;
 require bugcfg;
 package scanlib;
 
-our (%comments,%premature,%exclude,%maintainer,%section,%packagelist,%NMU,%debbugssection,%bugs);
-
-sub readcomments() {
-# Read bug commentary 
-# It is in paragraph format, with the first line of each paragraph being
-# the bug number or package name to which the comment applies.
-# Prefix a bug number with a * to force it to be listed even if it's closed.
-# (This deals with prematurely closed bugs)
-
-	my $index;					# Bug-number for current comment
-	my $file;					# Name of comments-file
-
-	%comments = ();					# Initialize our data
-	%premature = ();
-	%exclude = ();
-	$file=shift;
-	open(C, $file) or die "open $file: $!\n";
-	while (<C>) {
-		chomp;
-		if (m/^\s*$/) {				# Check for paragraph-breaks
-			undef $index;
-		} elsif (defined $index) {
-			$comments{$index} .= $_ . "\n";
-		} else {
-			if (s/^\*//) {			# Test & remove initial *
-				$premature{$_} = 1;
-			}
-			if (s/\s+EXCLUDE\s*//) {	# Test & remove EXCLUDE
-				$exclude{$_} = 1;
-				next;
-			}
-			$index = $_;
-			$comments{$index} = '';	# New comment, initialize data
-		}
-	}
-	close(C);
-}
+our (%premature,%exclude,%maintainer,%section,%packagelist,%NMU,%debbugssection,%bugs);
 
 
 # Read the list of maintainer 
@@ -338,7 +301,6 @@ sub readNMUstatus() {
 			$NMU{$bug} = 1;
 			$NMU{$bug, "source"} = $source;
 			$NMU{$bug, "version"} = $version;
-#			$comments{$bug} .= "[FIXED] Fixed package $source is in Incoming\n";
 			$flag = 0;
 		} else {
 			($field, $value) = split(/: /, $_, 2);
@@ -352,7 +314,6 @@ sub readNMUstatus() {
 		$NMU{$bug} = 1;
 		$NMU{$bug, "source"} = $source;
 		$NMU{$bug, "version"} = $version;
-#		$comments{$bug} .= "[FIXED] Fixed package $source in in Incoming\n";
 	}
 	close P;
 }

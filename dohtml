@@ -97,3 +97,65 @@ EOF
 </p>
 
 <div align="center"><img src="graph.png" alt="Graph of RC bugs"></div>
+
+<p>The red line graphs all bugs with release-critical severities; the green
+line graphs the number of bugs that are actually a concern for the next
+release (excluding ignored bugs, bugs on packages not in testing, and bugs
+whose tags and/or versioning information indicate that they don't apply to
+testing).</p>
+
+<h2>Recent changes</h2>
+EOF
+
+	./bugdiff -Hncs status-old status
+
+	cat <<EOF
+
+<h2>Detailed lists of RC bug reports:</h2>
+
+<ul>
+  <li> <a href="debian/all.html">All</a>
+  <li> <a href="debian/main.html">main</a>
+  <li> <a href="debian/source.html">source</a> 
+  <li> <a href="debian/contrib.html">contrib</a>
+  <li> <a href="debian/non-free.html">non-free</a>
+  <li><a href="other/pseudo.html">pseudo-packages</a>
+       <a href="http://www.debian.org/Bugs/pseudo-packages">(?)</a>
+  <li><a href="other/all.html">Everything in one page</a>
+    <br>
+     + <a href="other/testing.html">Only bugs relevant to testing</a>
+</ul>
+<p clear=both>
+<hr>
+This page is automatically generated.<br>
+Please contact
+<a href="mailto:owner@bugs.debian.org">owner@bugs.debian.org</a> for comments.
+To receive all mails sent to release-critical bugs, subscribe to the
+<a href="http://lists.debian.org/debian-bugs-rc/">debian-bugs-rc</a>
+mailing list.
+
+EOF
+}
+
+makepage() {
+	if [ ! -d "`dirname $3`" ]; then mkdir -p "`dirname $3`"; fi
+	realmakepage "$1" "$2" "$4" "$5" > $3.new
+	mv -f $3.new $3
+}
+
+time=$(date -u --date="$(ls -Ll status | awk '{print $6, $7}'):00 $(date +%z)")
+oldtime=$(date -u --date="$(ls -Ll status-old | awk '{print $6, $7}'):00 $(date +%z)")
+title="Release-critical bugs status"
+
+makepage "debian" "$title" "$htmldir/debian/all.html" "$time"
+makepage "debian/main" "$title" $htmldir/debian/main.html "$time"
+makepage "debian/contrib" "$title" $htmldir/debian/contrib.html "$time"
+makepage "debian/non-free" "$title" $htmldir/debian/non-free.html "$time"
+makepage "debian/source" "$title" $htmldir/debian/source.html "$time"
+
+makepage "" "$title" $htmldir/other/all.html "$time"
+makepage "" "$title" "$htmldir/other/testing.html" "$time" "-t"
+
+makemainpage > $htmldir/index.html.new
+mv -f $htmldir/index.html.new $htmldir/index.html
+
