@@ -43,7 +43,6 @@ scanlib::readstatus($statusfile);
 scanlib::readcomments($commentsfile);
 
 my $total=0;		# total number of bugs
-my $removecount=0;	# Number of bugs that will disappear if packages are removed
 my $patchcount=0;	# Number of bugs that have a fix proposed
 my $pendingcount=0;	# Number of bugs that will have a fix uploaded RSN
 my $ignorecount=0;      # Number of bugs being ignored
@@ -66,10 +65,6 @@ for my $p (keys %scanlib::packagelist) {
 		}
 		$worrycount++ if (scanlib::check_worry($scanlib::bugs{$nr}));
 	}
-
-	if (defined($scanlib::comments{$p}) && $scanlib::comments{$p} =~ m/^\[REMOVE\]/) {
-		$removecount += scalar @{$scanlib::packagelist{$p}};
-	}
 }
 
-printf("%d %d %d %d %d %d %d\n", $total, $pendingcount, $patchcount, $removecount, $ignorecount, $nottestingcount, $worrycount);
+printf("%d %d %d 0 %d %d %d\n", $total, $pendingcount, $patchcount, $ignorecount, $nottestingcount, $worrycount);

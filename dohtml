@@ -40,17 +40,6 @@ EOF
 	
 	cat <<EOF
 <p>
-Explanation for comment tags:
-<ul>
-   <li><strong>[FIX]</strong>: describes a simple method to deal with
-       the bug.
-   <li><strong>[STRATEGY]</strong>: describes a possible approach for
-       fixing the bug.
-   <li><strong>[HELP]</strong>: help is needed to fix this bug.
-   <li><strong>[REMOVE]</strong>: package will be removed if bug is not fixed
-</ul>
-
-<p>
 Explanation for <a href="http://www.debian.org/Bugs/Developer#tags">bug
 tags</a>:
 
