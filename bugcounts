@@ -42,7 +42,6 @@ my $total=0;		# total number of bugs
 my $patchcount=0;	# Number of bugs that have a fix proposed
 my $pendingcount=0;	# Number of bugs that will have a fix uploaded RSN
 my $ignorecount=0;      # Number of bugs being ignored
-my $nottestingcount=0;	# Number of bugs on packages not in testing
 my $worrycount=0;	# Number of bugs we're actually worried about
 
 for my $p (keys %scanlib::packagelist) {
@@ -53,9 +52,8 @@ for my $p (keys %scanlib::packagelist) {
 		$pendingcount++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*P/);
 		$patchcount++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*\+/);
 		$ignorecount++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*I/);
-		$nottestingcount++ if ($scanlib::bugs{$nr} =~ m/ \[[^]]*X/);
 		$worrycount++ if (scanlib::check_worry($scanlib::bugs{$nr}));
 	}
 }
 
-printf("%d %d %d 0 %d %d %d\n", $total, $pendingcount, $patchcount, $ignorecount, $nottestingcount, $worrycount);
+printf("%d %d %d 0 %d 0 %d\n", $total, $pendingcount, $patchcount, $ignorecount, $worrycount);

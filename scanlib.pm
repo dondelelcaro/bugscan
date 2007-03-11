@@ -202,14 +202,10 @@ sub scanspooldir() {
 
 				# This is needed for now
 				my $exists = 0;
-				for my $arch (@bugcfg::architectures) {
-					for my $pkg (split /[,\s]+/, $bug->{'package'}) {
-						my @versions = Debbugs::Packages::getversions($pkg, $dist, $arch);
-						$exists = 1 if (scalar @versions > 0);
-					}
-					last if $exists;
+				for my $pkg (split /[,\s]+/, $bug->{'package'}) {
+					my @versions = Debbugs::Packages::getversions($pkg, $dist, undef);
+					$exists = 1 if (scalar @versions > 0);
 				}
-
 				next if !$exists;
 
 				my $presence = Debbugs::Status::bug_presence(
@@ -250,14 +246,6 @@ sub scanspooldir() {
 
 		for my $package (split /[,\s]+/, $bug->{'package'}) {
 			$_= $package; y/A-Z/a-z/; $_= $` if m/[^-+._a-z0-9]/;
-			if (not defined $section{$_}) {
-				if (defined $debbugssection{$_}) {
-					$relinfo .= "X";
-				} else {
-					next;	# Skip unavailable packages
-				}
-			}
-
 			push @{$packagelist{$_}}, $f;
 		}
 
@@ -333,7 +321,6 @@ sub check_worry {
 	my ($status) = @_;
 
 	if ($status =~ m/^\[[^]]*I/ or
-	    $status =~ m/ \[[^]]*X/ or
             $status !~ m/ \[[^]]*T/) {
 		return 0;
 	}
