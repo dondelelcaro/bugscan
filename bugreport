@@ -42,9 +42,13 @@ sub PrintPackageHeader() {
 	if ($html) {
 		print "<div class=\"package\"><pre>";
 		print "<a name=\"$p\"><strong>Package:</strong></a> " . scanlib::wwwname($p);
-		print " ($scanlib::section{$p}).\n";
+		if (defined($scanlib::section{$p})) {
+			print " (unknown).\n";
+		} else {
+			print " ($scanlib::section{$p}).\n";
+		}
 		print "<strong>Maintainer:</strong> ";
-		if (defined($scanlib::maintainer{$p})) {
+		if (exists($scanlib::maintainer{$p}) && $scanlib::maintainer{$p} ne '') {
 			if ($scanlib::maintainer{$p} =~ /(.*) <([^>]*)>/) {
 				($name,$email) = ($1,$2);
 			} elsif ($scanlib::maintainer{$p} =~ /<(.*) \((.*)\)>/) {
@@ -52,7 +56,11 @@ sub PrintPackageHeader() {
 			} elsif ($scanlib::maintainer{$p} =~ /<(.*)>/) {
 				$name = $email = $1;
 			}
-			print "$name &lt;<a href=\"http://bugs.debian.org/$email\">$email</A>&gt;\n";
+			if (defined($name)) {
+				print "$name &lt;<a href=\"http://bugs.debian.org/$email\">$email</A>&gt;\n";
+			} else {
+				print "$scanlib::maintainer{$p}\n";
+			}
 		} else {
 			print "unknown\n";
 		}
