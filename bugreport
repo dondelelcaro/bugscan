@@ -43,9 +43,9 @@ sub PrintPackageHeader() {
 		print "<div class=\"package\"><pre>";
 		print "<a name=\"$p\"><strong>Package:</strong></a> " . scanlib::wwwname($p);
 		if (defined($scanlib::section{$p})) {
-			print " (unknown).\n";
-		} else {
 			print " ($scanlib::section{$p}).\n";
+		} else {
+			print " (unknown).\n";
 		}
 		print "<strong>Maintainer:</strong> ";
 		if (exists($scanlib::maintainer{$p}) && $scanlib::maintainer{$p} ne '') {
