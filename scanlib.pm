@@ -200,6 +200,18 @@ sub scanspooldir() {
 
 				next if (!$disttags{$dist});
 
+				# This is needed for now
+				my $exists = 0;
+				for my $arch (@bugcfg::architectures) {
+					for my $pkg (split /[,\s]+/, $bug->{'package'}) {
+						my @versions = Debbugs::Packages::getversions($pkg, $dist, $arch);
+						$exists = 1 if (scalar @versions > 0);
+					}
+					last if $exists;
+				}
+
+				next if !$exists;
+
 				my $presence = Debbugs::Status::bug_presence(
 					bug => $f, 
 					status => $bug, 
