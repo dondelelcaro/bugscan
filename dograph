@@ -6,11 +6,14 @@ cd /home/sesse/bugscan
 
 tmp=`tempfile`
 tmp2=`tempfile`
+tmp3=`tempfile`
 
 find counts -type f | sort | xargs grep '^' /dev/null |
     sed 's/^.*count-//;s/ .*$//;s/:/ /' >"$tmp"
-find counts -type f | sort | xargs egrep '^(.* ){6}' /dev/null |
-    sed 's/^.*count-//;s/:.* / /;' >"$tmp2"
+find counts -type f | sort | xargs egrep '^(.* ){6}' /dev/null | tr ":-" " " |
+    cut -d" " -f2,9 >"$tmp2"
+find counts -type f | sort | xargs egrep '^(.* ){7}' /dev/null | tr ":-" " " |
+    cut -d" " -f2,10 >"$tmp3"
 
 #for i in counts/count-[0-9]* ; do
 #	date=`echo $i | sed -e s/.*count-//`
@@ -29,7 +32,7 @@ set yrange [0:]
 #set xtics 2678400
 #set nomxtics
 set output "/home/sesse/bugscan/www/graph.png"
-plot "$tmp" using 1:2 with lines, "$tmp2" using 1:2 with lines
+plot "$tmp" using 1:2 with lines, "$tmp2" using 1:2 with lines, "$tmp3" using 1:2 with lines
 quit
 EOF
 

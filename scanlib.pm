@@ -319,4 +319,13 @@ sub check_worry {
 	return 1;
 }
 
+sub check_worry_stable {
+	my ($status) = @_;
+
+	if ($status !~ m/ \[[^]]*S/) {
+		return 0;
+	}
+	return 1;
+}
+
 1;

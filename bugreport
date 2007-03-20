@@ -132,6 +132,7 @@ sub MakeStatistics() {
 	my $pendingtotal=0;	# Total number of bugs marked pending
 	my $ignoretotal=0;	# Total number of bugs marked ignore
 	my $worrytotal=0;	# Total number of bugs we're actually worried about
+	my $stabletotal=0;	# Total number of bugs affecting stable
 	my %list;		# List of bugnumber associated with package
 
 	for my $p (sort keys %scanlib::packagelist) {
@@ -143,6 +144,7 @@ sub MakeStatistics() {
 			$patchtotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*\+/);
 			$ignoretotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*I/);
 			$worrytotal++ if (scanlib::check_worry($scanlib::bugs{$nr}));
+			$stabletotal++ if (scanlib::check_worry_stable($scanlib::bugs{$nr}));
 
 			if (not defined($scanlib::exclude{$nr})) {
 				$bugcount++;
@@ -156,13 +158,15 @@ sub MakeStatistics() {
 		printf("<strong>Number that have a patch:</strong> %d<BR>\n", $patchtotal);
 		printf("<strong>Number that have a fix prepared and waiting to upload:</strong> %d<BR>\n", $pendingtotal);
 		printf("<strong>Number that are being ignored:</strong> %d<BR>\n", $ignoretotal);
-		printf("<strong>Number concerning the next release (excluding ignored and not-in-testing):</strong> %d<P>\n", $worrytotal);
+		printf("<strong>Number concerning the next release (excluding ignored and not-in-testing):</strong> %d<BR>\n", $worrytotal);
+		printf("<strong>Number concerning the current stable release:</strong> %d<P>\n", $stabletotal);
 	} else {
 		print "Total number of release-critical bugs: $bugcount\n";
 		printf("Number that have a patch: %d\n", $patchtotal);
 		printf("Number that have a fix prepared and waiting to upload: %d\n", $pendingtotal);
 		printf("Number that are being ignored: %d\n", $ignoretotal);
 		printf("Number concerning the next release (excluding ignored and not-in-testing): %d\n", $worrytotal);
+		printf("Number concerning the current stable release: %d<P>\n", $stabletotal);
 	}
 }
 
