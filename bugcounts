@@ -7,7 +7,7 @@ use Getopt::Std;
 require scanlib;
 require bugcfg;
 use strict;
-use warnings;
+# use warnings;
 
 my $Version		= "BugCount 1.1\nCopyright (C) Wichert Akkerman <wakkerma\@debian.org>\n";
 my $statusfile		= "status";
@@ -41,19 +41,17 @@ scanlib::readstatus($statusfile);
 my $total=0;		# total number of bugs
 my $patchcount=0;	# Number of bugs that have a fix proposed
 my $pendingcount=0;	# Number of bugs that will have a fix uploaded RSN
-my $ignorecount=0;      # Number of bugs being ignored
+my $ignorecount=0;  # Number of bugs being ignored
 my $worrycount=0;	# Number of bugs we're actually worried about
 my $stablecount=0;	# Number of bugs affecting stable
 
-for my $p (keys %scanlib::packagelist) {
-	for my $nr (sort @{$scanlib::packagelist{$p}}) {
-		$total++;
-		$pendingcount++ if ($scanlib::bugs{$nr}->{'pending'});
-		$patchcount++ if ($scanlib::bugs{$nr}->{'patch'});
-		$ignorecount++ if ($scanlib::bugs{$nr}->{'sarge-ignore'} || $scanlib::bugs{$nr}->{'etch-ignore'});
-		$worrycount++ if (scanlib::check_worry($scanlib::bugs{$nr}));
-		$stablecount++ if (scanlib::check_worry_stable($scanlib::bugs{$nr}));
-	}
+for my $bug (values %scanlib::bugs) {
+	$total++;
+	$pendingcount++ if ($bug->{'pending'});
+	$patchcount++ if ($bug->{'patch'});
+	$ignorecount++ if ($bug->{'sarge-ignore'} || $bug->{'etch-ignore'});
+	$worrycount++ if (scanlib::check_worry($bug));
+	$stablecount++ if (scanlib::check_worry_stable($bug));
 }
 
 printf("%d %d %d 0 %d 0 %d %d\n", $total, $pendingcount, $patchcount, $ignorecount, $worrycount, $stablecount);
