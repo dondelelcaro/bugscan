@@ -160,7 +160,7 @@ sub MakeStatistics() {
 		printf("Number that have a patch: %d\n", $patchtotal);
 		printf("Number that have a fix prepared and waiting to upload: %d\n", $pendingtotal);
 		printf("Number that are being ignored: %d\n", $ignoretotal);
-		printf("Number concerning the current stable release: %d<P>\n", $stabletotal);
+		printf("Number concerning the current stable release: %d\n", $stabletotal);
 		printf("Number concerning the next release (excluding ignored and not-in-testing): %d\n", $worrytotal);
 	}
 }
