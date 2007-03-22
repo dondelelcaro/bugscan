@@ -52,7 +52,7 @@ for my $p (keys %scanlib::packagelist) {
 		$total++;
 		$pendingcount++ if ($scanlib::bugs{$nr}->{'pending'});
 		$patchcount++ if ($scanlib::bugs{$nr}->{'patch'});
-		$ignorecount++ if ($scanlib::bugs{$nr}->{'etch-ignore'});
+		$ignorecount++ if ($scanlib::bugs{$nr}->{'sarge-ignore'} || $scanlib::bugs{$nr}->{'etch-ignore'});
 		$worrycount++ if (scanlib::check_worry($scanlib::bugs{$nr}));
 		$stablecount++ if (scanlib::check_worry_stable($scanlib::bugs{$nr}));
 	}

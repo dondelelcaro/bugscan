@@ -224,7 +224,7 @@ sub scanspooldir() {
 			next if !$affects_any;
 		}
 
-		for my $keyword qw(pending patch help moreinfo unreproducible security upstream etch-ignore) {
+		for my $keyword qw(pending patch help moreinfo unreproducible security upstream sarge-ignore etch-ignore) {
 			$bi->{$keyword} = ($bug->{'keywords'} =~ /\b$keyword\b/) ? 1 : 0;
 		}
 
@@ -322,7 +322,7 @@ sub check_worry {
 sub check_worry_stable {
 	my ($bi) = @_;
 
-	return ($bi->{'stable'});
+	return ($bi->{'stable'} && !$bi->{'sarge-ignore'});
 }
 
 sub get_taginfo {
@@ -336,7 +336,7 @@ sub get_taginfo {
 	$taginfo .= $bi->{'unreproducible'} ? "R" : " ";
 	$taginfo .= $bi->{'security'}       ? "S" : " ";
 	$taginfo .= $bi->{'upstream'}       ? "U" : " ";
-	$taginfo .= $bi->{'etch-ignore'}    ? "I" : " ";
+	$taginfo .= ($bi->{'sarge-ignore'} || $bi->{'etch-ignore'}) ? "I" : " ";
 
 	return $taginfo;
 }

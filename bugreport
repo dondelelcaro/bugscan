@@ -142,7 +142,7 @@ sub MakeStatistics() {
 		for my $nr (@{$scanlib::packagelist{$p}}) {
 			$pendingtotal++ if ($scanlib::bugs{$nr}->{'pending'});
 			$patchtotal++ if ($scanlib::bugs{$nr}->{'patch'});
-			$ignoretotal++ if ($scanlib::bugs{$nr}->{'etch-ignore'});
+			$ignoretotal++ if ($scanlib::bugs{$nr}->{'sarge-ignore'} || $scanlib::bugs{$nr}->{'etch-ignore'});
 			$worrytotal++ if (scanlib::check_worry($scanlib::bugs{$nr}));
 			$stabletotal++ if (scanlib::check_worry_stable($scanlib::bugs{$nr}));
 
