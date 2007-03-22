@@ -101,7 +101,8 @@ EOF
 line graphs the number of bugs that are actually a concern for the next
 release (excluding ignored bugs, bugs on packages not in testing, and bugs
 whose tags and/or versioning information indicate that they don't apply to
-testing).</p>
+testing), and the blue line graphs the number of bugs that are a concern
+for the <em>current</em> stable release.</p>
 
 <h2>Recent changes</h2>
 EOF
