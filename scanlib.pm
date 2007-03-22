@@ -6,7 +6,6 @@
 # which was based on an unknown other script.
 #
 # Global variables:
-#   %premature      - list of prematurely closed bugreports
 #   %exclude        - list of bugreports to exclude from the report
 #   %maintainer     - map from packagename to maintainer
 #   %section        - map from packagename to section in the FTP-site
@@ -24,7 +23,7 @@ use warnings;
 require bugcfg;
 package scanlib;
 
-our (%premature,%exclude,%maintainer,%section,%packagelist,%debbugssection,%bugs);
+our (%exclude,%maintainer,%section,%packagelist,%debbugssection,%bugs);
 
 
 # Read the list of maintainer 
@@ -220,8 +219,7 @@ sub scanspooldir() {
 				}
 			}
 			
-			next if !$affects_any and not $premature{$f};
-			$premature{$f}++ if !$affects_any;
+			next if !$affects_any;
 		}
 
 		for my $keyword qw(pending patch help moreinfo unreproducible security upstream etch-ignore) {
