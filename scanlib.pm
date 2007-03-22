@@ -1,5 +1,5 @@
 #! /usr/bin/perl
-# vim: ts=4 sw=4 nowrap
+# vim: ts=8 sw=8 nowrap
 #
 # General functions for scanning the BTS-database.
 # Based on bugscan, written by Richard Braakman <dark@debian.org>,

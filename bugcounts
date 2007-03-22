@@ -1,5 +1,5 @@
 #! /usr/bin/perl
-# vim: ts=4 sw=4 nowrap
+# vim: ts=8 sw=8 nowrap
 
 # Generate some counts for the bugreports
 
