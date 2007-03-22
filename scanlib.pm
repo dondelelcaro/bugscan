@@ -225,7 +225,7 @@ sub scanspooldir() {
 		}
 
 		for my $keyword qw(pending patch help moreinfo unreproducible security upstream sarge-ignore etch-ignore) {
-			$bi->{$keyword} = ($bug->{'keywords'} =~ /\b$keyword\b/) ? 1 : 0;
+			$bi->{$keyword} = grep(/^$keyword$/, @tags);
 		}
 
 		if (length($bug->{'mergedwith'})) {
