@@ -140,9 +140,9 @@ sub MakeStatistics() {
 
 		next if (defined $scanlib::exclude{$p});
 		for my $nr (@{$scanlib::packagelist{$p}}) {
-			$pendingtotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*P/);
-			$patchtotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*\+/);
-			$ignoretotal++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*I/);
+			$pendingtotal++ if ($scanlib::bugs{$nr}->{'pending'});
+			$patchtotal++ if ($scanlib::bugs{$nr}->{'patch'});
+			$ignoretotal++ if ($scanlib::bugs{$nr}->{'etch-ignore'});
 			$worrytotal++ if (scanlib::check_worry($scanlib::bugs{$nr}));
 			$stabletotal++ if (scanlib::check_worry_stable($scanlib::bugs{$nr}));
 

@@ -24,12 +24,22 @@ for my $p (keys %scanlib::packagelist) {
 	} else {
 	    $section = $scanlib::debbugssection{$p};
 	}
-	print "$p $section $scanlib::maintainer{$p}\n";
-	for my $b (@{$scanlib::packagelist{$p}}) {
-		print "$scanlib::bugs{$b}\n";
+	print "package\n";
+	print $p, "\n";
+	print $section, "\n";
+	print $scanlib::maintainer{$p}, "\n";
+	print "\n";
+}
+
+for my $b (keys %scanlib::bugs) {
+	print "bug\n";
+	for my $key (keys %{$scanlib::bugs{$b}}) {
+		print $key, "=", $scanlib::bugs{$b}->{$key}, "\n";
 	}
 	print "\n";
 }
+
+print "end\n";
 
 exit 0;
 

@@ -50,9 +50,9 @@ for my $p (keys %scanlib::packagelist) {
 	for my $nr (sort @{$scanlib::packagelist{$p}}) {
 		next if (defined $bugcfg::exclude{$nr});
 		$total++;
-		$pendingcount++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*P/);
-		$patchcount++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*\+/);
-		$ignorecount++ if ($scanlib::bugs{$nr} =~ m/^\[[^]]*I/);
+		$pendingcount++ if ($scanlib::bugs{$nr}->{'pending'});
+		$patchcount++ if ($scanlib::bugs{$nr}->{'patch'});
+		$ignorecount++ if ($scanlib::bugs{$nr}->{'etch-ignore'});
 		$worrycount++ if (scanlib::check_worry($scanlib::bugs{$nr}));
 		$stablecount++ if (scanlib::check_worry_stable($scanlib::bugs{$nr}));
 	}

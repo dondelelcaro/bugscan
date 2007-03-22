@@ -154,6 +154,12 @@ sub scanspooldir() {
 		my $bug = Debbugs::Status::read_bug(summary => "$f.summary");
 		next if (!defined($bug));
 		
+		my $bi = {
+			number => $f,
+			subject => $bug->{'subject'},
+			package => $bug->{'package'}
+		};
+		
 		$skip=1;
 		for $walk (@bugcfg::priorities) {
 			$skip=0 if $walk eq $bug->{'severity'};
@@ -181,7 +187,6 @@ sub scanspooldir() {
 			$disttags{'experimental'} = 1;
 		}
 		
-		my $bi = {};
 		if (defined($section{$bug->{'package'}}) && $section{$bug->{'package'}} eq 'pseudo') {
 			# versioning information makes no sense for pseudo packages,
 			# just use the tags
@@ -236,35 +241,45 @@ sub scanspooldir() {
 		my $taginfo = get_taginfo($bi);
 		my $relinfo = get_relinfo($bi);
 
-		$bugs{$f} = "$f [$taginfo] [$relinfo] " . $bug->{'subject'};
+		$bugs{$f} = $bi;
 	}
 }
 
 
 sub readstatus() {
-	my $bug;		# Number of current bug
-	my $subject;	# Subject for current bug
-	my $pkg;		# Name of current package
-	my $file;		# Name of statusfile
-	my $sect;		# Section of current package
-	my $mnt;		# Maintainer of current package
+    my $filename = shift;
+	open STATUS, "<", $filename
+		or die "$filename: $!";
 
-	$file=shift;
-	open(P, $file) or die "open $file: $!";
-	while (<P>) {
-		chomp;
-		if (m/^[0-9]+ \[/) {
-			($bug,$subject)=split(/ /, $_, 2);
-			$bugs{$bug}=$subject;
-			push @{$packagelist{$pkg}}, $bug;
-		} else {
-			($pkg,$sect, $mnt)=split(/ /, $_, 3);
-			next if (!defined($pkg));
-			$section{$pkg}=$sect;
-			$maintainer{$pkg}=$mnt;
+    while (1) {
+		chomp (my $type = <STATUS>);
+		if ($type eq 'package') {
+			chomp (my $package = <STATUS>);
+			chomp (my $section = <STATUS>);
+			chomp (my $maintainer = <STATUS>);
+			my $blank = <STATUS>;
+
+			$section{$package} = $section;
+			$maintainer{$package} = $maintainer;
 		}
+		if ($type eq 'bug') {
+			my $bug = {};
+			while (1) {
+				my $line = <STATUS>;
+				last if ($line !~ /^(.*?)=(.*)$/);
+
+				$bug->{$1} = $2;				
+			}
+			$bugs{$bug->{'number'}} = $bug;
+
+			for my $package (split /[,\s]+/, $bug->{'package'}) {
+				$_= $package; y/A-Z/a-z/; $_= $` if m/[^-+._a-z0-9]/;
+				push @{$packagelist{$_}}, $bug->{'number'};
+			}
+		}
+		last if ($type eq 'end');
 	}
-	close P;
+	close(STATUS);
 }
 
 
@@ -299,22 +314,15 @@ sub wwwname() {
 }
 
 sub check_worry {
-	my ($status) = @_;
+	my ($bi) = @_;
 
-	if ($status =~ m/^\[[^]]*I/ or
-            $status !~ m/ \[[^]]*T/) {
-		return 0;
-	}
-	return 1;
+	return ($bi->{'testing'} && !$bi->{'etch-ignore'});
 }
 
 sub check_worry_stable {
-	my ($status) = @_;
+	my ($bi) = @_;
 
-	if ($status !~ m/ \[[^]]*S/) {
-		return 0;
-	}
-	return 1;
+	return ($bi->{'stable'});
 }
 
 sub get_taginfo {
