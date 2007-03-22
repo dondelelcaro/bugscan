@@ -6,7 +6,6 @@
 # which was based on an unknown other script.
 #
 # Global variables:
-#   %exclude        - list of bugreports to exclude from the report
 #   %maintainer     - map from packagename to maintainer
 #   %section        - map from packagename to section in the FTP-site
 #   %packagelist    - map from packagename to bugreports
@@ -23,7 +22,7 @@ use warnings;
 require bugcfg;
 package scanlib;
 
-our (%exclude,%maintainer,%section,%packagelist,%debbugssection,%bugs);
+our (%maintainer,%section,%packagelist,%debbugssection,%bugs);
 
 
 # Read the list of maintainer 
@@ -152,8 +151,6 @@ sub scanspooldir() {
 	closedir(DIR);
 
 	for $f (@list) {
-		next if $exclude{$f};			# Check the list of bugs to skip
-	
 		my $bug = Debbugs::Status::read_bug(summary => "$f.summary");
 		next if (!defined($bug));
 		
