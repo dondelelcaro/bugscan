@@ -46,9 +46,7 @@ my $worrycount=0;	# Number of bugs we're actually worried about
 my $stablecount=0;	# Number of bugs affecting stable
 
 for my $p (keys %scanlib::packagelist) {
-	next if (defined $bugcfg::exclude{$p});
 	for my $nr (sort @{$scanlib::packagelist{$p}}) {
-		next if (defined $bugcfg::exclude{$nr});
 		$total++;
 		$pendingcount++ if ($scanlib::bugs{$nr}->{'pending'});
 		$patchcount++ if ($scanlib::bugs{$nr}->{'patch'});

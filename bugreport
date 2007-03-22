@@ -85,10 +85,8 @@ sub MakeBuglist() {
 	my $header;		# Flag if packagename has already been printed
 
 	for my $p (sort {$a cmp $b} keys %scanlib::packagelist) {
-		next if (defined $bugcfg::exclude{$p});
 		$header = 0;
 		for $nr (sort @{$scanlib::packagelist{$p}}) {
-			next if (defined $bugcfg::exclude{$nr});
 			if (! $header) {
 				$header = 1;
 				&PrintPackageHeader($p);
@@ -138,7 +136,6 @@ sub MakeStatistics() {
 	for my $p (sort keys %scanlib::packagelist) {
 		my $count = 0;		# Number of bugs for this package
 
-		next if (defined $scanlib::exclude{$p});
 		for my $nr (@{$scanlib::packagelist{$p}}) {
 			$pendingtotal++ if ($scanlib::bugs{$nr}->{'pending'});
 			$patchtotal++ if ($scanlib::bugs{$nr}->{'patch'});
@@ -146,10 +143,8 @@ sub MakeStatistics() {
 			$worrytotal++ if (scanlib::check_worry($scanlib::bugs{$nr}));
 			$stabletotal++ if (scanlib::check_worry_stable($scanlib::bugs{$nr}));
 
-			if (not defined($scanlib::exclude{$nr})) {
-				$bugcount++;
-				$count++;
-			} 
+			$bugcount++;
+			$count++;
 		}
 	}
 
