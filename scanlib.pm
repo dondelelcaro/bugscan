@@ -185,19 +185,22 @@ sub scanspooldir() {
 			$disttags{'experimental'} = 1;
 		}
 		
-		my $relinfo = "";
+		my $bi = {};
 		if (defined($section{$bug->{'package'}}) && $section{$bug->{'package'}} eq 'pseudo') {
 			# versioning information makes no sense for pseudo packages,
 			# just use the tags
 			for my $dist qw(oldstable stable testing unstable experimental) {
-				$relinfo .= uc(substr($dist, 0, 1)) if $disttags{$dist};
+				$bi->{$dist} = $disttags{$dist};
 			}
 			next if (length($bug->{'done'}));
 		} else {
+			my $affects_any = 0;
+		
 			# only bother to check the versioning status for the distributions indicated by the tags 
 			for my $dist qw(oldstable stable testing unstable experimental) {
 				local $SIG{__WARN__} = sub {};
 
+				$bi->{$dist} = 0;
 				next if (!$disttags{$dist});
 
 				my $presence = Debbugs::Status::bug_presence(
@@ -212,24 +215,18 @@ sub scanspooldir() {
 				# indicates that no versioning information is present and it's not closed
 				# unversioned)
 				if (!defined($presence) || ($presence ne 'absent' && $presence ne 'fixed')) {
-					$relinfo .= uc(substr($dist, 0, 1));
+					$bi->{$dist} = 1;
+					$affects_any = 1;
 				}
 			}
 			
-			next if $relinfo eq '' and not $premature{$f};
-			$premature{$f}++ if $relinfo eq '';
+			next if !$affects_any and not $premature{$f};
+			$premature{$f}++ if !$affects_any;
 		}
 
-		$taginfo = "[";
-		$taginfo .= ($bug->{'keywords'} =~ /\bpending\b/        ? "P" : " ");
-		$taginfo .= ($bug->{'keywords'} =~ /\bpatch\b/          ? "+" : " ");
-		$taginfo .= ($bug->{'keywords'} =~ /\bhelp\b/           ? "H" : " ");
-		$taginfo .= ($bug->{'keywords'} =~ /\bmoreinfo\b/       ? "M" : " ");
-		$taginfo .= ($bug->{'keywords'} =~ /\bunreproducible\b/ ? "R" : " ");
-		$taginfo .= ($bug->{'keywords'} =~ /\bsecurity\b/       ? "S" : " ");
-		$taginfo .= ($bug->{'keywords'} =~ /\bupstream\b/       ? "U" : " ");
-		$taginfo .= ($bug->{'keywords'} =~ /\betch-ignore\b/    ? "I" : " ");
-		$taginfo .= "]";
+		for my $keyword qw(pending patch help moreinfo unreproducible security upstream etch-ignore) {
+			$bi->{$keyword} = ($bug->{'keywords'} =~ /\b$keyword\b/) ? 1 : 0;
+		}
 
 		if (length($bug->{'mergedwith'})) {
 			my @merged = split(' ', $bug->{'mergedwith'});
@@ -241,13 +238,10 @@ sub scanspooldir() {
 			push @{$packagelist{$_}}, $f;
 		}
 
-		if ($relinfo eq "") { # or $relinfo eq "U" # confuses e.g. #210306
-			$relinfo = "";
-		} else {
-			$relinfo = " [$relinfo]";
-		}
+		my $taginfo = get_taginfo($bi);
+		my $relinfo = get_relinfo($bi);
 
-		$bugs{$f} = "$f $taginfo$relinfo " . $bug->{'subject'};
+		$bugs{$f} = "$f [$taginfo] [$relinfo] " . $bug->{'subject'};
 	}
 }
 
@@ -327,5 +321,33 @@ sub check_worry_stable {
 	}
 	return 1;
 }
+
+sub get_taginfo {
+    my $bi = shift;
+
+	my $taginfo = "";
+	$taginfo .= $bi->{'pending'}        ? "P" : " ";
+	$taginfo .= $bi->{'patch'}          ? "+" : " ";
+	$taginfo .= $bi->{'help'}           ? "H" : " ";
+	$taginfo .= $bi->{'moreinfo'}       ? "M" : " ";
+	$taginfo .= $bi->{'unreproducible'} ? "R" : " ";
+	$taginfo .= $bi->{'security'}       ? "S" : " ";
+	$taginfo .= $bi->{'upstream'}       ? "U" : " ";
+	$taginfo .= $bi->{'etch-ignore'}    ? "I" : " ";
+
+	return $taginfo;
+}
+
+sub get_relinfo {
+    my $bi = shift;
+
+    my $relinfo = "";
+	for my $dist qw(oldstable stable testing unstable experimental) {
+	    $relinfo .= uc(substr($dist, 0, 1)) if $bi->{$dist};
+	}
+
+	return $relinfo;
+}
+
 
 1;
