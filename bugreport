@@ -21,13 +21,14 @@ sub ShowVersion() {
 sub ShowUsage() {
 	print <<EOF;
 Usage:
-  $0 [-V] [-h] [-H] [-l] [-s] [-d distrib] [-S file] [-C file]
+  $0 [-V] [-h] [-H] [-l] [-s] [-b] [-t] [-d distrib] [-S file] [-C file]
 Options:
   -V    show version
   -h    show some (hopefully) helpful information
   -H    produce HTML output
   -l    list all release-critical bugs
   -s    list bug statistics
+  -b    show bugs relevant for stable only
   -t    show bugs relevant for testing only
   -d    only list these distributions (comma-separated)
   -S    use different statusfile
@@ -183,9 +184,16 @@ sub FilterBugs() {
 	}
 }
 
-our ($opt_h,$opt_V,$opt_S,$opt_H,$opt_d,$opt_t,$opt_s,$opt_l);
+sub FilterBugsStable() {
+	for my $p (sort keys %scanlib::packagelist) {
+		$scanlib::packagelist{$p} = [ grep { scanlib::check_worry_stable($scanlib::bugs{$_}) } @{$scanlib::packagelist{$p}} ];
+		delete $scanlib::packagelist{$p} if (scalar @{$scanlib::packagelist{$p}} == 0);
+	}
+}
 
-getopts('VhHlstd:S:');
+our ($opt_h,$opt_V,$opt_S,$opt_H,$opt_d,$opt_b,$opt_t,$opt_s,$opt_l);
+
+getopts('VhHlsbtd:S:');
 ShowUsage if ($opt_h);
 ShowVersion if ($opt_V);
 $statusfile=$opt_S if ($opt_S);
@@ -194,6 +202,7 @@ $html=1 if ($opt_H);
 scanlib::readstatus($statusfile);
 
 FilterPackages($opt_d) if ($opt_d);
+FilterBugsStable() if ($opt_b);
 FilterBugs() if ($opt_t);
 
 MakeStatistics if ($opt_s);

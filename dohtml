@@ -123,6 +123,8 @@ EOF
        <a href="http://www.debian.org/Bugs/pseudo-packages">(?)</a>
   <li><a href="other/all.html">Everything in one page</a>
     <br>
+     + <a href="other/stable.html">Only bugs relevant to stable</a>
+    <br>
      + <a href="other/testing.html">Only bugs relevant to testing</a>
 </ul>
 <p clear=both>
@@ -154,6 +156,7 @@ makepage "debian/non-free" "$title" $htmldir/debian/non-free.html "$time"
 makepage "debian/source" "$title" $htmldir/debian/source.html "$time"
 
 makepage "" "$title" $htmldir/other/all.html "$time"
+makepage "" "$title" "$htmldir/other/stable.html" "$time" "-b"
 makepage "" "$title" "$htmldir/other/testing.html" "$time" "-t"
 
 makemainpage > $htmldir/index.html.new
