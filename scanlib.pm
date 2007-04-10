@@ -174,9 +174,9 @@ sub scanspooldir() {
 		next if $skip==1;
 	
 		my %disttags = ();	
-		$disttags{'oldstable'}    = grep(/^woody$/, @tags);
-		$disttags{'stable'}       = grep(/^sarge$/, @tags);
-		$disttags{'testing'}      = grep(/^etch$/, @tags);
+		$disttags{'oldstable'}    = grep(/^sarge$/, @tags);
+		$disttags{'stable'}       = grep(/^etch$/, @tags);
+		$disttags{'testing'}      = grep(/^lenny$/, @tags);
 		$disttags{'unstable'}     = grep(/^sid$/, @tags);
 		$disttags{'experimental'} = grep(/^experimental$/, @tags);
 			
