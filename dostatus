@@ -2,5 +2,6 @@
 
 newtime=`stat --format %y status | cut -d: -f-2`
 echo -n "$newtime (CST): " > /org/bugs.debian.org/www/bugscan/status
-./bugreport -s >> /home/sesse/bugscan/www/status
+./bugreport -s >> /org/bugs.debian.org/www/bugscan/status
+
 

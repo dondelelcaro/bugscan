@@ -51,7 +51,7 @@ tags</a>:
    <li><strong>R</strong>: unreproducible</li>
    <li><strong>S</strong>: security</li>
    <li><strong>U</strong>: upstream</li>
-   <li><strong>I</strong>: sarge-ignore or etch-ignore</li>
+   <li><strong>I</strong>: etch-ignore or lenny-ignore</li>
 </ul>
 
 <p>
