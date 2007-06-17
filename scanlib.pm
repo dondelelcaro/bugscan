@@ -180,8 +180,9 @@ sub scanspooldir() {
 		$disttags{'unstable'}     = grep(/^sid$/, @tags);
 		$disttags{'experimental'} = grep(/^experimental$/, @tags);
 			
-		# default according to dondelelcaro 2006-11-11
+		# default according to vorlon 2007-06-17
 		if (!$disttags{'oldstable'} && !$disttags{'stable'} && !$disttags{'testing'} && !$disttags{'unstable'} && !$disttags{'experimental'}) {
+			$disttags{'stable'} = 1;
 			$disttags{'testing'} = 1;
 			$disttags{'unstable'} = 1;
 			$disttags{'experimental'} = 1;
