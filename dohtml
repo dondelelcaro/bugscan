@@ -1,6 +1,6 @@
 #! /bin/sh
 
-htmldir=/home/sesse/bugscan/www
+htmldir=/org/bugs.debian.org/www/bugscan
 
 realmakepage() {
 	local	filter="$1"	# Distributions to list
@@ -51,12 +51,12 @@ tags</a>:
    <li><strong>R</strong>: unreproducible</li>
    <li><strong>S</strong>: security</li>
    <li><strong>U</strong>: upstream</li>
-   <li><strong>I</strong>: sarge-ignore or etch-ignore</li>
+   <li><strong>I</strong>: etch-ignore or lenny-ignore</li>
 </ul>
 
 <p>
 The second set of tags indicate what releases a bug applies to:
-O for oldstable (woody), S for stable (sarge), T for testing (etch),
+O for oldstable (sarge), S for stable (etch), T for testing (lenny),
 U for unstable (sid) or E for experimental.
 
 <p>

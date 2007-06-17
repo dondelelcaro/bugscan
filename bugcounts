@@ -49,7 +49,7 @@ for my $bug (values %scanlib::bugs) {
 	$total++;
 	$pendingcount++ if ($bug->{'pending'});
 	$patchcount++ if ($bug->{'patch'});
-	$ignorecount++ if ($bug->{'sarge-ignore'} || $bug->{'etch-ignore'});
+	$ignorecount++ if ($bug->{'etch-ignore'} || $bug->{'lenny-ignore'});
 	$worrycount++ if (scanlib::check_worry($bug));
 	$stablecount++ if (scanlib::check_worry_stable($bug));
 }

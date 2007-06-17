@@ -2,7 +2,7 @@
 
 set -e
 
-cd /home/sesse/bugscan
+cd /org/bugs.debian.org/bugscan
 
 tmp=`tempfile`
 tmp2=`tempfile`
@@ -31,9 +31,9 @@ set terminal png
 set yrange [0:]
 #set xtics 2678400
 #set nomxtics
-set output "/home/sesse/bugscan/www/graph.png"
+set output "/org/bugs.debian.org/www/bugscan/graph.png"
 plot "$tmp" using 1:2 with lines, "$tmp2" using 1:2 with lines, "$tmp3" using 1:2 with lines
 quit
 EOF
 
-rm "$tmp" "$tmp2"
+rm "$tmp" "$tmp2" "$tmp3"
