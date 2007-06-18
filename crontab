@@ -30,3 +30,4 @@ ln -sf $countfile count
 ./dohtml
 ./dostatus
 ./dograph
+./make-britney-counts
