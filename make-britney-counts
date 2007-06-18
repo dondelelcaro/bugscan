@@ -1,0 +1,73 @@
+#!/usr/bin/perl
+# vim: ts=8 sw=8 nowrap
+
+# Generate a report britney can use
+
+use Getopt::Std;
+require scanlib;
+require bugcfg;
+use strict;
+# use warnings;
+
+my $Version		= "make-britney-count 1.0\nCopyright (C) Steinar H. Gunderson <sesse\@debian.org>\n";
+my $statusfile		= "status";
+
+sub ShowVersion() {
+	print "$Version\n";
+	exit 0;
+}
+
+sub ShowUsage() {
+	print <<EOF;
+Usage:
+  $0 [-V] [-h] [-S file]
+Options:
+  -V    show version
+  -h    show this screen
+  -S    use a different status file
+EOF
+	exit 0;
+}
+
+our ($opt_h,$opt_V,$opt_S);
+
+getopts('VhS:');
+ShowUsage() if ($opt_h);
+ShowVersion() if ($opt_V);
+$statusfile = $opt_S if ($opt_S);
+
+scanlib::readstatus($statusfile);
+
+my %testingbugs = ();
+my %unstablebugs = ();
+
+for my $bug (values %scanlib::bugs) {
+	for my $package (split /[,\s]+/, $bug->{'package'}) {
+		$package =~ y/A-Z/a-z/;
+		$package = $` if ($package =~ /[^-+._a-z0-9]/);
+
+		if (scanlib::check_worry_unstable($bug)) {
+			++$unstablebugs{$package};
+		}
+		if (scanlib::check_worry($bug)) {
+			++$testingbugs{$package};
+		}
+	}
+}
+
+open TESTING, ">", "britney/testing"
+	or die "britney/testing: $!";
+for my $pkg (sort keys %testingbugs) {
+	print TESTING "$pkg $testingbugs{$pkg}\n";
+}
+close TESTING;
+
+open UNSTABLE, ">", "britney/unstable"
+	or die "britney/unstable: $!";
+for my $pkg (sort keys %unstablebugs) {
+	print UNSTABLE "$pkg $unstablebugs{$pkg}\n";
+}
+close UNSTABLE;
+
+exit 0;
+

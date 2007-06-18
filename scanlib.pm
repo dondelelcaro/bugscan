@@ -83,6 +83,7 @@ sub readpackages() {
 				next unless m/^Package:\s/;	# We're only interested in the packagenames
 				s/^Package:\s*//;			# Strip the fieldname
 				$section{$_} = "$archive/$sect";
+				print "$root/$sect/binary-$arch/Packages.gz\n" if ($_ eq 'xtla');
 			}
 			close(P);
 		}
@@ -324,6 +325,12 @@ sub check_worry_stable {
 	my ($bi) = @_;
 
 	return ($bi->{'stable'} && !$bi->{'etch-ignore'});
+}
+
+sub check_worry_unstable {
+	my ($bi) = @_;
+
+	return ($bi->{'unstable'});
 }
 
 sub get_taginfo {
