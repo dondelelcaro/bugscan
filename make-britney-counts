@@ -41,38 +41,50 @@ scanlib::readstatus($statusfile);
 my %testingbugs = ();
 my %unstablebugs = ();
 
-for my $bug (values %scanlib::bugs) {
+while (my ($nr, $bug) = each %scanlib::bugs) {
 	for my $package (split /[,\s]+/, $bug->{'package'}) {
 		$package =~ y/A-Z/a-z/;
 		$package = $` if ($package =~ /[^-+._a-z0-9]/);
 
 		if (scanlib::check_worry_unstable($bug)) {
-			++$unstablebugs{$package};
+			push @{$unstablebugs{$package}}, $nr;
 		}
 		if (scanlib::check_worry($bug)) {
-			++$testingbugs{$package};
+			push @{$testingbugs{$package}}, $nr;
 		}
 	}
 }
 
 open TESTING, ">", "britney/testing.new"
 	or die "britney/testing.new: $!";
+open TESTINGNR, ">", "britney/testing-nr.new"
+	or die "britney/testing-nr.new: $!";
 for my $pkg (sort keys %testingbugs) {
-	print TESTING "$pkg $testingbugs{$pkg}\n";
+	print TESTING   "$pkg ", scalar @{$testingbugs{$pkg}}, "\n";
+	print TESTINGNR "$pkg ", join(',', @{$testingbugs{$pkg}}), "\n";
 }
 close TESTING;
+close TESTINGNR;
 
 open UNSTABLE, ">", "britney/unstable.new"
 	or die "britney/unstable.new: $!";
+open UNSTABLENR, ">", "britney/unstable-nr.new"
+	or die "britney/unstable-nr.new: $!";
 for my $pkg (sort keys %unstablebugs) {
-	print UNSTABLE "$pkg $unstablebugs{$pkg}\n";
+	print UNSTABLE   "$pkg ", scalar @{$unstablebugs{$pkg}}, "\n";
+	print UNSTABLENR "$pkg ", join(',', @{$unstablebugs{$pkg}}), "\n";
 }
 close UNSTABLE;
+close UNSTABLENR;
 
 rename "britney/testing.new", "britney/testing"
 	or die "renaming britney/testing.new to britney/testing: $!";
+rename "britney/testing-nr.new", "britney/testing-nr"
+	or die "renaming britney/testing-nr.new to britney/testing-nr: $!";
 rename "britney/unstable.new", "britney/unstable"
 	or die "renaming britney/unstable.new to britney/unstable: $!";
+rename "britney/unstable-nr.new", "britney/unstable-nr"
+	or die "renaming britney/unstable-nr.new to britney/unstable-nr: $!";
 
 exit 0;
 
