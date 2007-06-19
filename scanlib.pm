@@ -142,6 +142,8 @@ sub scanspooldir() {
 	my $skip;		# Flow control
 	my $walk;		# index variable
 	my $taginfo;	# Tag info
+					
+	my @archs_with_source = ( @bugcfg::architectures, 'source' );
 
 	chdir($dir) or die "chdir $dir: $!\n";
 
@@ -210,7 +212,7 @@ sub scanspooldir() {
 					bug => $f, 
 					status => $bug, 
 					dist => $dist, 
-					arch => \@bugcfg::architectures
+					arch => \@archs_with_source
 				);
 
 				# ignore bugs that are absent/fixed in this distribution, include everything
