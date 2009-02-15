@@ -51,12 +51,12 @@ tags</a>:
    <li><strong>R</strong>: unreproducible</li>
    <li><strong>S</strong>: security</li>
    <li><strong>U</strong>: upstream</li>
-   <li><strong>I</strong>: etch-ignore or lenny-ignore</li>
+   <li><strong>I</strong>: lenny-ignore or squeeze-ignore</li>
 </ul>
 
 <p>
 The second set of tags indicate what releases a bug applies to:
-O for oldstable (sarge), S for stable (etch), T for testing (lenny),
+O for oldstable (sarge), S for stable (lenny), T for testing (squeeze),
 U for unstable (sid) or E for experimental.
 
 <p>
