@@ -8,11 +8,11 @@ tmp=`tempfile`
 tmp2=`tempfile`
 tmp3=`tempfile`
 
-find counts -type f | sort | xargs grep '^' /dev/null |
+find counts -type f -not -iname '*.bad'| sort | xargs grep '^' /dev/null |
     sed 's/^.*count-//;s/ .*$//;s/:/ /' >"$tmp"
-find counts -type f | sort | xargs egrep '^(.* ){6}' /dev/null | tr ":-" " " |
+find counts -type f -not -iname '*.bad'| sort | xargs egrep '^(.* ){6}' /dev/null | tr ":-" " " |
     cut -d" " -f2,9 >"$tmp2"
-find counts -type f | sort | xargs egrep '^(.* ){7}' /dev/null | tr ":-" " " |
+find counts -type f -not -iname '*.bad'| sort | xargs egrep '^(.* ){7}' /dev/null | tr ":-" " " |
     cut -d" " -f2,10 >"$tmp3"
 
 #for i in counts/count-[0-9]* ; do
