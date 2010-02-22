@@ -44,7 +44,7 @@ my %unstablebugs = ();
 while (my ($nr, $bug) = each %scanlib::bugs) {
 	for my $package (split /[,\s]+/, $bug->{'package'}) {
 		$package =~ y/A-Z/a-z/;
-		$package = $` if ($package =~ /[^-+._a-z0-9]/);
+		$package = $` if ($package =~ /[^-+._:a-z0-9]/);
 
 		# this hack is specific to britney counts, and ignores
 		# bugs tagged ignore for the next testing release
