@@ -238,7 +238,7 @@ sub scanspooldir() {
 		}
 
 		for my $package (split /[,\s]+/, $bug->{'package'}) {
-			$_= $package; y/A-Z/a-z/; $_= $` if m/[^-+._a-z0-9]/;
+			$_= $package; y/A-Z/a-z/; $_= $` if m/[^-+._:a-z0-9]/;
 			push @{$packagelist{$_}}, $f;
 		}
 
