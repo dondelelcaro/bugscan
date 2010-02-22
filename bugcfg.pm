@@ -26,7 +26,8 @@ if ($host eq "master" or $host eq "spohr" or $host eq "rietz") {
 	die "Unknown machine, please configure paths in bugcfg.pm\n";
 }
 
-our @architectures		= ( "i386", "amd64", "alpha", "sparc", "powerpc", "armel", "hppa", "ia64", "mips", "mipsel", "s390" );
+# alpha excluded to RM request
+our @architectures		= ( "i386", "amd64", "sparc", "powerpc", "armel", "hppa", "ia64", "mips", "mipsel", "s390" );
 our @sections		= ( "main", "contrib", "non-free" );
 our @priorities		= ( "serious", "grave", "critical" );
 our @skiptags		= ( );
