@@ -10,7 +10,7 @@ our ($spooldir,$maintainerlist,$debian_ftproot,$debian_sources,$pseudolist);
 
 my $host=`hostname`;
 chomp $host;
-if ($host eq "master" or $host eq "spohr" or $host eq "rietz") {
+if ($host eq "master" or $host eq "spohr" or $host eq "rietz" or $host eq "busoni") {
 	$spooldir	= "/org/bugs.debian.org/debbugs/spool/db-h";
 	$maintainerlist	= "/etc/debbugs/Maintainers";
 	$debian_ftproot	= "/org/bugs.debian.org/etc/indices/ftp/testing";
