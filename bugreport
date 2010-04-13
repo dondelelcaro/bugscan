@@ -173,7 +173,8 @@ sub FilterPackages($) {
 	my $filter = shift;		# Distribution we want to keep
 
 	for my $p (sort keys %scanlib::packagelist) {
-		delete $scanlib::packagelist{$p} unless ($scanlib::section{$p} =~ m/^$filter/);
+		delete $scanlib::packagelist{$p} unless (defined $scanlib::section{$p} and
+							 $scanlib::section{$p} =~ m/^$filter/);
 	}
 }
 
