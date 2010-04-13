@@ -145,8 +145,8 @@ makepage() {
 	mv -f $3.new $3
 }
 
-time=$(date -u --date="$(ls -Ll status | awk '{print $6, $7}'):00 $(date +%z)")
-oldtime=$(date -u --date="$(ls -Ll status-old | awk '{print $6, $7}'):00 $(date +%z)")
+time=$(date -u -d '@'$(($(stat -c '%Y' status) / 3600 * 3600)))
+oldtime=$(date -u -d '@'$(($(stat -c '%Y' status-old) / 3600 * 3600)))
 title="Release-critical bugs status"
 
 makepage "debian" "$title" "$htmldir/debian/all.html" "$time"
