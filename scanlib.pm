@@ -135,7 +135,7 @@ sub scanspool() {
 
 }
 
-sub scanspooldir() {
+sub scanspooldir {
 	my ($dir)		= @_;
 	my $f;			# While we're currently processing
 	my @list;		# List of files to process
@@ -250,7 +250,7 @@ sub scanspooldir() {
 }
 
 
-sub readstatus() {
+sub readstatus {
     my $filename = shift;
 	open STATUS, "<", $filename
 		or die "$filename: $!";
@@ -277,7 +277,7 @@ sub readstatus() {
 			$bugs{$bug->{'number'}} = $bug;
 
 			for my $package (split /[,\s]+/, $bug->{'package'}) {
-				$_= $package; y/A-Z/a-z/; $_= $` if m/[^-+._a-z0-9]/;
+				$_= $package; y/A-Z/a-z/; $_= $` if m/[^-+._:a-z0-9]/;
 				push @{$packagelist{$_}}, $bug->{'number'};
 			}
 		}
