@@ -66,16 +66,10 @@ sub readsources() {
 	}
 }
 
-sub readpackages() {
-	my $root;					# Root of archive we are scanning
-	my $archive;				# Name of archive we are scanning
-	my $sect;					# Name of current section
-	my $arch;					# Name of current architecture
-
-	$root=shift;
-	$archive=shift;
-	for $arch ( @bugcfg::architectures ) {
-		for $sect ( @bugcfg::sections) {
+sub readpackages {
+    my ($root,$archive) = @_;
+	for my $arch ( @bugcfg::architectures ) {
+		for my $sect ( @bugcfg::sections) {
 			open(P, "zcat $root/$sect/binary-$arch/Packages.gz|")
 				or die "open: $root/$sect/binary-$arch/Packages.gz: $!\n";
 			while (<P>) {
@@ -88,6 +82,18 @@ sub readpackages() {
 			close(P);
 		}
 	}
+    # handle the source packages
+    for my $sect (@bugcfg::sections) {
+	my $fh;
+	open($fh,'-|','zcat',"$root/$sect/source/Sources.gz") or
+	    die "Unable to open zcat $root/$sect/source/Sources.gz for reading: $!";
+	while (<$fh>) {
+	    chomp;
+	    next unless m/^Package:\s/;	# We're only interested in the packagenames
+	    s/^Package:\s*//;			# Strip the fieldname
+	    $section{$_} = "$archive/$sect";
+	}
+    }
 }
 
 sub readdebbugssources() {
