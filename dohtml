@@ -56,7 +56,7 @@ tags</a>:
 
 <p>
 The second set of tags indicate what releases a bug applies to:
-O for oldstable (sarge), S for stable (lenny), T for testing (squeeze),
+O for oldstable (etch), S for stable (lenny), T for testing (squeeze),
 U for unstable (sid) or E for experimental.
 
 <p>
