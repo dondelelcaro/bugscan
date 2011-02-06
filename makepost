@@ -23,7 +23,7 @@ Explanation for bug tags:
    I  etch-ignore
 
 The second set of tags indicate what releases a bug applies to:
-O for oldstable (sarge), S for stable (lenny), T for testing (squeeze),
+O for oldstable (lenny), S for stable (squeeze), T for testing (wheezy),
 U for unstable (sid) or E for experimental.
 
 ------------------------------------------------------------------------------
