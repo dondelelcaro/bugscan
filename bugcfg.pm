@@ -12,7 +12,7 @@ use Debbugs::Config qw(:config);
 
 $spooldir = $config{spool_dir};
 $maintainerlist = $config{maintainer_file};
-$debian_ftproot = $config{package_source}
+$debian_ftproot = $config{package_source};
 $debian_sources = $config{package_source};
 $pseudolist = $config{pseudo_desc_file};
 
