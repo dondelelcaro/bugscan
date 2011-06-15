@@ -18,6 +18,7 @@ $pseudolist = $config{pseudo_desc_file};
 
 $debian_sources	= "/etc/debbugs/indices/ftp.sources";
 
+$debian_ftproot = "/org/bugs.debian.org/etc/indices/ftp/testing";
 
 
 # alpha excluded to RM request
