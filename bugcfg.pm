@@ -10,7 +10,7 @@ use Debbugs::Config qw(:config);
 
 # General configuration stuff
 
-$spooldir = $config{spool_dir};
+$spooldir = $config{spool_dir}.'/db-h';
 $maintainerlist = $config{maintainer_file};
 $debian_ftproot = $config{package_source};
 $debian_sources = $config{package_source};
