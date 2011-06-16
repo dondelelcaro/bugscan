@@ -24,7 +24,7 @@ $debian_ftproot = "/org/bugs.debian.org/etc/indices/ftp/testing";
 # alpha excluded to RM request
 our @architectures		= ( "i386", "amd64", "sparc", "powerpc", "armel", "hppa", "ia64", "mips", "mipsel", "s390" );
 our @sections		= ( "main", "contrib", "non-free" );
-our @priorities		= $config{strong_severities};
+our @priorities		= @{$config{strong_severities}};
 our @skiptags		= ( );
 
 1;
