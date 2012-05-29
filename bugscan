@@ -19,15 +19,17 @@ scanlib::scanspool();
 
 for my $p (keys %scanlib::packagelist) {
 	my $section;
-	if (exists $scanlib::section{$p}) {
-	    $section = $scanlib::section{$p};
+	my $package = $p;
+	$package =~ s/src://;
+	if (exists $scanlib::section{$package}) {
+	    $section = $scanlib::section{$package};
 	} else {
-	    $section = $scanlib::debbugssection{$p};
+	    $section = $scanlib::debbugssection{$package};
 	}
 	print "package\n";
 	print $p, "\n";
 	print $section, "\n";
-	print $scanlib::maintainer{$p}, "\n";
+	print $scanlib::maintainer{$package}, "\n";
 	print "\n";
 }
 
