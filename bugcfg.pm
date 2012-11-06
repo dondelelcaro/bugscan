@@ -21,8 +21,10 @@ $debian_sources	= "/etc/debbugs/indices/ftp.sources";
 $debian_ftproot = "/org/bugs.debian.org/etc/indices/ftp/testing";
 
 
-# alpha excluded to RM request
-our @architectures		= ( "i386", "amd64", "sparc", "powerpc", "armel", "hppa", "ia64", "mips", "mipsel", "s390" );
+# check out:
+# http://release.debian.org/wheezy/arch_qualify.html
+# and then generally include architectures which are currently in testing
+our @architectures = qw(amd64 armel armhf i386 ia64 kfreebsd-amd64 kfreebsd-i386 mips mipsel powerpc s390 s390x sparc);
 our @sections		= ( "main", "contrib", "non-free" );
 our @priorities		= @{$config{strong_severities}};
 our @skiptags		= ( );
