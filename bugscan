@@ -17,6 +17,8 @@ scanlib::readpseudopackages();
 scanlib::readmaintainers();
 scanlib::scanspool();
 
+binmode(STDOUT,':encoding(UTF-8)');
+
 for my $p (keys %scanlib::packagelist) {
 	my $section;
 	my $package = $p;
