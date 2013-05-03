@@ -200,7 +200,7 @@ sub scanspooldir {
 		if (defined($section{$bug->{'package'}}) && $section{$bug->{'package'}} eq 'pseudo') {
 			# versioning information makes no sense for pseudo packages,
 			# just use the tags
-			for my $dist qw(oldstable stable testing unstable experimental) {
+			for my $dist (qw(oldstable stable testing unstable experimental)) {
 				$bi->{$dist} = $disttags{$dist};
 			}
 			next if (length($bug->{'done'}));
@@ -208,7 +208,7 @@ sub scanspooldir {
 			my $affects_any = 0;
 		
 			# only bother to check the versioning status for the distributions indicated by the tags 
-			for my $dist qw(oldstable stable testing unstable experimental) {
+			for my $dist (qw(oldstable stable testing unstable experimental)) {
 				local $SIG{__WARN__} = sub {};
 
 				$bi->{$dist} = 0;
@@ -234,7 +234,7 @@ sub scanspooldir {
 			next if !$affects_any;
 		}
 
-		for my $keyword qw(pending patch help moreinfo unreproducible security upstream etch-ignore lenny-ignore squeeze-ignore wheezy-ignore) {
+		for my $keyword (qw(pending patch help moreinfo unreproducible security upstream etch-ignore lenny-ignore squeeze-ignore wheezy-ignore)) {
 			$bi->{$keyword} = grep(/^$keyword$/, @tags);
 		}
 
@@ -361,7 +361,7 @@ sub get_relinfo {
     my $bi = shift;
 
     my $relinfo = "";
-	for my $dist qw(oldstable stable testing unstable experimental) {
+	for my $dist (qw(oldstable stable testing unstable experimental)) {
 	    $relinfo .= uc(substr($dist, 0, 1)) if $bi->{$dist};
 	}
 
