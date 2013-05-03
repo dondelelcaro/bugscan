@@ -135,11 +135,15 @@ sub MakeStatistics() {
 	my $worrytotal=0;	# Total number of bugs we're actually worried about
 	my $stabletotal=0;	# Total number of bugs affecting stable
 	my %list;		# List of bugnumber associated with package
+        my %seen_bugs;          # bugs which have already been counted
 
 	for my $p (sort keys %scanlib::packagelist) {
 		my $count = 0;		# Number of bugs for this package
 
 		for my $nr (@{$scanlib::packagelist{$p}}) {
+                    # if we've already counted this bug, we don't want to count it again
+                    next if $seen_bugs{$nr};
+                    $seen_bugs{$nr} = 1;
 			$pendingtotal++ if ($scanlib::bugs{$nr}->{'pending'});
 			$patchtotal++ if ($scanlib::bugs{$nr}->{'patch'});
 			$ignoretotal++ if ($scanlib::bugs{$nr}->{'wheezy-ignore'} || $scanlib::bugs{$nr}->{'squeeze-ignore'});
