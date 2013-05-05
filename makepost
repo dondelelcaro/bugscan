@@ -20,10 +20,10 @@ Explanation for bug tags:
    R  unreproducible
    S  security
    U  upstream
-   I  etch-ignore
+   I  jessie-ignore or wheezy-ignore
 
 The second set of tags indicate what releases a bug applies to:
-O for oldstable (lenny), S for stable (squeeze), T for testing (wheezy),
+O for oldstable (squeeze), S for stable (wheezy), T for testing (jessie),
 U for unstable (sid) or E for experimental.
 
 ------------------------------------------------------------------------------

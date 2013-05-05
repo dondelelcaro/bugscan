@@ -183,9 +183,9 @@ sub scanspooldir {
 		next if $skip==1;
 	
 		my %disttags = ();	
-		$disttags{'oldstable'}    = grep(/^lenny$/, @tags);
-		$disttags{'stable'}       = grep(/^squeeze$/, @tags);
-		$disttags{'testing'}      = grep(/^wheezy$/, @tags);
+		$disttags{'oldstable'}    = grep(/^squeeze$/, @tags);
+		$disttags{'stable'}       = grep(/^wheezy$/, @tags);
+		$disttags{'testing'}      = grep(/^jessie$/, @tags);
 		$disttags{'unstable'}     = grep(/^sid$/, @tags);
 		$disttags{'experimental'} = grep(/^experimental$/, @tags);
 			
@@ -234,7 +234,7 @@ sub scanspooldir {
 			next if !$affects_any;
 		}
 
-		for my $keyword (qw(pending patch help moreinfo unreproducible security upstream etch-ignore lenny-ignore squeeze-ignore wheezy-ignore)) {
+		for my $keyword (qw(pending patch help moreinfo unreproducible security upstream squeeze-ignore wheezy-ignore jessie-ignore)) {
 			$bi->{$keyword} = grep(/^$keyword$/, @tags);
 		}
 
@@ -326,13 +326,13 @@ sub wwwname() {
 sub check_worry {
 	my ($bi) = @_;
 
-	return ($bi->{'testing'} && !$bi->{'wheezy-ignore'});
+	return ($bi->{'testing'} && !$bi->{'jessie-ignore'});
 }
 
 sub check_worry_stable {
 	my ($bi) = @_;
 
-	return ($bi->{'stable'} && !$bi->{'squeeze-ignore'});
+	return ($bi->{'stable'} && !$bi->{'wheezy-ignore'});
 }
 
 sub check_worry_unstable {
@@ -352,7 +352,7 @@ sub get_taginfo {
 	$taginfo .= $bi->{'unreproducible'} ? "R" : " ";
 	$taginfo .= $bi->{'security'}       ? "S" : " ";
 	$taginfo .= $bi->{'upstream'}       ? "U" : " ";
-	$taginfo .= ($bi->{'wheezy-ignore'} || $bi->{'squeeze-ignore'}) ? "I" : " ";
+	$taginfo .= ($bi->{'wheezy-ignore'} || $bi->{'jessie-ignore'}) ? "I" : " ";
 
 	return $taginfo;
 }
