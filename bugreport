@@ -103,7 +103,7 @@ sub MakeBuglist() {
 				} elsif ($scanlib::bugs{$nr}->{'help'}) {
 					print '<span style="color: #ffaa30">';
 				}
-				print "<strike>" if ($scanlib::bugs{$nr}->{'wheezy-ignore'} || $scanlib::bugs{$nr}->{'jessie-ignore'});
+				print "<strike>" if ($scanlib::bugs{$nr}->{$bugcfg::debian_releases->{stable}.'-ignore'} || $scanlib::bugs{$nr}->{$bugcfg::debian_releases->{testing}.'-ignore'});
 				print "<em class=\"worry\">" if $worry;
 				($sect=$nr) =~ s/([0-9]{2}).*/$1/;
 				printf "<A NAME=\"$nr\"></A>  %s [%s] [%s] %s\n", scanlib::wwwnumber($nr),
@@ -111,7 +111,7 @@ sub MakeBuglist() {
 					scanlib::get_relinfo($scanlib::bugs{$nr}), 
 					scanlib::htmlsanit($scanlib::bugs{$nr}->{'subject'});
 				print "</em>" if $worry;
-				print "</strike>" if ($scanlib::bugs{$nr}->{'wheezy-ignore'} || $scanlib::bugs{$nr}->{'jessie-ignore'});
+				print "</strike>" if ($scanlib::bugs{$nr}->{$bugcfg::debian_releases->{stable}.'-ignore'} || $scanlib::bugs{$nr}->{$bugcfg::debian_releases->{testing}.'-ignore'});
 			} else {
 				printf("  %-6d [%s] [%s] %s\n", $nr, scanlib::get_taginfo($scanlib::bugs{$nr}),
 					scanlib::get_relinfo($scanlib::bugs{$nr}), $scanlib::bugs{$nr}->{'subject'});
@@ -146,7 +146,7 @@ sub MakeStatistics() {
                     $seen_bugs{$nr} = 1;
 			$pendingtotal++ if ($scanlib::bugs{$nr}->{'pending'});
 			$patchtotal++ if ($scanlib::bugs{$nr}->{'patch'});
-			$ignoretotal++ if ($scanlib::bugs{$nr}->{'wheezy-ignore'} || $scanlib::bugs{$nr}->{'jessie-ignore'});
+			$ignoretotal++ if ($scanlib::bugs{$nr}->{$bugcfg::debian_releases->{stable}.'-ignore'} || $scanlib::bugs{$nr}->{$bugcfg::debian_releases->{testing}.'-ignore'});
 			$worrytotal++ if (scanlib::check_worry($scanlib::bugs{$nr}));
 			$stabletotal++ if (scanlib::check_worry_stable($scanlib::bugs{$nr}));
 

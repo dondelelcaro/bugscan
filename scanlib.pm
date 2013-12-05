@@ -182,11 +182,10 @@ sub scanspooldir {
 		}
 		next if $skip==1;
 	
-		my %disttags = ();	
-		$disttags{'oldstable'}    = grep(/^squeeze$/, @tags);
-		$disttags{'stable'}       = grep(/^wheezy$/, @tags);
-		$disttags{'testing'}      = grep(/^jessie$/, @tags);
-		$disttags{'unstable'}     = grep(/^sid$/, @tags);
+		my %disttags = ();
+        for (qw(unstable stable testing unstable)) {
+            $disttags{$_}    = grep(/^$bug_cfg::debian_releases->{$_}$/, @tags);
+        }
 		$disttags{'experimental'} = grep(/^experimental$/, @tags);
 			
 		# default according to vorlon 2007-06-17
@@ -234,7 +233,8 @@ sub scanspooldir {
 			next if !$affects_any;
 		}
 
-		for my $keyword (qw(pending patch help moreinfo unreproducible security upstream squeeze-ignore wheezy-ignore jessie-ignore)) {
+		for my $keyword (qw(pending patch help moreinfo unreproducible security upstream),
+                         map {$_.$bug_cfg::debian_releases->{testing}.'-ignore'} keys %{$bug_cfg::debian_releases}) {
 			$bi->{$keyword} = grep(/^$keyword$/, @tags);
 		}
 
@@ -326,13 +326,13 @@ sub wwwname() {
 sub check_worry {
 	my ($bi) = @_;
 
-	return ($bi->{'testing'} && !$bi->{'jessie-ignore'});
+	return ($bi->{'testing'} && !$bi->{$bug_cfg::debian_releases->{testing}.'-ignore'});
 }
 
 sub check_worry_stable {
 	my ($bi) = @_;
 
-	return ($bi->{'stable'} && !$bi->{'wheezy-ignore'});
+	return ($bi->{'stable'} && !$bi->{$bug_cfg::debian_releases->{stable}.'-ignore'});
 }
 
 sub check_worry_unstable {
@@ -352,7 +352,7 @@ sub get_taginfo {
 	$taginfo .= $bi->{'unreproducible'} ? "R" : " ";
 	$taginfo .= $bi->{'security'}       ? "S" : " ";
 	$taginfo .= $bi->{'upstream'}       ? "U" : " ";
-	$taginfo .= ($bi->{'wheezy-ignore'} || $bi->{'jessie-ignore'}) ? "I" : " ";
+	$taginfo .= ($bi->{$bug_cfg::debian_releases->{stable}.'-ignore'} || $bi->{$bug_cfg::debian_releases->{testing}.'-ignore'}) ? "I" : " ";
 
 	return $taginfo;
 }

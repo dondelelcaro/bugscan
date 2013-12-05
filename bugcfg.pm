@@ -16,10 +16,19 @@ $debian_ftproot = $config{package_source};
 $debian_sources = $config{package_source};
 $pseudolist = $config{pseudo_desc_file};
 
-$debian_sources	= "/etc/debbugs/indices/ftp.sources";
-
-$debian_ftproot = "/org/bugs.debian.org/etc/indices/ftp/testing";
-
+# this is just the default, and should always be overriden by the
+# Debbugs::Config; set values
+our $debian_releases = {testing => 'jessie',
+                        stable  => 'wheezy',
+                        unstable => 'sid',
+                        oldstable => 'squeeze',
+                       };
+# figure out debian releases from distribution aliases
+for my $alias (keys %{$config{distribution_aliases}//{}}) {
+    next if $alias eq $config{distribution_aliases}{$alias};
+    $debian_releases->{$config{distribution_aliases}{$alias}} =
+        $alias;
+}
 
 # check out:
 # http://release.debian.org/wheezy/arch_qualify.html

@@ -49,7 +49,8 @@ for my $bug (values %scanlib::bugs) {
 	$total++;
 	$pendingcount++ if ($bug->{'pending'});
 	$patchcount++ if ($bug->{'patch'});
-	$ignorecount++ if ($bug->{'wheezy-ignore'} || $bug->{'jessie-ignore'});
+	$ignorecount++ if ($bug->{$debian_releases->{stable}.'-ignore'} ||
+                       $bug->{$debian_releases->{testing}.'-ignore'});
 	$worrycount++ if (scanlib::check_worry($bug));
 	$stablecount++ if (scanlib::check_worry_stable($bug));
 }

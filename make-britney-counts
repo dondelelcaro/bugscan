@@ -48,7 +48,7 @@ while (my ($nr, $bug) = each %scanlib::bugs) {
 
 		# this hack is specific to britney counts, and ignores
 		# bugs tagged ignore for the next testing release
-		if (scanlib::check_worry_unstable($bug) and not $bug->{'wheezy-ignore'}) {
+		if (scanlib::check_worry_unstable($bug) and not $bug->{$bugcfg::debian_releases->{testing}.'-ignore'}) {
 			push @{$unstablebugs{$package}}, $nr;
 		}
 		if (scanlib::check_worry($bug)) {
