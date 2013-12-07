@@ -183,7 +183,7 @@ sub scanspooldir {
 		next if $skip==1;
 	
 		my %disttags = ();
-        for (qw(unstable stable testing unstable)) {
+        for (qw(oldstable stable testing unstable)) {
             $disttags{$_}    = grep(/^$bug_cfg::debian_releases->{$_}$/, @tags);
         }
 		$disttags{'experimental'} = grep(/^experimental$/, @tags);
