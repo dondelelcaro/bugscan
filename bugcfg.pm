@@ -12,8 +12,8 @@ use Debbugs::Config qw(:config);
 
 $spooldir = $config{spool_dir}.'/db-h';
 $maintainerlist = $config{maintainer_file};
-$debian_ftproot = $config{package_source};
-$debian_sources = $config{package_source};
+$debian_sources = "/etc/debbugs/indices/ftp.sources";
+$debian_ftproot = "/srv/bugs.debian.org/etc/indices/ftp/testing";
 $pseudolist = $config{pseudo_desc_file};
 
 # this is just the default, and should always be overriden by the
