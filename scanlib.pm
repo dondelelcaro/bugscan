@@ -183,8 +183,8 @@ sub scanspooldir {
 		next if $skip==1;
 	
 		my %disttags = ();
-        for (qw(oldstable stable testing unstable)) {
-            $disttags{$_}    = grep(/^$bug_cfg::debian_releases->{$_}$/, @tags);
+        for my $release (qw(oldstable stable testing unstable)) {
+            $disttags{$release}    = grep(/^$bugcfg::debian_releases->{$release}$/, @tags);
         }
 		$disttags{'experimental'} = grep(/^experimental$/, @tags);
 			
@@ -234,7 +234,7 @@ sub scanspooldir {
 		}
 
 		for my $keyword (qw(pending patch help moreinfo unreproducible security upstream),
-                         map {$_.$bug_cfg::debian_releases->{testing}.'-ignore'} keys %{$bug_cfg::debian_releases}) {
+                         map {$_.$bugcfg::debian_releases->{testing}.'-ignore'} keys %{$bugcfg::debian_releases}) {
 			$bi->{$keyword} = grep(/^$keyword$/, @tags);
 		}
 
@@ -326,13 +326,13 @@ sub wwwname() {
 sub check_worry {
 	my ($bi) = @_;
 
-	return ($bi->{'testing'} && !$bi->{$bug_cfg::debian_releases->{testing}.'-ignore'});
+	return ($bi->{'testing'} && !$bi->{$bugcfg::debian_releases->{testing}.'-ignore'});
 }
 
 sub check_worry_stable {
 	my ($bi) = @_;
 
-	return ($bi->{'stable'} && !$bi->{$bug_cfg::debian_releases->{stable}.'-ignore'});
+	return ($bi->{'stable'} && !$bi->{$bugcfg::debian_releases->{stable}.'-ignore'});
 }
 
 sub check_worry_unstable {
@@ -352,7 +352,7 @@ sub get_taginfo {
 	$taginfo .= $bi->{'unreproducible'} ? "R" : " ";
 	$taginfo .= $bi->{'security'}       ? "S" : " ";
 	$taginfo .= $bi->{'upstream'}       ? "U" : " ";
-	$taginfo .= ($bi->{$bug_cfg::debian_releases->{stable}.'-ignore'} || $bi->{$bug_cfg::debian_releases->{testing}.'-ignore'}) ? "I" : " ";
+	$taginfo .= ($bi->{$bugcfg::debian_releases->{stable}.'-ignore'} || $bi->{$bugcfg::debian_releases->{testing}.'-ignore'}) ? "I" : " ";
 
 	return $taginfo;
 }
