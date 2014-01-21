@@ -21,6 +21,12 @@ find counts -type f -not -iname '*.bad'| sort | xargs egrep '^(.* ){7}' /dev/nul
 #	echo $date $count >> ${tmp}2
 #done
 
+# This is the date of the wheezy release
+previous_release="201305040600"
+
+# And this is a month ago
+previous_month=`date +"%Y%m%d%H%M" --date="1 month ago"`
+
 cat <<EOF | gnuplot
 set xdata time
 set timefmt "%Y%m%d%H%M"
@@ -32,6 +38,13 @@ set yrange [0:]
 #set xtics 2678400
 #set nomxtics
 set output "/org/bugs.debian.org/www/bugscan/graph.png"
+plot "$tmp" using 1:2 with lines, "$tmp2" using 1:2 with lines, "$tmp3" using 1:2 with lines
+set xrange ["$previous_release":]
+set output "/org/bugs.debian.org/www/bugscan/graph-release.png"
+plot "$tmp" using 1:2 with lines, "$tmp2" using 1:2 with lines, "$tmp3" using 1:2 with lines
+set xrange ["$previous_month":]
+set format x "%d\n%m\n%Y"
+set output "/org/bugs.debian.org/www/bugscan/graph-month.png"
 plot "$tmp" using 1:2 with lines, "$tmp2" using 1:2 with lines, "$tmp3" using 1:2 with lines
 quit
 EOF
