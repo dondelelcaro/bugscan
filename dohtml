@@ -95,7 +95,14 @@ EOF
 	cat <<EOF
 </p>
 
-<div align="center"><img src="graph.png" alt="Graph of RC bugs"></div>
+<div align="center"><img src="graph-release.png" alt="Graph of RC bugs"></div>
+
+<p>Other graphs:
+  <ul>
+    <li><a href="graph-month.png">Graph for the last month</a></li>
+    <li><a href="graph.png">Graph with all the history</a></li>
+  </ul>
+</p>
 
 <p>The red line graphs all bugs with release-critical severities; the green
 line graphs the number of bugs that are actually a concern for the next
