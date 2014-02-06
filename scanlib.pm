@@ -234,7 +234,7 @@ sub scanspooldir {
 		}
 
 		for my $keyword (qw(pending patch help moreinfo unreproducible security upstream),
-                         map {$_.$bugcfg::debian_releases->{testing}.'-ignore'} keys %{$bugcfg::debian_releases}) {
+                         map {$bugcfg::debian_releases->{$_}.'-ignore'} keys %{$bugcfg::debian_releases}) {
 			$bi->{$keyword} = grep(/^$keyword$/, @tags);
 		}
 
