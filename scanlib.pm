@@ -51,14 +51,10 @@ sub readmaintainers() {
 }
 
 
-sub readsources() {
-	my $root;					# Root of archive we are scanning
-	my $archive;				# Name of archive we are scanning
-	my $sect;					# Name of current section
+sub readsources {
+    my ($root,$archive) = @_;
 
-	$root=shift;
-	$archive=shift;
-	for $sect (@bugcfg::sections) {
+	for my $sect (@bugcfg::sections) {
 		open(P, "zcat $root/$sect/source/Sources.gz|")
 			or die open "open: $sect sourcelist: $!\n";
 		while (<P>) {
@@ -101,12 +97,9 @@ sub readpackages {
     }
 }
 
-sub readdebbugssources() {
-	my $file;
-	my $archive;
+sub readdebbugssources {
+    my ($file,$archive) = @_;
 
-	$file=shift;
-	$archive=shift;
 	open(P, $file)
 		or die "open: $file: $!\n";
 	while (<P>) {
