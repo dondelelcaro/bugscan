@@ -1,9 +1,12 @@
 #! /usr/bin/perl
 
-require bugcfg;
-require scanlib;
+use warnings;
 use strict;
-# use warnings;
+
+use File::Basename;
+use lib dirname(__FILE__);
+use bugcfg;
+use scanlib;
 
 # Main part
 
