@@ -10,6 +10,9 @@
 #   %section        - map from packagename to section in the FTP-site
 #   %packagelist    - map from packagename to bugreports
 
+use warnings;
+use strict;
+
 use lib qw(/org/bugs.debian.org/perl);
 use LWP::UserAgent;
 use Debbugs::MIME qw(decode_rfc1522 encode_rfc1522);
@@ -17,9 +20,11 @@ use Debbugs::Packages;
 use Debbugs::Versions;
 use Debbugs::Status;
 use Fcntl qw(O_RDONLY);
-use strict;
-use warnings;
-require bugcfg;
+
+use File::Basename;
+use lib dirname(__FILE__);
+use bugcfg;
+
 package scanlib;
 
 our (%maintainer,%section,%packagelist,%debbugssection,%bugs);
