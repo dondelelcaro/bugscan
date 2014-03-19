@@ -44,13 +44,13 @@ sub populate_index{
             @stub_results = @{$stub_results[0]};
         }
         if ((@stub_results % 2) == 0 and
-            not ref($stub_results[0]) and
+            not ref($stub_results[0])
            ) {
             %stub_results_to_add = @stub_results;
         } else {
             for my $stub_result (@stub_results) {
-                next unless ref($stub_results);
-                next unless ref($stub_results) eq 'HASH';
+                next unless ref($stub_result);
+                next unless ref($stub_result) eq 'HASH';
                 %stub_results_to_add = (%stub_results_to_add,
                                         %{$stub_result});
             }
