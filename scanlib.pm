@@ -249,8 +249,9 @@ sub scanspooldir {
 		my $taginfo = get_taginfo($bi);
 		my $relinfo = get_relinfo($bi);
 
-		$bugs{$f} = $bi;
+		$bugs->{$f} = $bi;
 	}
+    return $bugs;
 }
 
 
