@@ -6,6 +6,9 @@ PERL?=perl
 
 all: $(VERSION_INDICES)
 
-$(VERSION_INDICES): %.idx: %.idx_stubs make_index_from_stubs.pl $(wildcard %.idx_stubs/*.stub)
+$(VERSION_INDICES): %.idx: %.idx_stubs
 	$(PERL) $(wordlist 2,2,$^) $@ $(wordlist 3,$(words $^),$^)
+
+.SECONDEXPANSION:
+$(VERSION_INDICES): %.idx: %.idx_stubs make_index_from_stubs.pl $$(wildcard $$*.idx_stubs/*.stub)
 
