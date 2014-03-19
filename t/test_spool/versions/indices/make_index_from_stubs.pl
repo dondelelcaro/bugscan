@@ -28,7 +28,7 @@ sub open_index {
 
 # populate the index with the given stubs
 sub populate_index{
-    my ($tie,$stubs);
+    my ($tie,$stubs) = @_;
     for my $stub (@{$stubs}) {
         my $fh = IO::File->new($stub,'r');
         local $/;
