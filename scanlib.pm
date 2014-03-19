@@ -258,7 +258,9 @@ sub readstatus {
 		or die "$filename: $!";
 
     while (1) {
-		chomp (my $type = <STATUS>);
+		my $type = <STATUS>;
+        last if not defined $type;
+        chomp $type;
 		if ($type eq 'package') {
 			chomp (my $package = <STATUS>);
 			chomp (my $section = <STATUS>);
