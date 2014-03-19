@@ -1,0 +1,9 @@
+Format-Version: 3
+Found-In: cpu/1.4.3-11.3
+Date: 1369705867
+Tags: wheezy-ignore
+Message-Id: <20130528014911.10046.69361.reportbug@cake.ae.cs.uni-frankfurt.de>
+Severity: serious
+Submitter: Andreas Beckmann <anbe@debian.org>
+Subject: cpu: postinst uses /usr/share/doc content (Policy 12.3)
+Package: cpu

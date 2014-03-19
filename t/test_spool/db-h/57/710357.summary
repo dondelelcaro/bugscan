@@ -1,0 +1,12 @@
+Format-Version: 3
+Found-In: bandwidthd/2.0.1+cvs20090917-5
+Done: Andreas Henriksson <andreas@fatal.se>
+Date: 1369900982
+Fixed-In: bandwidthd/2.0.1+cvs20090917-6
+Tags: wheezy-ignore
+Message-Id: <20130530080127.2251.86007.reportbug@cake.ae.cs.uni-frankfurt.de>
+Severity: serious
+Submitter: Andreas Beckmann <anbe@debian.org>
+Subject: bandwidthd-pgsql: postinst uses /usr/share/doc content (Policy 12.3)
+Affects: bandwidthd
+Package: bandwidthd-pgsql
