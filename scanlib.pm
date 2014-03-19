@@ -140,24 +140,22 @@ sub scanspool() {
 }
 
 sub scanspooldir {
-	my ($dir)		= @_;
-	my $f;			# While we're currently processing
-	my @list;		# List of files to process
+	my ($dir,$bugs)	= @_;
 	my $skip;		# Flow control
 	my $walk;		# index variable
 	my $taginfo;	# Tag info
 					
 	my @archs_with_source = ( @bugcfg::architectures, 'source' );
 
-	chdir($dir) or die "chdir $dir: $!\n";
+#	chdir($dir) or die "chdir $dir: $!\n";
 
-	opendir(DIR, $dir) or die "opendir $dir: $!\n";
-	@list = grep { s/\.summary$// }
-			grep { m/^\d+\.summary$/ } 
-			readdir(DIR);
-	closedir(DIR);
+	my $d = IO::Dir->new($dir) or die "Unable to opendir: $dir $!\n";
+	my @list = grep { s/\.summary$// }
+        grep { m/^\d+\.summary$/ }
+        $d->read;
+	$d->close;
 
-	for $f (@list) {
+	for my $f (@list) {
 		my $bug = Debbugs::Status::read_bug(summary => "$f.summary");
 		next if (!defined($bug));
 		
