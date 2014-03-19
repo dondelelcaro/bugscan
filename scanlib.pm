@@ -20,6 +20,8 @@ use Debbugs::Packages;
 use Debbugs::Versions;
 use Debbugs::Status;
 use Fcntl qw(O_RDONLY);
+use IO::File;
+use IO::Dir;
 
 use File::Basename;
 use lib dirname(__FILE__);
