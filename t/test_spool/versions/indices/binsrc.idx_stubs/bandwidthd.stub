@@ -1,0 +1,2103 @@
+# dump_stub_from_index.pl binsrc.idx bandwidthd bandwidthd-pgsql
+$stub = {
+          'bandwidthd' => {
+                            '2.0.1+cvs20090917-4.1' => {
+                                                         'hurd-i386' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-4.1'
+                                                                        ],
+                                                         'mips' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-4.1'
+                                                                   ],
+                                                         'ia64' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-4.1'
+                                                                   ],
+                                                         's390' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-4.1'
+                                                                   ],
+                                                         's390x' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-4.1'
+                                                                    ],
+                                                         'kfreebsd-i386' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20090917-4.1'
+                                                                            ],
+                                                         'kfreebsd-amd64' => [
+                                                                               'bandwidthd',
+                                                                               '2.0.1+cvs20090917-4.1'
+                                                                             ],
+                                                         'powerpc' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20090917-4.1'
+                                                                      ],
+                                                         'hppa' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-4.1'
+                                                                   ],
+                                                         'mipsel' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20090917-4.1'
+                                                                     ],
+                                                         'amd64' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-4.1'
+                                                                    ],
+                                                         'armhf' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-4.1'
+                                                                    ],
+                                                         'i386' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-4.1'
+                                                                   ],
+                                                         'armel' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-4.1'
+                                                                    ],
+                                                         'sparc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-4.1'
+                                                                    ],
+                                                         'alpha' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-4.1'
+                                                                    ]
+                                                       },
+                            '2.0.1+cvs20090917-4' => {
+                                                       'ia64' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-4'
+                                                                 ],
+                                                       's390' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-4'
+                                                                 ],
+                                                       'mips' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-4'
+                                                                 ],
+                                                       'kfreebsd-i386' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-4'
+                                                                          ],
+                                                       'kfreebsd-amd64' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20090917-4'
+                                                                           ],
+                                                       'powerpc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-4'
+                                                                    ],
+                                                       'hppa' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-4'
+                                                                 ],
+                                                       'i386' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-4'
+                                                                 ],
+                                                       'armel' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-4'
+                                                                  ],
+                                                       'sparc' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-4'
+                                                                  ],
+                                                       'mipsel' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-4'
+                                                                   ],
+                                                       'alpha' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-4'
+                                                                  ],
+                                                       'amd64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-4'
+                                                                  ]
+                                                     },
+                            '2.0.1+cvs20090917-5' => {
+                                                       'armhf' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-5'
+                                                                  ],
+                                                       'powerpc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-5'
+                                                                    ],
+                                                       'kfreebsd-amd64' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20090917-5'
+                                                                           ],
+                                                       'i386' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-5'
+                                                                 ],
+                                                       's390' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-5'
+                                                                 ],
+                                                       'ia64' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-5'
+                                                                 ],
+                                                       'mips' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-5'
+                                                                 ],
+                                                       'kfreebsd-i386' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-5'
+                                                                          ],
+                                                       's390x' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-5'
+                                                                  ],
+                                                       'amd64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-5'
+                                                                  ],
+                                                       'sparc' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-5'
+                                                                  ],
+                                                       'armel' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-5'
+                                                                  ],
+                                                       'mipsel' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-5'
+                                                                   ]
+                                                     },
+                            '2.0.1+cvs20090917-3' => {
+                                                       'i386' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-3'
+                                                                 ],
+                                                       'kfreebsd-amd64' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20090917-3'
+                                                                           ],
+                                                       'powerpc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-3'
+                                                                    ],
+                                                       'hppa' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-3'
+                                                                 ],
+                                                       'kfreebsd-i386' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-3'
+                                                                          ],
+                                                       'mips' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-3'
+                                                                 ],
+                                                       's390' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-3'
+                                                                 ],
+                                                       'ia64' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-3'
+                                                                 ],
+                                                       'amd64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-3'
+                                                                  ],
+                                                       'alpha' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-3'
+                                                                  ],
+                                                       'mipsel' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-3'
+                                                                   ],
+                                                       'sparc' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-3'
+                                                                  ],
+                                                       'armel' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-3'
+                                                                  ]
+                                                     },
+                            '2.0.1+cvs20090917-2' => {
+                                                       'kfreebsd-i386' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-2'
+                                                                          ],
+                                                       'mips' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-2'
+                                                                 ],
+                                                       's390' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-2'
+                                                                 ],
+                                                       'ia64' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-2'
+                                                                 ],
+                                                       'i386' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-2'
+                                                                 ],
+                                                       'kfreebsd-amd64' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20090917-2'
+                                                                           ],
+                                                       'powerpc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-2'
+                                                                    ],
+                                                       'hppa' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-2'
+                                                                 ],
+                                                       'alpha' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-2'
+                                                                  ],
+                                                       'armel' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-2'
+                                                                  ],
+                                                       'amd64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-2'
+                                                                  ]
+                                                     },
+                            '2.0.1+cvs20071208-1' => {
+                                                       'amd64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20071208-1'
+                                                                  ],
+                                                       'alpha' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20071208-1'
+                                                                  ],
+                                                       'mipsel' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20071208-1'
+                                                                   ],
+                                                       'armel' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20071208-1'
+                                                                  ],
+                                                       'arm' => [
+                                                                  'bandwidthd',
+                                                                  '2.0.1+cvs20071208-1'
+                                                                ],
+                                                       'sparc' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20071208-1'
+                                                                  ],
+                                                       'i386' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-1'
+                                                                 ],
+                                                       'powerpc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20071208-1'
+                                                                    ],
+                                                       'hppa' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-1'
+                                                                 ],
+                                                       'm68k' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-1'
+                                                                 ],
+                                                       'mips' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-1'
+                                                                 ],
+                                                       'ia64' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-1'
+                                                                 ],
+                                                       's390' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-1'
+                                                                 ]
+                                                     },
+                            '2.0.1+cvs20050208-6' => {
+                                                       'amd64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-6'
+                                                                  ],
+                                                       'mipsel' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-6'
+                                                                   ],
+                                                       'alpha' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-6'
+                                                                  ],
+                                                       'sparc' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-6'
+                                                                  ],
+                                                       'arm' => [
+                                                                  'bandwidthd',
+                                                                  '2.0.1+cvs20050208-6'
+                                                                ],
+                                                       'hppa' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-6'
+                                                                 ],
+                                                       'powerpc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20050208-6'
+                                                                    ],
+                                                       'i386' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-6'
+                                                                 ],
+                                                       'm68k' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-6'
+                                                                 ],
+                                                       's390' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-6'
+                                                                 ],
+                                                       'ia64' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-6'
+                                                                 ],
+                                                       'hurd-i386' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20050208-6'
+                                                                      ],
+                                                       'mips' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-6'
+                                                                 ]
+                                                     },
+                            '2.0.1+cvs20050208-11+b1' => {
+                                                           'sparc' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20050208-11'
+                                                                      ],
+                                                           'arm' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20050208-11'
+                                                                    ],
+                                                           'mipsel' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-11'
+                                                                       ],
+                                                           'alpha' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20050208-11'
+                                                                      ],
+                                                           'amd64' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20050208-11'
+                                                                      ],
+                                                           'ia64' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20050208-11'
+                                                                     ],
+                                                           's390' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20050208-11'
+                                                                     ],
+                                                           'mips' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20050208-11'
+                                                                     ],
+                                                           'm68k' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20050208-11'
+                                                                     ],
+                                                           'powerpc' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-11'
+                                                                        ],
+                                                           'hppa' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20050208-11'
+                                                                     ],
+                                                           'i386' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20050208-11'
+                                                                     ]
+                                                         },
+                            '2.0.1+cvs20050208-11' => {
+                                                        'i386' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-11'
+                                                                  ],
+                                                        'powerpc' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20050208-11'
+                                                                     ],
+                                                        'hppa' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-11'
+                                                                  ],
+                                                        'm68k' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-11'
+                                                                  ],
+                                                        'mips' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-11'
+                                                                  ],
+                                                        'hurd-i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-11'
+                                                                       ],
+                                                        's390' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-11'
+                                                                  ],
+                                                        'ia64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-11'
+                                                                  ],
+                                                        'amd64' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-11'
+                                                                   ],
+                                                        'alpha' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-11'
+                                                                   ],
+                                                        'mipsel' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20050208-11'
+                                                                    ],
+                                                        'arm' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-11'
+                                                                 ],
+                                                        'sparc' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-11'
+                                                                   ]
+                                                      },
+                            '2.0.1+cvs20050208-3.1' => {
+                                                         'i386' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-3.1'
+                                                                   ],
+                                                         'powerpc' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20050208-3.1'
+                                                                      ],
+                                                         'hppa' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-3.1'
+                                                                   ],
+                                                         'm68k' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-3.1'
+                                                                   ],
+                                                         'hurd-i386' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-3.1'
+                                                                        ],
+                                                         'mips' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-3.1'
+                                                                   ],
+                                                         's390' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-3.1'
+                                                                   ],
+                                                         'ia64' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-3.1'
+                                                                   ],
+                                                         'amd64' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20050208-3.1'
+                                                                    ],
+                                                         'alpha' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20050208-3.1'
+                                                                    ],
+                                                         'mipsel' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20050208-3.1'
+                                                                     ],
+                                                         'sparc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20050208-3.1'
+                                                                    ],
+                                                         'arm' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-3.1'
+                                                                  ]
+                                                       },
+                            '2.0.1+cvs20090917-6' => {
+                                                       'armhf' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-6'
+                                                                  ],
+                                                       'i386' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-6'
+                                                                 ],
+                                                       'powerpc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-6'
+                                                                    ],
+                                                       'kfreebsd-amd64' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20090917-6'
+                                                                           ],
+                                                       'hurd-i386' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20090917-6'
+                                                                      ],
+                                                       'mips' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-6'
+                                                                 ],
+                                                       's390' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-6'
+                                                                 ],
+                                                       'ia64' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-6'
+                                                                 ],
+                                                       's390x' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-6'
+                                                                  ],
+                                                       'kfreebsd-i386' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-6'
+                                                                          ],
+                                                       'amd64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-6'
+                                                                  ],
+                                                       'sparc' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-6'
+                                                                  ],
+                                                       'armel' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-6'
+                                                                  ],
+                                                       'mipsel' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-6'
+                                                                   ]
+                                                     },
+                            '2.0.1+cvs20090917-7' => {
+                                                       'amd64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-7'
+                                                                  ],
+                                                       'sparc' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-7'
+                                                                  ],
+                                                       'armel' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-7'
+                                                                  ],
+                                                       'mipsel' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-7'
+                                                                   ],
+                                                       'armhf' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-7'
+                                                                  ],
+                                                       'kfreebsd-amd64' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20090917-7'
+                                                                           ],
+                                                       'powerpc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-7'
+                                                                    ],
+                                                       'i386' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-7'
+                                                                 ],
+                                                       'ia64' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-7'
+                                                                 ],
+                                                       's390' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-7'
+                                                                 ],
+                                                       'mips' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20090917-7'
+                                                                 ],
+                                                       'hurd-i386' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20090917-7'
+                                                                      ],
+                                                       'kfreebsd-i386' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-7'
+                                                                          ],
+                                                       's390x' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-7'
+                                                                  ]
+                                                     },
+                            '2.0.1+cvs20090917-5+b1' => {
+                                                          'kfreebsd-amd64' => [
+                                                                                'bandwidthd',
+                                                                                '2.0.1+cvs20090917-5'
+                                                                              ],
+                                                          'powerpc' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-5'
+                                                                       ],
+                                                          'i386' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-5'
+                                                                    ],
+                                                          'armhf' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20090917-5'
+                                                                     ],
+                                                          'kfreebsd-i386' => [
+                                                                               'bandwidthd',
+                                                                               '2.0.1+cvs20090917-5'
+                                                                             ],
+                                                          's390x' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20090917-5'
+                                                                     ],
+                                                          's390' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-5'
+                                                                    ],
+                                                          'ia64' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-5'
+                                                                    ],
+                                                          'mips' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-5'
+                                                                    ],
+                                                          'amd64' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20090917-5'
+                                                                     ],
+                                                          'mipsel' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20090917-5'
+                                                                      ],
+                                                          'armel' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20090917-5'
+                                                                     ],
+                                                          'sparc' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20090917-5'
+                                                                     ]
+                                                        },
+                            '2.0.1+cvs20050208-9' => {
+                                                       'amd64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-9'
+                                                                  ],
+                                                       'arm' => [
+                                                                  'bandwidthd',
+                                                                  '2.0.1+cvs20050208-9'
+                                                                ],
+                                                       'sparc' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-9'
+                                                                  ],
+                                                       'alpha' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-9'
+                                                                  ],
+                                                       'mipsel' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-9'
+                                                                   ],
+                                                       'm68k' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-9'
+                                                                 ],
+                                                       'i386' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-9'
+                                                                 ],
+                                                       'powerpc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20050208-9'
+                                                                    ],
+                                                       'hppa' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-9'
+                                                                 ],
+                                                       'mips' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-9'
+                                                                 ],
+                                                       'hurd-i386' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20050208-9'
+                                                                      ],
+                                                       's390' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-9'
+                                                                 ],
+                                                       'ia64' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-9'
+                                                                 ]
+                                                     },
+                            '2.0.1+cvs20090917-1' => {
+                                                       'armel' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-1'
+                                                                  ],
+                                                       'amd64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20090917-1'
+                                                                  ]
+                                                     },
+                            '2.0.1+cvs20071208-3' => {
+                                                       'kfreebsd-i386' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20071208-3'
+                                                                          ],
+                                                       's390' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-3'
+                                                                 ],
+                                                       'ia64' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-3'
+                                                                 ],
+                                                       'mips' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-3'
+                                                                 ],
+                                                       'hppa' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-3'
+                                                                 ],
+                                                       'powerpc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20071208-3'
+                                                                    ],
+                                                       'kfreebsd-amd64' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20071208-3'
+                                                                           ],
+                                                       'i386' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-3'
+                                                                 ],
+                                                       'm68k' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-3'
+                                                                 ],
+                                                       'mipsel' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20071208-3'
+                                                                   ],
+                                                       'alpha' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20071208-3'
+                                                                  ],
+                                                       'arm' => [
+                                                                  'bandwidthd',
+                                                                  '2.0.1+cvs20071208-3'
+                                                                ],
+                                                       'armel' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20071208-3'
+                                                                  ],
+                                                       'sparc' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20071208-3'
+                                                                  ],
+                                                       'amd64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20071208-3'
+                                                                  ]
+                                                     },
+                            '2.0.1+cvs20050208-3' => {
+                                                       'hurd-i386' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20050208-3'
+                                                                      ],
+                                                       'mips' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-3'
+                                                                 ],
+                                                       'ia64' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-3'
+                                                                 ],
+                                                       's390' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-3'
+                                                                 ],
+                                                       'i386' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-3'
+                                                                 ],
+                                                       'hppa' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-3'
+                                                                 ],
+                                                       'powerpc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20050208-3'
+                                                                    ],
+                                                       'm68k' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-3'
+                                                                 ],
+                                                       'alpha' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-3'
+                                                                  ],
+                                                       'mipsel' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-3'
+                                                                   ],
+                                                       'sparc' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-3'
+                                                                  ],
+                                                       'arm' => [
+                                                                  'bandwidthd',
+                                                                  '2.0.1+cvs20050208-3'
+                                                                ]
+                                                     },
+                            '2.0.1+cvs20071208-2' => {
+                                                       'mipsel' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20071208-2'
+                                                                   ],
+                                                       'alpha' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20071208-2'
+                                                                  ],
+                                                       'arm' => [
+                                                                  'bandwidthd',
+                                                                  '2.0.1+cvs20071208-2'
+                                                                ],
+                                                       'armel' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20071208-2'
+                                                                  ],
+                                                       'sparc' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20071208-2'
+                                                                  ],
+                                                       'amd64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20071208-2'
+                                                                  ],
+                                                       'ia64' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-2'
+                                                                 ],
+                                                       's390' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-2'
+                                                                 ],
+                                                       'mips' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-2'
+                                                                 ],
+                                                       'hppa' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-2'
+                                                                 ],
+                                                       'powerpc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20071208-2'
+                                                                    ],
+                                                       'i386' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-2'
+                                                                 ],
+                                                       'm68k' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20071208-2'
+                                                                 ]
+                                                     },
+                            '2.0.1+cvs20050208-10' => {
+                                                        'mipsel' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20050208-10'
+                                                                    ],
+                                                        'alpha' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-10'
+                                                                   ],
+                                                        'sparc' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-10'
+                                                                   ],
+                                                        'arm' => [
+                                                                   'bandwidthd',
+                                                                   '2.0.1+cvs20050208-10'
+                                                                 ],
+                                                        'amd64' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20050208-10'
+                                                                   ],
+                                                        's390' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-10'
+                                                                  ],
+                                                        'ia64' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-10'
+                                                                  ],
+                                                        'hurd-i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-10'
+                                                                       ],
+                                                        'mips' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-10'
+                                                                  ],
+                                                        'powerpc' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20050208-10'
+                                                                     ],
+                                                        'hppa' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-10'
+                                                                  ],
+                                                        'i386' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-10'
+                                                                  ],
+                                                        'm68k' => [
+                                                                    'bandwidthd',
+                                                                    '2.0.1+cvs20050208-10'
+                                                                  ]
+                                                      },
+                            '2.0.1+cvs20090917-3.1' => {
+                                                         'kfreebsd-i386' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20090917-3.1'
+                                                                            ],
+                                                         'mips' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-3.1'
+                                                                   ],
+                                                         's390' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-3.1'
+                                                                   ],
+                                                         'ia64' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-3.1'
+                                                                   ],
+                                                         'i386' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-3.1'
+                                                                   ],
+                                                         'powerpc' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20090917-3.1'
+                                                                      ],
+                                                         'hppa' => [
+                                                                     'bandwidthd',
+                                                                     '2.0.1+cvs20090917-3.1'
+                                                                   ],
+                                                         'kfreebsd-amd64' => [
+                                                                               'bandwidthd',
+                                                                               '2.0.1+cvs20090917-3.1'
+                                                                             ],
+                                                         'alpha' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-3.1'
+                                                                    ],
+                                                         'mipsel' => [
+                                                                       'bandwidthd',
+                                                                       '2.0.1+cvs20090917-3.1'
+                                                                     ],
+                                                         'sparc' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-3.1'
+                                                                    ],
+                                                         'armel' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-3.1'
+                                                                    ],
+                                                         'amd64' => [
+                                                                      'bandwidthd',
+                                                                      '2.0.1+cvs20090917-3.1'
+                                                                    ]
+                                                       }
+                          },
+          'bandwidthd-pgsql' => {
+                                  '2.0.1+cvs20071208-2' => {
+                                                             'm68k' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-2'
+                                                                       ],
+                                                             'i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-2'
+                                                                       ],
+                                                             'powerpc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20071208-2'
+                                                                          ],
+                                                             'hppa' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-2'
+                                                                       ],
+                                                             'mips' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-2'
+                                                                       ],
+                                                             'ia64' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-2'
+                                                                       ],
+                                                             's390' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-2'
+                                                                       ],
+                                                             'amd64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20071208-2'
+                                                                        ],
+                                                             'arm' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20071208-2'
+                                                                      ],
+                                                             'armel' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20071208-2'
+                                                                        ],
+                                                             'sparc' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20071208-2'
+                                                                        ],
+                                                             'alpha' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20071208-2'
+                                                                        ],
+                                                             'mipsel' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20071208-2'
+                                                                         ]
+                                                           },
+                                  '2.0.1+cvs20090917-3.1' => {
+                                                               'amd64' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-3.1'
+                                                                          ],
+                                                               'mipsel' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20090917-3.1'
+                                                                           ],
+                                                               'alpha' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-3.1'
+                                                                          ],
+                                                               'sparc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-3.1'
+                                                                          ],
+                                                               'armel' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-3.1'
+                                                                          ],
+                                                               'powerpc' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20090917-3.1'
+                                                                            ],
+                                                               'kfreebsd-amd64' => [
+                                                                                     'bandwidthd',
+                                                                                     '2.0.1+cvs20090917-3.1'
+                                                                                   ],
+                                                               'hppa' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-3.1'
+                                                                         ],
+                                                               'i386' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-3.1'
+                                                                         ],
+                                                               'kfreebsd-i386' => [
+                                                                                    'bandwidthd',
+                                                                                    '2.0.1+cvs20090917-3.1'
+                                                                                  ],
+                                                               'ia64' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-3.1'
+                                                                         ],
+                                                               's390' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-3.1'
+                                                                         ],
+                                                               'mips' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-3.1'
+                                                                         ]
+                                                             },
+                                  '2.0.1+cvs20050208-10' => {
+                                                              'sparc' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-10'
+                                                                         ],
+                                                              'arm' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-10'
+                                                                       ],
+                                                              'mipsel' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20050208-10'
+                                                                          ],
+                                                              'alpha' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-10'
+                                                                         ],
+                                                              'amd64' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-10'
+                                                                         ],
+                                                              's390' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-10'
+                                                                        ],
+                                                              'ia64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-10'
+                                                                        ],
+                                                              'mips' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-10'
+                                                                        ],
+                                                              'hurd-i386' => [
+                                                                               'bandwidthd',
+                                                                               '2.0.1+cvs20050208-10'
+                                                                             ],
+                                                              'm68k' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-10'
+                                                                        ],
+                                                              'hppa' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-10'
+                                                                        ],
+                                                              'powerpc' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20050208-10'
+                                                                           ],
+                                                              'i386' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-10'
+                                                                        ]
+                                                            },
+                                  '2.0.1+cvs20050208-9' => {
+                                                             'alpha' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-9'
+                                                                        ],
+                                                             'mipsel' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-9'
+                                                                         ],
+                                                             'arm' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20050208-9'
+                                                                      ],
+                                                             'sparc' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-9'
+                                                                        ],
+                                                             'amd64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-9'
+                                                                        ],
+                                                             'mips' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-9'
+                                                                       ],
+                                                             'hurd-i386' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20050208-9'
+                                                                            ],
+                                                             'ia64' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-9'
+                                                                       ],
+                                                             's390' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-9'
+                                                                       ],
+                                                             'i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-9'
+                                                                       ],
+                                                             'powerpc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20050208-9'
+                                                                          ],
+                                                             'hppa' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-9'
+                                                                       ],
+                                                             'm68k' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-9'
+                                                                       ]
+                                                           },
+                                  '2.0.1+cvs20090917-5+b1' => {
+                                                                'ia64' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-5'
+                                                                          ],
+                                                                's390' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-5'
+                                                                          ],
+                                                                'mips' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-5'
+                                                                          ],
+                                                                'kfreebsd-i386' => [
+                                                                                     'bandwidthd',
+                                                                                     '2.0.1+cvs20090917-5'
+                                                                                   ],
+                                                                's390x' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20090917-5'
+                                                                           ],
+                                                                'armhf' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20090917-5'
+                                                                           ],
+                                                                'kfreebsd-amd64' => [
+                                                                                      'bandwidthd',
+                                                                                      '2.0.1+cvs20090917-5'
+                                                                                    ],
+                                                                'powerpc' => [
+                                                                               'bandwidthd',
+                                                                               '2.0.1+cvs20090917-5'
+                                                                             ],
+                                                                'i386' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-5'
+                                                                          ],
+                                                                'armel' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20090917-5'
+                                                                           ],
+                                                                'sparc' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20090917-5'
+                                                                           ],
+                                                                'mipsel' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20090917-5'
+                                                                            ],
+                                                                'amd64' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20090917-5'
+                                                                           ]
+                                                              },
+                                  '2.0.1+cvs20050208-3' => {
+                                                             'arm' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20050208-3'
+                                                                      ],
+                                                             'sparc' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-3'
+                                                                        ],
+                                                             'mipsel' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-3'
+                                                                         ],
+                                                             'alpha' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-3'
+                                                                        ],
+                                                             'm68k' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-3'
+                                                                       ],
+                                                             'powerpc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20050208-3'
+                                                                          ],
+                                                             'hppa' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-3'
+                                                                       ],
+                                                             'i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-3'
+                                                                       ],
+                                                             's390' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-3'
+                                                                       ],
+                                                             'ia64' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-3'
+                                                                       ],
+                                                             'mips' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-3'
+                                                                       ],
+                                                             'hurd-i386' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20050208-3'
+                                                                            ]
+                                                           },
+                                  '2.0.1+cvs20071208-3' => {
+                                                             'amd64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20071208-3'
+                                                                        ],
+                                                             'sparc' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20071208-3'
+                                                                        ],
+                                                             'armel' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20071208-3'
+                                                                        ],
+                                                             'arm' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20071208-3'
+                                                                      ],
+                                                             'mipsel' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20071208-3'
+                                                                         ],
+                                                             'alpha' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20071208-3'
+                                                                        ],
+                                                             'm68k' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-3'
+                                                                       ],
+                                                             'hppa' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-3'
+                                                                       ],
+                                                             'powerpc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20071208-3'
+                                                                          ],
+                                                             'kfreebsd-amd64' => [
+                                                                                   'bandwidthd',
+                                                                                   '2.0.1+cvs20071208-3'
+                                                                                 ],
+                                                             'i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-3'
+                                                                       ],
+                                                             's390' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-3'
+                                                                       ],
+                                                             'ia64' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-3'
+                                                                       ],
+                                                             'mips' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-3'
+                                                                       ],
+                                                             'kfreebsd-i386' => [
+                                                                                  'bandwidthd',
+                                                                                  '2.0.1+cvs20071208-3'
+                                                                                ]
+                                                           },
+                                  '2.0.1+cvs20090917-1' => {
+                                                             'amd64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-1'
+                                                                        ],
+                                                             'armel' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-1'
+                                                                        ]
+                                                           },
+                                  '2.0.1+cvs20050208-6' => {
+                                                             'ia64' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-6'
+                                                                       ],
+                                                             's390' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-6'
+                                                                       ],
+                                                             'hurd-i386' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20050208-6'
+                                                                            ],
+                                                             'mips' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-6'
+                                                                       ],
+                                                             'm68k' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-6'
+                                                                       ],
+                                                             'powerpc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20050208-6'
+                                                                          ],
+                                                             'hppa' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-6'
+                                                                       ],
+                                                             'i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-6'
+                                                                       ],
+                                                             'sparc' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-6'
+                                                                        ],
+                                                             'arm' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20050208-6'
+                                                                      ],
+                                                             'mipsel' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-6'
+                                                                         ],
+                                                             'alpha' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-6'
+                                                                        ],
+                                                             'amd64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-6'
+                                                                        ]
+                                                           },
+                                  '2.0.1+cvs20071208-1' => {
+                                                             'amd64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20071208-1'
+                                                                        ],
+                                                             'mipsel' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20071208-1'
+                                                                         ],
+                                                             'alpha' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20071208-1'
+                                                                        ],
+                                                             'arm' => [
+                                                                        'bandwidthd',
+                                                                        '2.0.1+cvs20071208-1'
+                                                                      ],
+                                                             'armel' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20071208-1'
+                                                                        ],
+                                                             'sparc' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20071208-1'
+                                                                        ],
+                                                             'hppa' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-1'
+                                                                       ],
+                                                             'powerpc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20071208-1'
+                                                                          ],
+                                                             'i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-1'
+                                                                       ],
+                                                             'm68k' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-1'
+                                                                       ],
+                                                             's390' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-1'
+                                                                       ],
+                                                             'ia64' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-1'
+                                                                       ],
+                                                             'mips' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20071208-1'
+                                                                       ]
+                                                           },
+                                  '2.0.1+cvs20090917-7' => {
+                                                             'amd64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-7'
+                                                                        ],
+                                                             'armel' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-7'
+                                                                        ],
+                                                             'sparc' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-7'
+                                                                        ],
+                                                             'mipsel' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-7'
+                                                                         ],
+                                                             'armhf' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-7'
+                                                                        ],
+                                                             'i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-7'
+                                                                       ],
+                                                             'powerpc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-7'
+                                                                          ],
+                                                             'kfreebsd-amd64' => [
+                                                                                   'bandwidthd',
+                                                                                   '2.0.1+cvs20090917-7'
+                                                                                 ],
+                                                             'mips' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-7'
+                                                                       ],
+                                                             'hurd-i386' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20090917-7'
+                                                                            ],
+                                                             's390' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-7'
+                                                                       ],
+                                                             'ia64' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-7'
+                                                                       ],
+                                                             's390x' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-7'
+                                                                        ],
+                                                             'kfreebsd-i386' => [
+                                                                                  'bandwidthd',
+                                                                                  '2.0.1+cvs20090917-7'
+                                                                                ]
+                                                           },
+                                  '2.0.1+cvs20090917-6' => {
+                                                             'armel' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-6'
+                                                                        ],
+                                                             'sparc' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-6'
+                                                                        ],
+                                                             'mipsel' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-6'
+                                                                         ],
+                                                             'amd64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-6'
+                                                                        ],
+                                                             'ia64' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-6'
+                                                                       ],
+                                                             's390' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-6'
+                                                                       ],
+                                                             'hurd-i386' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20090917-6'
+                                                                            ],
+                                                             'mips' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-6'
+                                                                       ],
+                                                             'kfreebsd-i386' => [
+                                                                                  'bandwidthd',
+                                                                                  '2.0.1+cvs20090917-6'
+                                                                                ],
+                                                             's390x' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-6'
+                                                                        ],
+                                                             'armhf' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-6'
+                                                                        ],
+                                                             'powerpc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-6'
+                                                                          ],
+                                                             'kfreebsd-amd64' => [
+                                                                                   'bandwidthd',
+                                                                                   '2.0.1+cvs20090917-6'
+                                                                                 ],
+                                                             'i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-6'
+                                                                       ]
+                                                           },
+                                  '2.0.1+cvs20050208-3.1' => {
+                                                               'amd64' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20050208-3.1'
+                                                                          ],
+                                                               'alpha' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20050208-3.1'
+                                                                          ],
+                                                               'mipsel' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20050208-3.1'
+                                                                           ],
+                                                               'sparc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20050208-3.1'
+                                                                          ],
+                                                               'arm' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-3.1'
+                                                                        ],
+                                                               'i386' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-3.1'
+                                                                         ],
+                                                               'hppa' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-3.1'
+                                                                         ],
+                                                               'powerpc' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20050208-3.1'
+                                                                            ],
+                                                               'm68k' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-3.1'
+                                                                         ],
+                                                               'mips' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-3.1'
+                                                                         ],
+                                                               'hurd-i386' => [
+                                                                                'bandwidthd',
+                                                                                '2.0.1+cvs20050208-3.1'
+                                                                              ],
+                                                               'ia64' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-3.1'
+                                                                         ],
+                                                               's390' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-3.1'
+                                                                         ]
+                                                             },
+                                  '2.0.1+cvs20050208-11' => {
+                                                              'alpha' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-11'
+                                                                         ],
+                                                              'mipsel' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20050208-11'
+                                                                          ],
+                                                              'arm' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20050208-11'
+                                                                       ],
+                                                              'sparc' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-11'
+                                                                         ],
+                                                              'amd64' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20050208-11'
+                                                                         ],
+                                                              'hurd-i386' => [
+                                                                               'bandwidthd',
+                                                                               '2.0.1+cvs20050208-11'
+                                                                             ],
+                                                              'mips' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-11'
+                                                                        ],
+                                                              'ia64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-11'
+                                                                        ],
+                                                              's390' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-11'
+                                                                        ],
+                                                              'i386' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-11'
+                                                                        ],
+                                                              'powerpc' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20050208-11'
+                                                                           ],
+                                                              'hppa' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-11'
+                                                                        ],
+                                                              'm68k' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20050208-11'
+                                                                        ]
+                                                            },
+                                  '2.0.1+cvs20050208-11+b1' => {
+                                                                 'm68k' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20050208-11'
+                                                                           ],
+                                                                 'i386' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20050208-11'
+                                                                           ],
+                                                                 'hppa' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20050208-11'
+                                                                           ],
+                                                                 'powerpc' => [
+                                                                                'bandwidthd',
+                                                                                '2.0.1+cvs20050208-11'
+                                                                              ],
+                                                                 'mips' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20050208-11'
+                                                                           ],
+                                                                 's390' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20050208-11'
+                                                                           ],
+                                                                 'ia64' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20050208-11'
+                                                                           ],
+                                                                 'amd64' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20050208-11'
+                                                                            ],
+                                                                 'sparc' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20050208-11'
+                                                                            ],
+                                                                 'arm' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20050208-11'
+                                                                          ],
+                                                                 'alpha' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20050208-11'
+                                                                            ],
+                                                                 'mipsel' => [
+                                                                               'bandwidthd',
+                                                                               '2.0.1+cvs20050208-11'
+                                                                             ]
+                                                               },
+                                  '2.0.1+cvs20090917-5' => {
+                                                             'mipsel' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-5'
+                                                                         ],
+                                                             'armel' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-5'
+                                                                        ],
+                                                             'sparc' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-5'
+                                                                        ],
+                                                             'amd64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-5'
+                                                                        ],
+                                                             'kfreebsd-i386' => [
+                                                                                  'bandwidthd',
+                                                                                  '2.0.1+cvs20090917-5'
+                                                                                ],
+                                                             's390x' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-5'
+                                                                        ],
+                                                             'ia64' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-5'
+                                                                       ],
+                                                             's390' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-5'
+                                                                       ],
+                                                             'mips' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-5'
+                                                                       ],
+                                                             'powerpc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-5'
+                                                                          ],
+                                                             'kfreebsd-amd64' => [
+                                                                                   'bandwidthd',
+                                                                                   '2.0.1+cvs20090917-5'
+                                                                                 ],
+                                                             'i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-5'
+                                                                       ],
+                                                             'armhf' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-5'
+                                                                        ]
+                                                           },
+                                  '2.0.1+cvs20090917-3' => {
+                                                             'sparc' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-3'
+                                                                        ],
+                                                             'armel' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-3'
+                                                                        ],
+                                                             'alpha' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-3'
+                                                                        ],
+                                                             'mipsel' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-3'
+                                                                         ],
+                                                             'amd64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-3'
+                                                                        ],
+                                                             'mips' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-3'
+                                                                       ],
+                                                             'ia64' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-3'
+                                                                       ],
+                                                             's390' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-3'
+                                                                       ],
+                                                             'kfreebsd-i386' => [
+                                                                                  'bandwidthd',
+                                                                                  '2.0.1+cvs20090917-3'
+                                                                                ],
+                                                             'i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-3'
+                                                                       ],
+                                                             'kfreebsd-amd64' => [
+                                                                                   'bandwidthd',
+                                                                                   '2.0.1+cvs20090917-3'
+                                                                                 ],
+                                                             'powerpc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-3'
+                                                                          ],
+                                                             'hppa' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-3'
+                                                                       ]
+                                                           },
+                                  '2.0.1+cvs20090917-2' => {
+                                                             'amd64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-2'
+                                                                        ],
+                                                             'alpha' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-2'
+                                                                        ],
+                                                             'armel' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-2'
+                                                                        ],
+                                                             'kfreebsd-amd64' => [
+                                                                                   'bandwidthd',
+                                                                                   '2.0.1+cvs20090917-2'
+                                                                                 ],
+                                                             'powerpc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-2'
+                                                                          ],
+                                                             'hppa' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-2'
+                                                                       ],
+                                                             'i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-2'
+                                                                       ],
+                                                             'kfreebsd-i386' => [
+                                                                                  'bandwidthd',
+                                                                                  '2.0.1+cvs20090917-2'
+                                                                                ],
+                                                             'ia64' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-2'
+                                                                       ],
+                                                             's390' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-2'
+                                                                       ],
+                                                             'mips' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-2'
+                                                                       ]
+                                                           },
+                                  '2.0.1+cvs20090917-4' => {
+                                                             'alpha' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-4'
+                                                                        ],
+                                                             'mipsel' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-4'
+                                                                         ],
+                                                             'sparc' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-4'
+                                                                        ],
+                                                             'armel' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-4'
+                                                                        ],
+                                                             'amd64' => [
+                                                                          'bandwidthd',
+                                                                          '2.0.1+cvs20090917-4'
+                                                                        ],
+                                                             'kfreebsd-i386' => [
+                                                                                  'bandwidthd',
+                                                                                  '2.0.1+cvs20090917-4'
+                                                                                ],
+                                                             'mips' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-4'
+                                                                       ],
+                                                             'ia64' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-4'
+                                                                       ],
+                                                             's390' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-4'
+                                                                       ],
+                                                             'i386' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-4'
+                                                                       ],
+                                                             'powerpc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-4'
+                                                                          ],
+                                                             'hppa' => [
+                                                                         'bandwidthd',
+                                                                         '2.0.1+cvs20090917-4'
+                                                                       ],
+                                                             'kfreebsd-amd64' => [
+                                                                                   'bandwidthd',
+                                                                                   '2.0.1+cvs20090917-4'
+                                                                                 ]
+                                                           },
+                                  '2.0.1+cvs20090917-4.1' => {
+                                                               'amd64' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-4.1'
+                                                                          ],
+                                                               'mipsel' => [
+                                                                             'bandwidthd',
+                                                                             '2.0.1+cvs20090917-4.1'
+                                                                           ],
+                                                               'hppa' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-4.1'
+                                                                         ],
+                                                               'powerpc' => [
+                                                                              'bandwidthd',
+                                                                              '2.0.1+cvs20090917-4.1'
+                                                                            ],
+                                                               'kfreebsd-amd64' => [
+                                                                                     'bandwidthd',
+                                                                                     '2.0.1+cvs20090917-4.1'
+                                                                                   ],
+                                                               'ia64' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-4.1'
+                                                                         ],
+                                                               's390' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-4.1'
+                                                                         ],
+                                                               'mips' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-4.1'
+                                                                         ],
+                                                               'hurd-i386' => [
+                                                                                'bandwidthd',
+                                                                                '2.0.1+cvs20090917-4.1'
+                                                                              ],
+                                                               'kfreebsd-i386' => [
+                                                                                    'bandwidthd',
+                                                                                    '2.0.1+cvs20090917-4.1'
+                                                                                  ],
+                                                               's390x' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-4.1'
+                                                                          ],
+                                                               'sparc' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-4.1'
+                                                                          ],
+                                                               'armel' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-4.1'
+                                                                          ],
+                                                               'alpha' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-4.1'
+                                                                          ],
+                                                               'armhf' => [
+                                                                            'bandwidthd',
+                                                                            '2.0.1+cvs20090917-4.1'
+                                                                          ],
+                                                               'i386' => [
+                                                                           'bandwidthd',
+                                                                           '2.0.1+cvs20090917-4.1'
+                                                                         ]
+                                                             }
+                                }
+        };
