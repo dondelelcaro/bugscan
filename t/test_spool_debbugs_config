@@ -1,0 +1,48 @@
+# -*- mode: cperl-mode; -*-
+
+$gDefaultSeverity = "normal";
+$gShowSeverities = "critical, grave, serious, important, normal, minor, wishlist, fixed";
+@gStrongSeverities = ( "critical", "grave", "serious" );
+@gSeverityList = ( "critical", "grave", "serious", "important", "normal",
+                   "minor", "wishlist", "fixed"
+                 );
+%gObsoleteSeverities = ( fixed => 'Use the fixed tag instead.' );
+%gSeverityDisplay = ( "critical", "Critical bugs",
+                      "grave", "Grave functionality bugs",
+                      "serious", "Serious (policy violations or makes package unfit for release)",
+                      "important", "Important bugs",
+                      "normal", "Normal bugs",
+                      "minor", "Minor bugs",
+                      "fixed", "NMU Fixed bugs",
+                      "wishlist", "Wishlist items"
+                    );
+
+@gDefaultArchitectures = qw(i386 powerpc mips mipsel sparc amd64 alpha m68k arm armel s390 ia64 kfreebsd-i386 kfreebsd-amd64 hppa);
+
+@gDistributions = qw(oldstable stable testing unstable experimental);
+
+%gDistributionAliases = (experimental => 'experimental',
+                         unstable     => 'unstable',
+                         testing      => 'testing',
+                         stable       => 'stable',
+                         oldstable    => 'oldstable',
+                         sid          => 'unstable',
+                         jessie       => 'testing',
+                         wheezy       => 'stable',
+                         squeeze      => 'oldstable',
+                         #lenny        => 'oldstable',
+                         #etch         => 'oldstable',
+                         #sarge        => 'oldstable',
+                        );
+
+$gPseudoMaintFile='/dev/null';
+$gPseudoDescFile='/dev/null';
+$gSpoolDir='t/test_spool';
+$gPackageSource='t/test_spool/sources';
+$gVersionPackagesDir='t/test_spool/versions/pkg';
+$gVersionTimeIndex='t/test_spool/versions/indices/versions_time.idx';
+$gVersionIndex='t/test_spool/versions/indices/versions.idx';
+$gBinarySourceMap='t/test_spool/versions/indices/binsrc.idx';
+$gSourceBinaryMap='t/test_spool/versions/indices/srcbin.idx';
+
+1;
