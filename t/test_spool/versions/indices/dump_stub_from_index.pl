@@ -52,11 +52,14 @@ dump_stub_from_index.pl
 
 use vars qw($DEBUG);
 use MLDBM qw(DB_File Storable);
+# Use the portable dump method
+$MLDBM::DumpMeth=q(portable);
 use Data::Dumper;
+# sort Data::Dumper keys
+$Data::Dumper::Sortkeys=1;
 use Fcntl;
 use File::Basename;
 
-$MLDBM::DumpMeth=q(portable);
 
 my %options = (debug           => 0,
                help            => 0,
