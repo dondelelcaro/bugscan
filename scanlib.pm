@@ -127,8 +127,6 @@ sub scanspool() {
 	my @dirs;
 	my $dir;
 
-	chdir($bugcfg::spooldir) or die "chdir $bugcfg::spooldir: $!\n";
-
 	opendir(DIR, $bugcfg::spooldir) or die "opendir $bugcfg::spooldir: $!\n";
 	@dirs=grep(m/^\d+$/,readdir(DIR));
 	closedir(DIR);
@@ -149,7 +147,6 @@ sub scanspooldir {
 					
 	my @archs_with_source = ( @bugcfg::architectures, 'source' );
 
-	chdir($dir) or die "chdir $dir: $!\n";
 
 	opendir(DIR, $dir) or die "opendir $dir: $!\n";
 	@list = grep { s/\.summary$// }
@@ -158,7 +155,7 @@ sub scanspooldir {
 	closedir(DIR);
 
 	for $f (@list) {
-		my $bug = Debbugs::Status::read_bug(summary => "$f.summary");
+		my $bug = Debbugs::Status::read_bug(summary => $dir.'/'."$f.summary");
 		next if (!defined($bug));
 		
 		my $bi = {
