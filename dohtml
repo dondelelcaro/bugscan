@@ -32,6 +32,7 @@ realmakepage() {
 
 <p align="center">for distribution(s): $descr</p>
 
+<p align="center">You might also want to check out <a href="http://udd.debian.org/bugs/">UDD</a> instead of this page.</p>
 <hr>
 
 <p>
