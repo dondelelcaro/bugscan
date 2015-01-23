@@ -2,6 +2,25 @@
 
 htmldir=/org/bugs.debian.org/www/bugscan
 
+header() {
+	local	title="$1"	# Title of page
+	local	date="$2"	# Date
+
+	cat <<EOF
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>$title, $date</title>
+  </head>
+<body bgcolor="white">
+<h1 align="center">$title</h1>
+
+<h2 align="center">$date</h2>
+
+EOF
+}
+
 realmakepage() {
 	local	filter="$1"	# Distributions to list
 	local	title="$2"	# Title of page
@@ -18,17 +37,9 @@ realmakepage() {
 
 	filter="$filter $worry"
 
-	cat <<EOF
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>$title, $date</title>
-  </head>
-<body bgcolor="white">
-<h1 align="center">$title</h1>
+	header "$title" "$date"
 
-<h2 align="center">$date</h2>
+	cat <<EOF
 
 <p align="center">for distribution(s): $descr</p>
 
@@ -76,17 +87,10 @@ EOF
 }
 
 makemainpage() {
-	cat <<EOF
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>$title, $time</title>
-  </head>
-<body bgcolor="white">
-<h1 align="center">$title</h1>
 
-<h2 align="center">$time</h2>
+	header "$title" "$date"
+
+	cat <<EOF
 
 <p align="center">
 EOF
