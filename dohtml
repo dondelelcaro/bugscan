@@ -98,6 +98,8 @@ EOF
 }
 
 makemainpage() {
+	local	title="$1"	# Title of page
+	local	time="$2"	# Date
 
 	header "$title" "$time"
 
@@ -186,6 +188,6 @@ makepage "" "$title" "$htmldir/other/stable.html" "$time" "-b"
 makepage "" "$title" "$htmldir/other/testing.html" "$time" "-t"
 makepage "" "$title" "$htmldir/other/pseudo.html" "$time" "pseudo"
 
-makemainpage > $htmldir/index.html.new
+makemainpage "$title" "$time" > $htmldir/index.html.new
 mv -f $htmldir/index.html.new $htmldir/index.html
 
