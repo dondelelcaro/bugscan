@@ -161,6 +161,8 @@ To receive all mails sent to release-critical bugs, subscribe to the
 mailing list.
 
 EOF
+
+	html_closing_tags
 }
 
 makepage() {
