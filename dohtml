@@ -30,6 +30,13 @@ Please contact
 EOF
 }
 
+html_closing_tags() {
+	cat <<EOF
+</body>
+</html>
+EOF
+}
+
 realmakepage() {
 	local	filter="$1"	# Distributions to list
 	local	title="$2"	# Title of page
@@ -87,10 +94,7 @@ EOF
 
 	html_page_creation_notice
 
-	cat <<EOF
-</body>
-</html>
-EOF
+	html_closing_tags
 }
 
 makemainpage() {
