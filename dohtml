@@ -177,17 +177,17 @@ date_time=$(date -u -d '@'$(($(stat -c '%Y' status) / 3600 * 3600)))
 olddate_time=$(date -u -d '@'$(($(stat -c '%Y' status-old) / 3600 * 3600)))
 title="Release-critical bugs status"
 
-makepage "debian" "$title" "$htmldir/debian/all.html" "$date_time"
-makepage "debian/main" "$title" $htmldir/debian/main.html "$date_time"
-makepage "debian/contrib" "$title" $htmldir/debian/contrib.html "$date_time"
-makepage "debian/non-free" "$title" $htmldir/debian/non-free.html "$date_time"
-makepage "debian/source" "$title" $htmldir/debian/source.html "$date_time"
+makepage "debian"          "$title" "$htmldir/debian/all.html"      "$date_time"
+makepage "debian/main"     "$title" "$htmldir/debian/main.html"     "$date_time"
+makepage "debian/contrib"  "$title" "$htmldir/debian/contrib.html"  "$date_time"
+makepage "debian/non-free" "$title" "$htmldir/debian/non-free.html" "$date_time"
+makepage "debian/source"   "$title" "$htmldir/debian/source.html"   "$date_time"
 
-makepage "" "$title" $htmldir/other/all.html "$date_time"
-makepage "" "$title" "$htmldir/other/stable.html" "$date_time" "-b"
-makepage "" "$title" "$htmldir/other/testing.html" "$date_time" "-t"
-makepage "" "$title" "$htmldir/other/pseudo.html" "$date_time" "pseudo"
+makepage ""                "$title" "$htmldir/other/all.html"       "$date_time"
+makepage ""                "$title" "$htmldir/other/stable.html"    "$date_time" "-b"
+makepage ""                "$title" "$htmldir/other/testing.html"   "$date_time" "-t"
+makepage ""                "$title" "$htmldir/other/pseudo.html"    "$date_time" "pseudo"
 
-makemainpage "$title" "$date_time" > $htmldir/index.html.new
+makemainpage  "$title"  "$date_time" > $htmldir/index.html.new
 mv -f $htmldir/index.html.new $htmldir/index.html
 
