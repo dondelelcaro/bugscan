@@ -40,7 +40,7 @@ EOF
 realmakepage() {
 	local	filter="$1"	# Distributions to list
 	local	title="$2"	# Title of page
-	local	date="$3"	# Date
+	local	date_time="$3"	# Date
 	local	worry="$4"	# Worry about testing only?
 	local	descr		# Description of filter
 
@@ -53,7 +53,7 @@ realmakepage() {
 
 	filter="$filter $worry"
 
-	html_header "$title" "$date"
+	html_header "$title" "$date_time"
 
 	cat <<EOF
 
@@ -99,9 +99,9 @@ EOF
 
 makemainpage() {
 	local	title="$1"	# Title of page
-	local	time="$2"	# Date
+	local	date_time="$2"	# Date
 
-	header "$title" "$time"
+	header "$title" "$date_time"
 
 	cat <<EOF
 
@@ -173,21 +173,21 @@ makepage() {
 	mv -f $3.new $3
 }
 
-time=$(date -u -d '@'$(($(stat -c '%Y' status) / 3600 * 3600)))
-oldtime=$(date -u -d '@'$(($(stat -c '%Y' status-old) / 3600 * 3600)))
+date_time=$(date -u -d '@'$(($(stat -c '%Y' status) / 3600 * 3600)))
+olddate_time=$(date -u -d '@'$(($(stat -c '%Y' status-old) / 3600 * 3600)))
 title="Release-critical bugs status"
 
-makepage "debian" "$title" "$htmldir/debian/all.html" "$time"
-makepage "debian/main" "$title" $htmldir/debian/main.html "$time"
-makepage "debian/contrib" "$title" $htmldir/debian/contrib.html "$time"
-makepage "debian/non-free" "$title" $htmldir/debian/non-free.html "$time"
-makepage "debian/source" "$title" $htmldir/debian/source.html "$time"
+makepage "debian" "$title" "$htmldir/debian/all.html" "$date_time"
+makepage "debian/main" "$title" $htmldir/debian/main.html "$date_time"
+makepage "debian/contrib" "$title" $htmldir/debian/contrib.html "$date_time"
+makepage "debian/non-free" "$title" $htmldir/debian/non-free.html "$date_time"
+makepage "debian/source" "$title" $htmldir/debian/source.html "$date_time"
 
-makepage "" "$title" $htmldir/other/all.html "$time"
-makepage "" "$title" "$htmldir/other/stable.html" "$time" "-b"
-makepage "" "$title" "$htmldir/other/testing.html" "$time" "-t"
-makepage "" "$title" "$htmldir/other/pseudo.html" "$time" "pseudo"
+makepage "" "$title" $htmldir/other/all.html "$date_time"
+makepage "" "$title" "$htmldir/other/stable.html" "$date_time" "-b"
+makepage "" "$title" "$htmldir/other/testing.html" "$date_time" "-t"
+makepage "" "$title" "$htmldir/other/pseudo.html" "$date_time" "pseudo"
 
-makemainpage "$title" "$time" > $htmldir/index.html.new
+makemainpage "$title" "$date_time" > $htmldir/index.html.new
 mv -f $htmldir/index.html.new $htmldir/index.html
 
