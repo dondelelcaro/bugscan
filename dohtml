@@ -67,7 +67,7 @@ EOF
 	./bugreport -H -s $filter
 	
 	cat <<EOF
-<p>
+</p>
 Explanation for <a href="http://www.debian.org/Bugs/Developer#tags">bug
 tags</a>:
 
@@ -83,11 +83,10 @@ tags</a>:
 </ul>
 
 <p>
-The second set of tags indicate what releases a bug applies to:
-O for oldstable (squeeze), S for stable (wheezy), T for testing (jessie),
-U for unstable (sid) or E for experimental.
-
-<p>
+  The second set of tags indicate what releases a bug applies to:
+  O for oldstable (squeeze), S for stable (wheezy), T for testing (jessie),
+  U for unstable (sid) or E for experimental.
+</p>
 
 EOF
 	./bugreport -H -l $filter
@@ -152,7 +151,7 @@ EOF
     <br>
      + <a href="other/testing.html">Only bugs relevant to testing</a>
 </ul>
-<p clear=both>
+<p clear=both></p>
 EOF
 
 	html_page_creation_notice
