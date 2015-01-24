@@ -14,15 +14,47 @@ html_header() {
     <title>$title, $date</title>
   </head>
 <body bgcolor="white">
-<h1 align="center">$title</h1>
-
-<h2 align="center">$date</h2>
+<div id="header">
+  <div id="upperheader">
+    <div id="logo">
+      <a href="http://www.debian.org/" title="Debian Home"><img src="http://www.debian.org/Pics/openlogo-50.png" alt="Debian" width="50" height="61"></a>
+    </div>
+    <div id="searchbox">
+      <form name="p" method="get" action="http://search.debian.org/cgi-bin/omega">
+        <p>
+          <input type="hidden" name="DB" value="en">
+          <input name="P" value="" size="27">
+          <input type="submit" value="Search">
+        </p>
+      </form>
+    </div>
+  </div>
+  <div id="navbar">
+    <p class="hidecss"><a href="#content">Skip Quicknav</a></p>
+    <ul>
+       <li><a href="http://www.debian.org/intro/about">About Debian</a></li>
+       <li><a href="http://www.debian.org/distrib/">Getting Debian</a></li>
+       <li><a href="http://www.debian.org/support">Support</a></li>
+       <li><a href="http://www.debian.org/devel/">Developers' Corner</a></li>
+    </ul>
+  </div>
+  <p id="breadcrumbs">
+    <a href="http://www.debian.org/Bugs/">Debian bug tracking system</a>
+    &#x2F;
+    Debian BTS &mdash; rc bugs status
+  </p>
+</div>
+<div id="content">
+  <h1>$title</h1>
+  
+  <h2>$date</h2>
 
 EOF
 }
 
 html_page_creation_notice() {
 	cat <<EOF
+</div><!-- end of 'div id="content"'-->
 <hr>
 This page is automatically generated.<br>
 Please contact
@@ -57,9 +89,9 @@ realmakepage() {
 
 	cat <<EOF
 
-<p align="center">for distribution(s): $descr</p>
+<p>for distribution(s): $descr</p>
 
-<p align="center">You might also want to check out <a href="http://udd.debian.org/bugs/">UDD</a> instead of this page.</p>
+<p>You might also want to check out <a href="http://udd.debian.org/bugs/">UDD</a> instead of this page.</p>
 <hr>
 
 <p>
@@ -104,7 +136,7 @@ makemainpage() {
 
 	cat <<EOF
 
-<p align="center">
+<p>
 EOF
 
 	./bugreport -Hs
@@ -112,7 +144,7 @@ EOF
 	cat <<EOF
 </p>
 
-<div align="center"><img src="graph-release.png" alt="Graph of RC bugs"></div>
+<div><img src="graph-release.png" alt="Graph of RC bugs"></div>
 
 <p>Other graphs:
   <ul>
