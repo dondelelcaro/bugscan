@@ -52,7 +52,7 @@ html_header() {
 EOF
 }
 
-html_page_creation_notice() {
+html_end_of_content() {
 	cat <<EOF
 </div><!-- end of 'div id="content"'-->
 <hr>
@@ -123,7 +123,7 @@ tags</a>:
 EOF
 	./bugreport -H -l $filter
 
-	html_page_creation_notice
+	html_end_of_content
 
 	html_closing_tags
 }
@@ -188,7 +188,7 @@ EOF
 <p clear=both></p>
 EOF
 
-	html_page_creation_notice
+	html_end_of_content
 
 	cat <<EOF
 To receive all mails sent to release-critical bugs, subscribe to the
