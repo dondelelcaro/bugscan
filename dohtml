@@ -11,7 +11,7 @@ html_header() {
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link href="http://www.debian.org/debhome.css" rel="stylesheet" type="text/css">
+    <link href="//www.debian.org/debhome.css" rel="stylesheet" type="text/css">
 
     <title>$title, $date</title>
   </head>
@@ -19,10 +19,10 @@ html_header() {
 <div id="header">
   <div id="upperheader">
     <div id="logo">
-      <a href="http://www.debian.org/" title="Debian Home"><img src="http://www.debian.org/Pics/openlogo-50.png" alt="Debian" width="50" height="61"></a>
+      <a href="//www.debian.org/" title="Debian Home"><img src="//www.debian.org/Pics/openlogo-50.png" alt="Debian" width="50" height="61"></a>
     </div>
     <div id="searchbox">
-      <form name="p" method="get" action="http://search.debian.org/cgi-bin/omega">
+      <form name="p" method="get" action="//search.debian.org/cgi-bin/omega">
         <p>
           <input type="hidden" name="DB" value="en">
           <input name="P" value="" size="27">
@@ -34,14 +34,14 @@ html_header() {
   <div id="navbar">
     <p class="hidecss"><a href="#content">Skip Quicknav</a></p>
     <ul>
-       <li><a href="http://www.debian.org/intro/about">About Debian</a></li>
-       <li><a href="http://www.debian.org/distrib/">Getting Debian</a></li>
-       <li><a href="http://www.debian.org/support">Support</a></li>
-       <li><a href="http://www.debian.org/devel/">Developers' Corner</a></li>
+       <li><a href="//www.debian.org/intro/about">About Debian</a></li>
+       <li><a href="//www.debian.org/distrib/">Getting Debian</a></li>
+       <li><a href="//www.debian.org/support">Support</a></li>
+       <li><a href="//www.debian.org/devel/">Developers' Corner</a></li>
     </ul>
   </div>
   <p id="breadcrumbs">
-    <a href="http://www.debian.org/Bugs/">Debian bug tracking system</a>
+    <a href="//www.debian.org/Bugs/">Debian bug tracking system</a>
     &#x2F;
     Debian BTS &mdash; rc bugs status
   </p>
@@ -93,7 +93,7 @@ realmakepage() {
 
 <p>for distribution(s): $descr</p>
 
-<p>You might also want to check out <a href="http://udd.debian.org/bugs/">UDD</a> instead of this page.</p>
+<p>You might also want to check out <a href="//udd.debian.org/bugs/">UDD</a> instead of this page.</p>
 <hr>
 
 <p>
@@ -102,7 +102,7 @@ EOF
 	
 	cat <<EOF
 </p>
-Explanation for <a href="http://www.debian.org/Bugs/Developer#tags">bug
+Explanation for <a href="//www.debian.org/Bugs/Developer#tags">bug
 tags</a>:
 
 <ul>
@@ -180,7 +180,7 @@ EOF
   <li> <a href="debian/contrib.html">contrib</a>
   <li> <a href="debian/non-free.html">non-free</a>
   <li> <a href="other/pseudo.html">pseudo-packages</a>
-       <a href="http://www.debian.org/Bugs/pseudo-packages">(?)</a>
+       <a href="//www.debian.org/Bugs/pseudo-packages">(?)</a>
   <li> <a href="other/all.html">Everything in one page</a>
     <br>
      + <a href="other/stable.html">Only bugs relevant to stable</a>
@@ -194,7 +194,7 @@ EOF
 
 	cat <<EOF
 To receive all mails sent to release-critical bugs, subscribe to the
-<a href="http://lists.debian.org/debian-bugs-rc/">debian-bugs-rc</a>
+<a href="//lists.debian.org/debian-bugs-rc/">debian-bugs-rc</a>
 mailing list.
 
 EOF
