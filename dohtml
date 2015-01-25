@@ -132,7 +132,7 @@ makemainpage() {
 	local	title="$1"	# Title of page
 	local	date_time="$2"	# Date
 
-	header "$title" "$date_time"
+	html_header "$title" "$date_time"
 
 	cat <<EOF
 
