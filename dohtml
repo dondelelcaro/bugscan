@@ -11,6 +11,8 @@ html_header() {
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="http://www.debian.org/debhome.css" rel="stylesheet" type="text/css">
+
     <title>$title, $date</title>
   </head>
 <body bgcolor="white">
