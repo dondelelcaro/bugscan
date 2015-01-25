@@ -22,7 +22,7 @@ html_header() {
       <a href="//www.debian.org/" title="Debian Home"><img src="//www.debian.org/Pics/openlogo-50.png" alt="Debian" width="50" height="61"></a>
     </div>
     <div id="searchbox">
-      <form name="p" method="get" action="//search.debian.org/cgi-bin/omega">
+      <form name="p" method="get" action="http://search.debian.org/cgi-bin/omega">
         <p>
           <input type="hidden" name="DB" value="en">
           <input name="P" value="" size="27">
