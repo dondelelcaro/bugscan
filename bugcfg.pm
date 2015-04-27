@@ -18,10 +18,10 @@ $pseudolist = $config{pseudo_desc_file};
 
 # this is just the default, and should always be overriden by the
 # Debbugs::Config; set values
-our $debian_releases = {testing => 'jessie',
-                        stable  => 'wheezy',
+our $debian_releases = {testing => 'stretch',
+                        stable  => 'jessie',
                         unstable => 'sid',
-                        oldstable => 'squeeze',
+                        oldstable => 'wheezy',
                        };
 # figure out debian releases from distribution aliases
 for my $alias (keys %{$config{distribution_aliases}//{}}) {
