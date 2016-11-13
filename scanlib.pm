@@ -19,6 +19,7 @@ use Debbugs::MIME qw(decode_rfc1522 encode_rfc1522);
 use Debbugs::Packages;
 use Debbugs::Versions;
 use Debbugs::Status;
+use IO::Uncompress::AnyUncompress;
 use Fcntl qw(O_RDONLY);
 
 use File::Basename;
@@ -50,20 +51,27 @@ sub readmaintainers() {
 	close(M);
 }
 
+sub glob_compressed_fh {
+    my ($fn) = @_;
+    $fn = (grep { -f $_ } glob $fn)[0];
+    my $fh = IO::Uncopmress::AnyUncompress->new($fn) or
+        die "Unable to open $fn for reading: $!";
+    return $fh;
+}
+
 
 sub readsources {
     my ($root,$archive) = @_;
 
 	for my $sect (@bugcfg::sections) {
-		open(P, "zcat $root/$sect/source/Sources.gz|")
-			or die open "open: $sect sourcelist: $!\n";
-		while (<P>) {
+        my $p = glob_compressed_fh("$root/$sect/source/Sources.*");
+		while (<$p>) {
 			chomp;
 			next unless m/^Package:\s/;
 			s/^Package:\s*//;			# Strip the fieldname
 			$section{$_} = "$archive/$sect";
 		}
-		close (P);
+		close ($p);
 	}
 }
 
@@ -71,23 +79,20 @@ sub readpackages {
     my ($root,$archive) = @_;
 	for my $arch ( @bugcfg::architectures ) {
 		for my $sect ( @bugcfg::sections) {
-			open(P, "zcat $root/$sect/binary-$arch/Packages.gz|")
-				or die "open: $root/$sect/binary-$arch/Packages.gz: $!\n";
-			while (<P>) {
+            my $p = glob_compressed_fh("$root/$sect/binary-$arch/Packages.*");
+			while (<$p>) {
 				chomp;
 				next unless m/^Package:\s/;	# We're only interested in the packagenames
 				s/^Package:\s*//;			# Strip the fieldname
 				$section{$_} = "$archive/$sect";
 				print "$root/$sect/binary-$arch/Packages.gz\n" if ($_ eq 'xtla');
 			}
-			close(P);
+			close($p);
 		}
 	}
     # handle the source packages
     for my $sect (@bugcfg::sections) {
-	my $fh;
-	open($fh,'-|','zcat',"$root/$sect/source/Sources.gz") or
-	    die "Unable to open zcat $root/$sect/source/Sources.gz for reading: $!";
+	my $fh = glob_compressed_fh("$root/$sect/source/Sources.*");
 	while (<$fh>) {
 	    chomp;
 	    next unless m/^Package:\s/;	# We're only interested in the packagenames
