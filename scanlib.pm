@@ -54,7 +54,7 @@ sub readmaintainers() {
 sub glob_compressed_fh {
     my ($fn) = @_;
     $fn = (grep { -f $_ } glob $fn)[0];
-    my $fh = IO::Uncopmress::AnyUncompress->new($fn) or
+    my $fh = IO::Uncompress::AnyUncompress->new($fn) or
         die "Unable to open $fn for reading: $!";
     return $fh;
 }
