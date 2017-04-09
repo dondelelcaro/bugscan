@@ -33,7 +33,7 @@ for my $p (keys %scanlib::packagelist) {
 	}
 	print "package\n";
 	print $p, "\n";
-	print $section, "\n";
+	print $section, "\n" if defined $section;
 	print $scanlib::maintainer{$package}, "\n";
 	print "\n";
 }
