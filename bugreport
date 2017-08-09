@@ -4,8 +4,10 @@
 # Generate a report of the release-critical bugs for packages
 
 use Getopt::Std;
-require scanlib;
-require bugcfg;
+use File::Basename;
+use lib dirname(__FILE__);
+use bugcfg;
+use scanlib;
 use strict;
 use warnings;
 
