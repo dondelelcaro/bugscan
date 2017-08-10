@@ -129,7 +129,7 @@ sub MakeBuglist() {
 }
 
 
-sub MakeStatistics() {
+sub MakeStatistics {
 	my $bugcount=0;		# Total number of bugs so far
 	my $patchtotal=0;	# Total number of bugs marked patch
 	my $pendingtotal=0;	# Total number of bugs marked pending
@@ -212,7 +212,7 @@ FilterPackages($opt_d) if ($opt_d);
 FilterBugsStable() if ($opt_b);
 FilterBugs() if ($opt_t);
 
-MakeStatistics if ($opt_s);
+MakeStatistics() if ($opt_s);
 if ($opt_l) {
 	MakeBuglist();
 }
