@@ -312,14 +312,14 @@ sub htmlsanit {
     return $in;
 }
 
-sub wwwnumber() {
+sub wwwnumber {
 	my $number = shift;		# Number of bug to html-ize
 
 	"<A HREF=\"http://bugs.debian.org/cgi-bin/bugreport.cgi?archive=no&amp;bug=" .
 		urlsanit($number) . '">' . htmlsanit($number) . '</A>';
 }
 
-sub wwwname() {
+sub wwwname {
 	my $name = shift;			# Name of package
 
 	"<A HREF=\"http://bugs.debian.org/cgi-bin/pkgreport.cgi?archive=no&amp;pkg=" .
