@@ -159,13 +159,13 @@ sub MakeStatistics {
 	}
 
 	if ($html) {
-		print "<strong><font color=\"red\">Total number of release-critical bugs</font>:</strong> $bugcount<BR>\n";
+		print "<strong><font color=\"#9400D3\">Total number of release-critical bugs</font>:</strong> $bugcount<BR>\n";
 		printf("<strong>Number that have a patch:</strong> %d<BR>\n", $patchtotal);
 		printf("<strong>Number that have a fix prepared and waiting to upload:</strong> %d<BR>\n", $pendingtotal);
 		printf("<strong>Number that are being ignored:</strong> %d<BR>\n", $ignoretotal);
-		printf("<strong><font color=\"blue\">Number concerning the current stable release</font>:</strong> %d<BR>\n", $stabletotal);
-		printf("<strong><font color=\"green\">Number concerning the next release</font>:</strong> %d<P>\n", $worrytotal);
-		printf("<strong><font color=\"green\">Number concerning the previous stable release</font>:</strong> %d<P>\n", $oldstabletotal);
+		printf("<strong><font color=\"#56b4e9\">Number concerning the current stable release</font>:</strong> %d<BR>\n", $stabletotal);
+		printf("<strong><font color=\"#009e73\">Number concerning the next release</font>:</strong> %d<P>\n", $worrytotal);
+		printf("<strong><font color=\"#e69f00\">Number concerning the previous stable release</font>:</strong> %d<P>\n", $oldstabletotal);
 	} else {
 		print "Total number of release-critical bugs: $bugcount\n";
 		printf("Number that have a patch: %d\n", $patchtotal);
