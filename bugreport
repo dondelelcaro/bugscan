@@ -200,7 +200,7 @@ sub FilterBugsStable() {
 		$scanlib::packagelist{$p} = [ grep { scanlib::check_worry_stable($scanlib::bugs{$_}) } @{$scanlib::packagelist{$p}} ];
 		delete $scanlib::packagelist{$p} if (scalar @{$scanlib::packagelist{$p}} == 0);
 	}
-
+}
 sub FilterBugsOldStable() {
 	for my $p (sort keys %scanlib::packagelist) {
 		$scanlib::packagelist{$p} = [ grep { scanlib::check_worry_oldstable($scanlib::bugs{$_}) } @{$scanlib::packagelist{$p}} ];
