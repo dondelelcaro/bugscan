@@ -327,15 +327,20 @@ sub wwwname {
 }
 
 sub check_worry {
-	my ($bi) = @_;
+	my ($bi,$dist) = @_;
+    $dist = 'testing' if not defined $dist;
 
-	return ($bi->{'testing'} && !$bi->{$bugcfg::debian_releases->{testing}.'-ignore'});
+	return ($bi->{$dist} && !$bi->{$bugcfg::debian_releases->{$dist}.'-ignore'});
 }
 
+sub check_worry_testing {
+    return check_worry($_[0],'testing');
+}
 sub check_worry_stable {
-	my ($bi) = @_;
-
-	return ($bi->{'stable'} && !$bi->{$bugcfg::debian_releases->{stable}.'-ignore'});
+    return check_worry($_[0],'stable');
+}
+sub check_worry_oldstable {
+    return check_worry($_[0],'oldstable');
 }
 
 sub check_worry_unstable {

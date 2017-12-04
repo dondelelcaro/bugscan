@@ -151,6 +151,7 @@ sub MakeStatistics {
 			$ignoretotal++ if ($scanlib::bugs{$nr}->{$bugcfg::debian_releases->{stable}.'-ignore'} || $scanlib::bugs{$nr}->{$bugcfg::debian_releases->{testing}.'-ignore'});
 			$worrytotal++ if (scanlib::check_worry($scanlib::bugs{$nr}));
 			$stabletotal++ if (scanlib::check_worry_stable($scanlib::bugs{$nr}));
+			$oldstabletotal++ if (scanlib::check_worry_oldstable($scanlib::bugs{$nr}));
 
 			$bugcount++;
 			$count++;
@@ -164,6 +165,7 @@ sub MakeStatistics {
 		printf("<strong>Number that are being ignored:</strong> %d<BR>\n", $ignoretotal);
 		printf("<strong><font color=\"blue\">Number concerning the current stable release</font>:</strong> %d<BR>\n", $stabletotal);
 		printf("<strong><font color=\"green\">Number concerning the next release</font>:</strong> %d<P>\n", $worrytotal);
+		printf("<strong><font color=\"green\">Number concerning the previous stable release</font>:</strong> %d<P>\n", $oldstabletotal);
 	} else {
 		print "Total number of release-critical bugs: $bugcount\n";
 		printf("Number that have a patch: %d\n", $patchtotal);
@@ -171,6 +173,7 @@ sub MakeStatistics {
 		printf("Number that are being ignored: %d\n", $ignoretotal);
 		printf("Number concerning the current stable release: %d\n", $stabletotal);
 		printf("Number concerning the next release: %d\n", $worrytotal);
+		printf("Number concerning the previous stable release: %d\n", $oldstabletotal);
 	}
 }
 
@@ -196,11 +199,17 @@ sub FilterBugsStable() {
 		$scanlib::packagelist{$p} = [ grep { scanlib::check_worry_stable($scanlib::bugs{$_}) } @{$scanlib::packagelist{$p}} ];
 		delete $scanlib::packagelist{$p} if (scalar @{$scanlib::packagelist{$p}} == 0);
 	}
+
+sub FilterBugsOldStable() {
+	for my $p (sort keys %scanlib::packagelist) {
+		$scanlib::packagelist{$p} = [ grep { scanlib::check_worry_oldstable($scanlib::bugs{$_}) } @{$scanlib::packagelist{$p}} ];
+		delete $scanlib::packagelist{$p} if (scalar @{$scanlib::packagelist{$p}} == 0);
+	}
 }
 
-our ($opt_h,$opt_V,$opt_S,$opt_H,$opt_d,$opt_b,$opt_t,$opt_s,$opt_l);
+our ($opt_h,$opt_V,$opt_S,$opt_H,$opt_d,$opt_b,$opt_t,$opt_s,$opt_l,$opt_o);
 
-getopts('VhHlsbtd:S:');
+getopts('VhHlsbtod:S:');
 ShowUsage if ($opt_h);
 ShowVersion if ($opt_V);
 $statusfile=$opt_S if ($opt_S);
@@ -211,6 +220,7 @@ scanlib::readstatus($statusfile);
 FilterPackages($opt_d) if ($opt_d);
 FilterBugsStable() if ($opt_b);
 FilterBugs() if ($opt_t);
+FilterBugsOldStable() if ($opt_o);
 
 MakeStatistics() if ($opt_s);
 if ($opt_l) {
