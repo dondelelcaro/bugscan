@@ -21,8 +21,8 @@ find counts -type f -not -iname '*.bad'| sort | xargs egrep '^(.* ){7}' /dev/nul
 #	echo $date $count >> ${tmp}2
 #done
 
-# This is the date of the wheezy release
-previous_release="201305040600"
+# This is the date of the stretch release
+previous_release="201706170000"
 
 # And this is a month ago
 previous_month=`date +"%Y%m%d%H%M" --date="1 month ago"`
