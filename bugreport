@@ -136,6 +136,7 @@ sub MakeStatistics {
 	my $ignoretotal=0;	# Total number of bugs marked ignore
 	my $worrytotal=0;	# Total number of bugs we're actually worried about
 	my $stabletotal=0;	# Total number of bugs affecting stable
+    my $oldstabletotal=0; # Total number of bugs affecting oldstable
 	my %list;		# List of bugnumber associated with package
         my %seen_bugs;          # bugs which have already been counted
 
