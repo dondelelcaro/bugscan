@@ -156,11 +156,11 @@ EOF
 </p>
 
 <p>
-  The <font color="#9400D3">dark-violet line</a> graphs all bugs with release-critical severities; 
-  the <font color="#009e73">dark green line</a> graphs the number of bugs that are actually a concern for the next
+  The <font color="#9400D3">dark-violet line</font> graphs all bugs with release-critical severities; 
+  the <font color="#009e73">dark green line</font> graphs the number of bugs that are actually a concern for the next
   release (excluding ignored bugs, bugs on packages not in testing, and bugs
   whose tags and/or versioning information indicate that they don't apply to
-  testing), and the <font color="#56b4e9">cyan line</a> graphs the number of bugs that are a concern
+  testing), and the <font color="#56b4e9">cyan line</font> graphs the number of bugs that are a concern
   for the <em>current</em> stable release.
 </p>
 
