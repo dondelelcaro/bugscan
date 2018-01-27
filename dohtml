@@ -113,12 +113,12 @@ tags</a>:
    <li><strong>R</strong>: unreproducible</li>
    <li><strong>S</strong>: security</li>
    <li><strong>U</strong>: upstream</li>
-   <li><strong>I</strong>: jessie-ignore or stretch-ignore</li>
+   <li><strong>I</strong>: stretch-ignore or buster-ignore</li>
 </ul>
 
 <p>
   The second set of tags indicate what releases a bug applies to:
-  O for oldstable (wheezy), S for stable (jessie), T for testing (stretch),
+  O for oldstable (jessie), S for stable (stretch), T for testing (buster),
   U for unstable (sid) or E for experimental.
 </p>
 
