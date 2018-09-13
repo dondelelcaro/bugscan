@@ -67,8 +67,10 @@ for my $pkg (sort keys %testingbugs) {
 	print TESTING   "$pkg ", scalar @{$testingbugs{$pkg}}, "\n";
 	print TESTINGNR "$pkg ", join(',', @{$testingbugs{$pkg}}), "\n";
 }
-close TESTING;
-close TESTINGNR;
+close TESTING
+	or die "close britney/testing.new: $!";
+close TESTINGNR
+	or die "close britney/testing-nr.new: $!";
 
 open UNSTABLE, ">", "britney/unstable.new"
 	or die "britney/unstable.new: $!";
@@ -78,8 +80,10 @@ for my $pkg (sort keys %unstablebugs) {
 	print UNSTABLE   "$pkg ", scalar @{$unstablebugs{$pkg}}, "\n";
 	print UNSTABLENR "$pkg ", join(',', @{$unstablebugs{$pkg}}), "\n";
 }
-close UNSTABLE;
-close UNSTABLENR;
+close UNSTABLE
+	or die "close britney/unstable.new: $!";
+close UNSTABLENR
+	or die "close britney/unstable-nr.new: $!";
 
 rename "britney/testing.new", "britney/testing"
 	or die "renaming britney/testing.new to britney/testing: $!";
