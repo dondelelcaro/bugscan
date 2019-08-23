@@ -19,7 +19,7 @@ use Debbugs::MIME qw(decode_rfc1522 encode_rfc1522);
 use Debbugs::Packages;
 use Debbugs::Versions;
 use Debbugs::Status;
-use IO::Uncompress::AnyUncompress;
+use Debbugs::Common qw(open_compressed_file);
 use Fcntl qw(O_RDONLY);
 
 use File::Basename;
@@ -53,8 +53,11 @@ sub readmaintainers() {
 
 sub glob_compressed_fh {
     my ($fn) = @_;
-    $fn = (grep { -f $_ } glob $fn)[0];
-    my $fh = IO::Uncompress::AnyUncompress->new($fn) or
+    my @fn = grep { -f $_ } glob $fn;
+    if (not @fn) {
+	die "No files exist which match glob '$fn'";
+    }
+    my $fh = open_compressed_file($fn[0]) or
         die "Unable to open $fn for reading: $!";
     return $fh;
 }
