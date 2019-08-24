@@ -57,7 +57,7 @@ sub glob_compressed_fh {
     if (not @fn) {
 	die "No files exist which match glob '$fn'";
     }
-    my $fh = open_compressed_file($fn[0]) or
+    my $fh = Debbugs::Common::open_compressed_file($fn[0]) or
         die "Unable to open $fn for reading: $!";
     return $fh;
 }
