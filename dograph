@@ -4,25 +4,17 @@ set -e
 
 cd /org/bugs.debian.org/bugscan
 
-tmp=`tempfile`
-tmp2=`tempfile`
-tmp3=`tempfile`
+tempdir=`mktemp -d`
 
 find counts -type f -not -iname '*.bad'| sort | xargs grep '^' /dev/null |
-    sed 's/^.*count-//;s/ .*$//;s/:/ /' >"$tmp"
+    sed 's/^.*count-//;s/ .*$//;s/:/ /' >"$tempdir/rc_bugs_total"
 find counts -type f -not -iname '*.bad'| sort | xargs egrep '^(.* ){6}' /dev/null | tr ":-" " " |
-    cut -d" " -f2,9 >"$tmp2"
+    cut -d" " -f2,9 >"$tempdir/rc_bugs_next_release"
 find counts -type f -not -iname '*.bad'| sort | xargs egrep '^(.* ){7}' /dev/null | tr ":-" " " |
-    cut -d" " -f2,10 >"$tmp3"
+    cut -d" " -f2,10 >"$tempdir/rc_bugs_current_release"
 
-#for i in counts/count-[0-9]* ; do
-#	date=`echo $i | sed -e s/.*count-//`
-#	count=`sed -e 's/ .*//' $i`
-#	echo $date $count >> ${tmp}2
-#done
-
-# This is the date of the stretch release
-previous_release="201706170000"
+# This is the date of the bullseye release
+previous_release="202108140000"
 
 # And this is a month ago
 previous_month=`date +"%Y%m%d%H%M" --date="1 month ago"`
@@ -37,8 +29,11 @@ set terminal png
 set yrange [0:]
 #set xtics 2678400
 #set nomxtics
+# release critical bugs
 set linetype  1 lc rgb "dark-violet" lw 1
+# RC bugs next release
 set linetype  2 lc rgb "#009e73" lw 1
+# RC bugs current release
 set linetype  3 lc rgb "#56b4e9" lw 1
 set linetype  4 lc rgb "#e69f00" lw 1
 set linetype  5 lc rgb "#f0e442" lw 1
@@ -48,15 +43,15 @@ set linetype  8 lc rgb "black"   lw 1
 set linetype  9 lc rgb "gray50"  lw 1
 set linetype cycle  9
 set output "/srv/bugs.debian.org/www/bugscan/graph.png"
-plot "$tmp" using 1:2 with lines, "$tmp2" using 1:2 with lines, "$tmp3" using 1:2 with lines
+plot "$tempdir/rc_bugs_total" using 1:2 with lines, "$tempdir/rc_bugs_next_release" using 1:2 with lines, "$rc_bugs_current_release" using 1:2 with lines
 set xrange ["$previous_release":]
 set output "/srv/bugs.debian.org/www/bugscan/graph-release.png"
-plot "$tmp" using 1:2 with lines, "$tmp2" using 1:2 with lines, "$tmp3" using 1:2 with lines
+plot "$tempdir/rc_bugs_total" using 1:2 with lines, "$tempdir/rc_bugs_next_release" using 1:2 with lines, "$rc_bugs_current_release" using 1:2 with lines
 set xrange ["$previous_month":]
 set format x "%d\n%m\n%Y"
 set output "/srv/bugs.debian.org/www/bugscan/graph-month.png"
-plot "$tmp" using 1:2 with lines, "$tmp2" using 1:2 with lines, "$tmp3" using 1:2 with lines
+plot "$tempdir/rc_bugs_total" using 1:2 with lines, "$tempdir/rc_bugs_next_release" using 1:2 with lines, "$rc_bugs_current_release" using 1:2 with lines
 quit
 EOF
 
-rm "$tmp" "$tmp2" "$tmp3"
+rm -rf "$tempdir"
