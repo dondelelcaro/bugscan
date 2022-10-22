@@ -43,14 +43,14 @@ set linetype  8 lc rgb "black"   lw 1
 set linetype  9 lc rgb "gray50"  lw 1
 set linetype cycle  9
 set output "/srv/bugs.debian.org/www/bugscan/graph.png"
-plot "$tempdir/rc_bugs_total" using 1:2 with lines, "$tempdir/rc_bugs_next_release" using 1:2 with lines, "$rc_bugs_current_release" using 1:2 with lines
+plot "$tempdir/rc_bugs_total" using 1:2 with lines, "$tempdir/rc_bugs_next_release" using 1:2 with lines, "$tempdir/rc_bugs_current_release" using 1:2 with lines
 set xrange ["$previous_release":]
 set output "/srv/bugs.debian.org/www/bugscan/graph-release.png"
-plot "$tempdir/rc_bugs_total" using 1:2 with lines, "$tempdir/rc_bugs_next_release" using 1:2 with lines, "$rc_bugs_current_release" using 1:2 with lines
+plot "$tempdir/rc_bugs_total" using 1:2 with lines, "$tempdir/rc_bugs_next_release" using 1:2 with lines, "$tempdir/rc_bugs_current_release" using 1:2 with lines
 set xrange ["$previous_month":]
 set format x "%d\n%m\n%Y"
 set output "/srv/bugs.debian.org/www/bugscan/graph-month.png"
-plot "$tempdir/rc_bugs_total" using 1:2 with lines, "$tempdir/rc_bugs_next_release" using 1:2 with lines, "$rc_bugs_current_release" using 1:2 with lines
+plot "$tempdir/rc_bugs_total" using 1:2 with lines, "$tempdir/rc_bugs_next_release" using 1:2 with lines, "$tempdir/rc_bugs_current_release" using 1:2 with lines
 quit
 EOF
 
