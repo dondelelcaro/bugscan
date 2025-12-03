@@ -33,7 +33,7 @@ for my $alias (keys %{$config{distribution_aliases}//{}}) {
 # check out:
 # http://release.debian.org/testing/arch_qualify.html
 # and then generally include architectures which are currently in testing
-our @architectures = qw(all amd64 arm64 armel armhf i386 ppc64el s390x);
+our @architectures = qw(all amd64 arm64 armhf i386 ppc64el s390x);
 our @sections		= ( "main", "contrib", "non-free", "non-free-firmware" );
 our @priorities		= @{$config{strong_severities}};
 our @skiptags		= ( );
