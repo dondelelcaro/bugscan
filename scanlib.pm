@@ -270,13 +270,23 @@ sub readstatus {
     while (1) {
 		chomp (my $type = <STATUS>);
 		if ($type eq 'package') {
-			chomp (my $package = <STATUS>);
-			chomp (my $section = <STATUS>);
-			chomp (my $maintainer = <STATUS>);
-			my $blank = <STATUS>;
-
-			$section{$package} = $section;
+			my @package_record;
+			while (1) {
+				my $line = <STATUS>;
+				chomp $line;
+				last if $line =~ /^$/;
+				push @package_record, $line;
+			}
+			my $package = pop @package_record;
+			my $maintainer = shift @package_record;
 			$maintainer{$package} = $maintainer;
+			# In some cases, a package may only have a package and a
+			# maintainer (and no section), handle these correctly.
+			if ($#package_record == 0) {
+				$section{$package} = '';
+			} else {
+				$section{$package} = $package_record[0];
+			}
 		}
 		if ($type eq 'bug') {
 			my $bug = {};
