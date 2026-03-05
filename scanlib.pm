@@ -263,6 +263,7 @@ sub scanspooldir {
 
 
 sub readstatus {
+    no warnings utf8;
     my $filename = shift;
 	open STATUS, "<", $filename
 		or die "$filename: $!";
